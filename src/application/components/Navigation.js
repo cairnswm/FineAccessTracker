@@ -33,6 +33,15 @@ const Navigation = () => {
         <Navbar.Toggle />
 
         <Navbar.Collapse className="justify-content-end">
+          <Nav className="me-auto">
+            {user && (
+              <>
+                <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                <Nav.Link as={Link} to="/applications">Applications</Nav.Link>
+                <Nav.Link as={Link} to="/documentation">Documentation</Nav.Link>
+              </>
+            )}
+          </Nav>
           <Nav>
             {user ? (
               <NavDropdown

@@ -15,7 +15,6 @@ import LandingPage from './application/pages/LandingPage';
 import HomePage from './application/pages/HomePage';
 import ApplicationsPage from './application/pages/ApplicationsPage';
 import ApplicationPage from './application/pages/ApplicationPage';
-import DashboardPage from './application/pages/DashboardPage';
 import DocumentationPage from './application/pages/DocumentationPage';
 
 // Components
@@ -47,7 +46,6 @@ function App() {
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
         <Route path="/applications" element={user ? <ApplicationsPage /> : <Navigate to="/login" />} />
         <Route path="/application/:id" element={user ? <ApplicationPage /> : <Navigate to="/login" />} />
-        <Route path="/dashboard" element={user ? <DashboardPage /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/subscriptions" element={user ? <SubscriptionsPage /> : <Navigate to="/login" />} />
