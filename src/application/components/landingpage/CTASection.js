@@ -20,7 +20,7 @@ const CTASection = () => {
       <Col md={8} className="mx-auto">
         <h2 className="mb-3">Ready to Start Tracking?</h2>
         <p className="lead mb-4">
-          Join thousands of developers who trust FineAccessTracker for their application analytics needs.
+          Join thousands of developers who trust Access Tracker for their application analytics needs.
         </p>
         <Button 
           variant="light" 

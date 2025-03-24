@@ -46,7 +46,7 @@ const HomePage = () => {
       <PageMenu />
       <Row className="mb-4">
         <Col>
-          <h1>Welcome to FineAccessTracker, {user?.firstname || 'User'}!</h1>
+          <h1>Welcome to Access Tracker, {user?.firstname || 'User'}!</h1>
           <p className="lead">Manage and monitor your applications</p>
         </Col>
         <Col xs="auto">

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './auth/context/AuthContext';
 
 // Auth Pages
-import LoginPage from './auth/pages/Login';
-import RegisterPage from './auth/pages/Register';
-import ForgotPasswordPage from './auth/pages/ForgotPassword';
+import LoginPage from './auth/pages/LoginPage';
+import RegisterPage from './auth/pages/RegisterPage';
+import ForgotPasswordPage from './auth/pages/ForgotPasswordPage';
 import ProfilePage from './auth/pages/ProfilePage';
 import SettingsPage from './auth/pages/SettingsPage';
 import SubscriptionsPage from './auth/pages/subscriptionsPage';
@@ -20,11 +20,13 @@ import DashboardPage from './application/pages/DashboardPage';
 // Components
 import Navigation from './application/components/Navigation';
 
-
-import "./app.scss";
-
 function App() {
   const { user } = useAuth();
+
+  // Set document title
+  useEffect(() => {
+    document.title = "Access Tracker - Application Usage Analytics";
+  }, []);
 
   return (
     <>

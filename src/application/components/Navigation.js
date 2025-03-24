@@ -5,7 +5,7 @@ import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
 import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
 import { useSummary } from "../context/SummaryContext";
-import "./Navigation.css"; // We'll create this file for custom styling
+import "./Navigation.css";
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -28,7 +28,7 @@ const Navigation = () => {
           className="d-flex align-items-center"
         >
           <BarChartFill className="me-2" />
-          <span>FineAccessTracker</span>
+          <span>Access Tracker</span>
         </Navbar.Brand>
         <Navbar.Toggle />
 
