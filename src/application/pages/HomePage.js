@@ -50,9 +50,13 @@ const HomePage = () => {
           <p className="lead">Manage and monitor your applications</p>
         </Col>
         <Col xs="auto">
-          <Button variant="primary" onClick={handleShow}>
+          <Button 
+            variant="primary" 
+            onClick={handleShow}
+            className="d-flex align-items-center"
+          >
             <PlusLg className="me-2" />
-            Add Application
+            <span>Add Application</span>
           </Button>
         </Col>
       </Row>
@@ -70,9 +74,13 @@ const HomePage = () => {
               <Card.Body>
                 <h3>No Applications Yet</h3>
                 <p>Add your first application to start tracking usage.</p>
-                <Button variant="primary" onClick={handleShow}>
+                <Button 
+                  variant="primary" 
+                  onClick={handleShow}
+                  className="d-flex align-items-center mx-auto"
+                >
                   <PlusLg className="me-2" />
-                  Add Application
+                  <span>Add Application</span>
                 </Button>
               </Card.Body>
             </Card>
@@ -115,8 +123,13 @@ const HomePage = () => {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAddApplication}>
-            Add Application
+          <Button 
+            variant="primary" 
+            onClick={handleAddApplication}
+            className="d-flex align-items-center"
+          >
+            <PlusLg className="me-2" />
+            <span>Add Application</span>
           </Button>
         </Modal.Footer>
       </Modal>

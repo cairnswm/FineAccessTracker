@@ -35,8 +35,9 @@ const ApplicationCard = ({ application }) => {
           <Button 
             variant="outline-primary" 
             onClick={() => navigate(`/application/${application.id}`)}
+            className="d-flex align-items-center justify-content-center"
           >
-            View Details
+            <span>View Details</span>
             <ArrowRightCircle className="ms-2" />
           </Button>
         </div>

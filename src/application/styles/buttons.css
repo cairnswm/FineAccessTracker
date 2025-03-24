@@ -1,0 +1,14 @@
+/* Button styles for consistent icon alignment */
+.btn-icon-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-text svg {
+  margin-top: -2px; /* Fine-tune vertical alignment */
+}
+
+.btn-icon-text .btn-text {
+  line-height: 1;
+}

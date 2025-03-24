@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Card, Button } from 'react-bootstrap';
-import { TagFill, XCircleFill } from 'react-bootstrap-icons';
+import { TagFill, XCircleFill, ArrowLeftCircle } from 'react-bootstrap-icons';
 
 const ItemTrackingTable = ({ applicationId, page, itemTracking, onBack }) => {
   if (!itemTracking || itemTracking.length === 0) {
@@ -8,8 +8,14 @@ const ItemTrackingTable = ({ applicationId, page, itemTracking, onBack }) => {
       <Card className="shadow-sm mb-4">
         <Card.Header className="bg-light d-flex justify-content-between align-items-center">
           <h5 className="mb-0">Item Analytics for: <code>{page}</code></h5>
-          <Button variant="outline-secondary" size="sm" onClick={onBack}>
-            Back to Pages
+          <Button 
+            variant="outline-secondary" 
+            size="sm" 
+            onClick={onBack}
+            className="d-flex align-items-center"
+          >
+            <ArrowLeftCircle className="me-1" />
+            <span>Back to Pages</span>
           </Button>
         </Card.Header>
         <Card.Body className="text-center p-4">
@@ -27,8 +33,14 @@ const ItemTrackingTable = ({ applicationId, page, itemTracking, onBack }) => {
     <Card className="shadow-sm mb-4">
       <Card.Header className="bg-light d-flex justify-content-between align-items-center">
         <h5 className="mb-0">Item Analytics for: <code>{page}</code></h5>
-        <Button variant="outline-secondary" size="sm" onClick={onBack}>
-          Back to Pages
+        <Button 
+          variant="outline-secondary" 
+          size="sm" 
+          onClick={onBack}
+          className="d-flex align-items-center"
+        >
+          <ArrowLeftCircle className="me-1" />
+          <span>Back to Pages</span>
         </Button>
       </Card.Header>
       <Card.Body>

@@ -88,9 +88,13 @@ const ApplicationsPage = () => {
           <p className="lead">Manage all your tracked applications</p>
         </Col>
         <Col xs="auto">
-          <Button variant="primary" onClick={handleShowAddModal}>
+          <Button 
+            variant="primary" 
+            onClick={handleShowAddModal}
+            className="d-flex align-items-center"
+          >
             <PlusLg className="me-2" />
-            Add Application
+            <span>Add Application</span>
           </Button>
         </Col>
       </Row>
@@ -121,25 +125,29 @@ const ApplicationsPage = () => {
                       <Button 
                         variant="outline-primary" 
                         size="sm" 
-                        className="me-2"
+                        className="me-2 d-inline-flex align-items-center"
                         onClick={() => navigate(`/application/${app.id}`)}
                       >
                         <EyeFill />
+                        <span className="ms-1">View</span>
                       </Button>
                       <Button 
                         variant="outline-secondary" 
                         size="sm" 
-                        className="me-2"
+                        className="me-2 d-inline-flex align-items-center"
                         onClick={() => handleShowEditModal(app)}
                       >
                         <PencilFill />
+                        <span className="ms-1">Edit</span>
                       </Button>
                       <Button 
                         variant="outline-danger" 
                         size="sm"
+                        className="d-inline-flex align-items-center"
                         onClick={() => handleShowDeleteModal(app)}
                       >
                         <TrashFill />
+                        <span className="ms-1">Delete</span>
                       </Button>
                     </td>
                   </tr>
@@ -148,8 +156,14 @@ const ApplicationsPage = () => {
                 <tr>
                   <td colSpan="6" className="text-center py-4">
                     <p className="mb-2">No applications found</p>
-                    <Button variant="primary" size="sm" onClick={handleShowAddModal}>
-                      Add Your First Application
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      onClick={handleShowAddModal}
+                      className="d-inline-flex align-items-center"
+                    >
+                      <PlusLg className="me-2" />
+                      <span>Add Your First Application</span>
                     </Button>
                   </td>
                 </tr>
@@ -194,8 +208,13 @@ const ApplicationsPage = () => {
           <Button variant="secondary" onClick={handleCloseModals}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAddApplication}>
-            Add Application
+          <Button 
+            variant="primary" 
+            onClick={handleAddApplication}
+            className="d-flex align-items-center"
+          >
+            <PlusLg className="me-2" />
+            <span>Add Application</span>
           </Button>
         </Modal.Footer>
       </Modal>
@@ -235,8 +254,13 @@ const ApplicationsPage = () => {
           <Button variant="secondary" onClick={handleCloseModals}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleEditApplication}>
-            Save Changes
+          <Button 
+            variant="primary" 
+            onClick={handleEditApplication}
+            className="d-flex align-items-center"
+          >
+            <PencilFill className="me-2" />
+            <span>Save Changes</span>
           </Button>
         </Modal.Footer>
       </Modal>
@@ -254,8 +278,13 @@ const ApplicationsPage = () => {
           <Button variant="secondary" onClick={handleCloseModals}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={handleDeleteApplication}>
-            Delete Application
+          <Button 
+            variant="danger" 
+            onClick={handleDeleteApplication}
+            className="d-flex align-items-center"
+          >
+            <TrashFill className="me-2" />
+            <span>Delete Application</span>
           </Button>
         </Modal.Footer>
       </Modal>

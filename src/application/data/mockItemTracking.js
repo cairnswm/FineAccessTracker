@@ -37,7 +37,7 @@ const mockItemTracking = [
     conversionRate: "1.9%"
   },
   
-  // Blog Article Items
+  // Blog Article Items - Note: No items for the "about" page
   {
     applicationId: 2,
     page: "articles",
@@ -57,7 +57,7 @@ const mockItemTracking = [
     conversionRate: "4.8%"
   },
   
-  // Mobile App Feature Items
+  // Mobile App Feature Items - Note: No items for the "profile" page
   {
     applicationId: 3,
     page: "dashboard",
