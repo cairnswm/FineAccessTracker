@@ -3,7 +3,7 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
-import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
+import { PersonCircle, StarFill, BarChartFill, Grid3x3 } from "react-bootstrap-icons";
 import { useSummary } from "../context/SummaryContext";
 
 const Navigation = () => {
@@ -32,6 +32,15 @@ const Navigation = () => {
         <Navbar.Toggle />
 
         <Navbar.Collapse className="justify-content-end">
+          <Nav className="me-auto">
+            {user && (
+              <>
+                <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                <Nav.Link as={Link} to="/applications">Applications</Nav.Link>
+                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+              </>
+            )}
+          </Nav>
           <Nav>
             {user ? (
               <NavDropdown
