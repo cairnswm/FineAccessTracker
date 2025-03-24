@@ -3,8 +3,9 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
-import { PersonCircle, StarFill, BarChartFill, Grid3x3 } from "react-bootstrap-icons";
+import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
 import { useSummary } from "../context/SummaryContext";
+import "./Navigation.css"; // We'll create this file for custom styling
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -32,30 +33,22 @@ const Navigation = () => {
         <Navbar.Toggle />
 
         <Navbar.Collapse className="justify-content-end">
-          <Nav className="me-auto">
-            {user && (
-              <>
-                <Nav.Link as={Link} to="/home">Home</Nav.Link>
-                <Nav.Link as={Link} to="/applications">Applications</Nav.Link>
-                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-              </>
-            )}
-          </Nav>
           <Nav>
             {user ? (
               <NavDropdown
                 title={
-                  <span className="d-flex align-items-center">
+                  <div className="d-inline-flex align-items-center">
                     {isPremium ? (
                       <StarFill size={20} className="me-1" style={{color:"gold"}} />
                     ) : (
                       <PersonCircle size={20} className="me-1" />
                     )}
                     <span>{user.firstname || "User"}</span>
-                  </span>
+                  </div>
                 }
                 id="user-dropdown"
                 align="end"
+                className="nav-dropdown-fix"
               >
                 <NavDropdown.Item as={Link} to="/profile">
                   Profile

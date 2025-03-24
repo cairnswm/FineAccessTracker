@@ -1,0 +1,17 @@
+/* Fix for dropdown caret alignment */
+.nav-dropdown-fix .dropdown-toggle::after {
+  vertical-align: middle;
+  margin-left: 0.5em;
+}
+
+/* Ensure the dropdown toggle has proper alignment */
+.nav-dropdown-fix .dropdown-toggle {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure the navbar brand is properly aligned */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
