@@ -16,12 +16,13 @@ import HomePage from './application/pages/HomePage';
 import ApplicationsPage from './application/pages/ApplicationsPage';
 import ApplicationPage from './application/pages/ApplicationPage';
 import DashboardPage from './application/pages/DashboardPage';
+import DocumentationPage from './application/pages/DocumentationPage';
 
 // Components
 import Navigation from './application/components/Navigation';
 
 // Styles
-import './app.scss';
+import './app.css';
 
 function App() {
   const { user } = useAuth();
@@ -30,7 +31,7 @@ function App() {
   useEffect(() => {
     document.title = "Access Tracker - Application Usage Analytics";
   }, []);
- 
+
   return (
     <>
       <Navigation />
@@ -50,6 +51,7 @@ function App() {
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/subscriptions" element={user ? <SubscriptionsPage /> : <Navigate to="/login" />} />
+        <Route path="/documentation" element={user ? <DocumentationPage /> : <Navigate to="/login" />} />
         
         {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />

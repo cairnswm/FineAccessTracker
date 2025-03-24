@@ -2,6 +2,9 @@ import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
 const TrackingExamples = ({ apiKey }) => {
+  // Use a display-friendly API key
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
   return (
     <Row className="mb-4" id="examples">
       <Col md={6}>
@@ -15,7 +18,7 @@ const TrackingExamples = ({ apiKey }) => {
               <code>{`
 // React component approach
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="products"
   title="Products Page"
 >
@@ -24,7 +27,7 @@ const TrackingExamples = ({ apiKey }) => {
 
 // For e-commerce sites
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="cart"
   title="Shopping Cart"
 >
@@ -33,7 +36,7 @@ const TrackingExamples = ({ apiKey }) => {
 
 // For user accounts
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="orders"
   title="Orders Page"
 >
@@ -55,7 +58,7 @@ const TrackingExamples = ({ apiKey }) => {
               <code>{`
 // Track when users view specific products
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="products"
   itemId="1001"
   title="Toaster"
@@ -65,7 +68,7 @@ const TrackingExamples = ({ apiKey }) => {
 
 // Track other products
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="products"
   itemId="1003"
   title="Kettle"
@@ -76,7 +79,7 @@ const TrackingExamples = ({ apiKey }) => {
 
 // Track user interactions with features
 <AccessTracker
-  apiKey="${apiKey}"
+  apiKey="${displayApiKey}"
   page="dashboard"
   itemId="3001"
   title="Quick Actions Widget"

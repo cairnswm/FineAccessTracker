@@ -2,6 +2,9 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 const ManualApiIntegration = ({ apiKey }) => {
+  // Use a display-friendly API key
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
   return (
     <Card className="shadow-sm" id="manual-api">
       <Card.Header className="bg-light">
@@ -21,7 +24,7 @@ POST https://cairns.co.za/accesstracker/php/trackitem.php
 
 // Headers
 Content-Type: application/json
-Authorization: Bearer ${apiKey}
+Authorization: Bearer ${displayApiKey}
 
 // Body for page tracking
 {

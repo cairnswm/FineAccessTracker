@@ -2,6 +2,9 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 const HowItWorks = ({ apiKey }) => {
+  // Use a display-friendly API key
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
   return (
     <Card className="shadow-sm" id="how-it-works">
       <Card.Header className="bg-light">
@@ -85,7 +88,7 @@ function trackItemView(apiKey, page, itemId, title, additionalData = {}) {
 
 // Usage examples
 document.addEventListener('DOMContentLoaded', function() {
-  const API_KEY = "${apiKey}";
+  const API_KEY = "${displayApiKey}";
   
   // Track the current page view
   trackPageView(API_KEY, 'products', 'Products Page', { 

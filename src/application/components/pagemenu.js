@@ -38,10 +38,10 @@ const PageMenu = () => {
           </Nav.Link>
           <Nav.Link 
             as={Link} 
-            to="/profile" 
-            className={isActive("/profile") ? "active" : ""}
+            to="/documentation" 
+            className={isActive("/documentation") ? "active" : ""}
           >
-            Profile
+            Documentation
           </Nav.Link>
         </Nav>
       </Container>
