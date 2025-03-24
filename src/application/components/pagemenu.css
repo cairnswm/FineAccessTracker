@@ -1,0 +1,20 @@
+.page-menu {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-menu .nav-link {
+  padding: 0.75rem 1rem;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.page-menu .nav-link:hover {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.page-menu .nav-link.active {
+  border-bottom-color: #fff;
+  font-weight: 500;
+}
