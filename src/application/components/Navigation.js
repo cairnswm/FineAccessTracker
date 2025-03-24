@@ -3,7 +3,7 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
-import { PersonCircle, StarFill } from "react-bootstrap-icons";
+import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
 import { useSummary } from "../context/SummaryContext";
 
 const Navigation = () => {
@@ -26,7 +26,8 @@ const Navigation = () => {
           to={user ? "/home" : "/"}
           style={{ cursor: "pointer" }}
         >
-          Template Application
+          <BarChartFill className="me-2" />
+          FineAccessTracker
         </Navbar.Brand>
         <Navbar.Toggle />
 
@@ -73,9 +74,14 @@ const Navigation = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
