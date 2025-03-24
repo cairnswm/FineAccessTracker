@@ -10,7 +10,7 @@ import PageTrackingTable from '../components/tracking/PageTrackingTable';
 import ItemTrackingTable from '../components/tracking/ItemTrackingTable';
 import TrackingCodeSnippet from '../components/tracking/TrackingCodeSnippet';
 import ActivityTable from '../components/tracking/ActivityTable';
-import { CodeSlash, BarChartFill, FileEarmarkText, ClockFill } from 'react-bootstrap-icons';
+import { CodeSlash, BarChartFill, FileEarmarkText, ClockFill, CodeSquare } from 'react-bootstrap-icons';
 
 const ApplicationPage = () => {
   const { user } = useAuth();
@@ -98,6 +98,12 @@ const ApplicationPage = () => {
                 <Nav.Link eventKey="activity" className="d-flex align-items-center">
                   <ClockFill className="me-2" />
                   <span>Activity</span>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="implementation" className="d-flex align-items-center">
+                  <CodeSquare className="me-2" />
+                  <span>Implementation</span>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -214,7 +220,17 @@ const ApplicationPage = () => {
                 onViewItems={handleViewItems}
               />
             )}
-            
+          </Tab.Pane>
+          
+          <Tab.Pane eventKey="activity">
+            <ActivityTable 
+              activities={activityData}
+              title={`Recent Activity for ${application.name}`}
+              showApplicationColumn={false}
+            />
+          </Tab.Pane>
+          
+          <Tab.Pane eventKey="implementation">
             <Card className="shadow-sm">
               <Card.Header className="bg-light">
                 <h5 className="mb-0">Tracking Implementation</h5>
@@ -244,14 +260,73 @@ FineTracker.trackItem({
                 </pre>
               </Card.Body>
             </Card>
-          </Tab.Pane>
-          
-          <Tab.Pane eventKey="activity">
-            <ActivityTable 
-              activities={activityData}
-              title={`Recent Activity for ${application.name}`}
-              showApplicationColumn={false}
-            />
+            
+            <Card className="shadow-sm mt-4">
+              <Card.Header className="bg-light">
+                <h5 className="mb-0">Implementation Examples</h5>
+              </Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col md={6}>
+                    <h6>E-commerce Example</h6>
+                    <pre className="bg-light p-3 rounded">
+                      <code>{`
+// On product listing page
+FineTracker.trackPage({
+  apiKey: "${application.apiKey}",
+  page: "products",
+  title: "Products Page"
+});
+
+// When user views a product
+FineTracker.trackItem({
+  apiKey: "${application.apiKey}",
+  page: "products",
+  itemId: "toaster-deluxe-5000",
+  title: "Toaster Deluxe 5000"
+});
+
+// When user adds to cart
+FineTracker.trackEvent({
+  apiKey: "${application.apiKey}",
+  eventType: "add_to_cart",
+  page: "products",
+  itemId: "toaster-deluxe-5000"
+});`}</code>
+                    </pre>
+                  </Col>
+                  
+                  <Col md={6}>
+                    <h6>Blog Example</h6>
+                    <pre className="bg-light p-3 rounded">
+                      <code>{`
+// On blog home page
+FineTracker.trackPage({
+  apiKey: "${application.apiKey}",
+  page: "blog",
+  title: "Blog Home"
+});
+
+// When user reads an article
+FineTracker.trackItem({
+  apiKey: "${application.apiKey}",
+  page: "blog",
+  itemId: "article-123",
+  title: "How to Improve Your Website Analytics"
+});
+
+// When user comments
+FineTracker.trackEvent({
+  apiKey: "${application.apiKey}",
+  eventType: "comment",
+  page: "blog",
+  itemId: "article-123"
+});`}</code>
+                    </pre>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
           </Tab.Pane>
           
           <Tab.Pane eventKey="integration">
