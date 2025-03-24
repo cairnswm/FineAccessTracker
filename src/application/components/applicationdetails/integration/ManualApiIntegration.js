@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 
 const ManualApiIntegration = ({ apiKey }) => {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm" id="manual-api">
       <Card.Header className="bg-light">
         <h5 className="mb-0">Manual API Integration</h5>
       </Card.Header>

@@ -25,9 +25,13 @@ const AccessTracker = ({
   // Debounce timer reference
   const timerRef = useRef(null);
 
+  // If no API key is provided, try to use the current application's API key
+  // This is a placeholder that will be replaced with the actual API key when downloaded
+  const effectiveApiKey = apiKey || "CURRENT_APP_API_KEY";
+
   useEffect(() => {
     // Skip if already tracked or missing required props
-    if (hasTracked.current || !apiKey || !page) {
+    if (hasTracked.current || !effectiveApiKey || !page) {
       return;
     }
 
@@ -50,7 +54,7 @@ const AccessTracker = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [apiKey, page, itemId, title]);
+  }, [effectiveApiKey, page, itemId, title]);
 
   const trackView = async () => {
     try {
@@ -75,7 +79,7 @@ const AccessTracker = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'Authorization': `Bearer ${effectiveApiKey}`
         },
         body: JSON.stringify(payload)
       });

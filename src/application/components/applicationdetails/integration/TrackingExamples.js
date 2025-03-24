@@ -3,7 +3,7 @@ import { Row, Col, Card } from 'react-bootstrap';
 
 const TrackingExamples = ({ apiKey }) => {
   return (
-    <Row className="mb-4">
+    <Row className="mb-4" id="examples">
       <Col md={6}>
         <Card className="shadow-sm h-100">
           <Card.Header className="bg-light">

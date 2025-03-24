@@ -1,8 +1,12 @@
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import DownloadButton from './DownloadButton';
+import TabMenu from './integration/TabMenu';
 
 const AccessTrackerExample = ({ apiKey }) => {
+  // Use the provided API key or a placeholder
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
   const componentCode = `
 import React, { useEffect, useRef } from 'react';
 
@@ -31,9 +35,12 @@ const AccessTracker = ({
   // Debounce timer reference
   const timerRef = useRef(null);
 
+  // If no API key is provided, try to use the current application's API key
+  const effectiveApiKey = apiKey || "${displayApiKey}";
+
   useEffect(() => {
     // Skip if already tracked or missing required props
-    if (hasTracked.current || !apiKey || !page) {
+    if (hasTracked.current || !effectiveApiKey || !page) {
       return;
     }
 
@@ -56,7 +63,7 @@ const AccessTracker = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [apiKey, page, itemId, title]);
+  }, [effectiveApiKey, page, itemId, title]);
 
   const trackView = async () => {
     try {
@@ -81,7 +88,7 @@ const AccessTracker = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': \`Bearer \${apiKey}\`
+          'Authorization': \`Bearer \${effectiveApiKey}\`
         },
         body: JSON.stringify(payload)
       });
@@ -108,7 +115,7 @@ import React from 'react';
 import AccessTracker from './AccessTracker';
 
 // Your API key from Access Tracker dashboard
-const API_KEY = "${apiKey}";
+const API_KEY = "${displayApiKey}";
 
 // Example product component
 const ProductDetail = ({ product }) => {
@@ -123,7 +130,7 @@ const ProductDetail = ({ product }) => {
       <div className="product-detail">
         <h1>{product.name}</h1>
         <p>{product.description}</p>
-        <div className="price">\${product.price}</div>
+        <div className="price">${product.price}</div>
         <button>Add to Cart</button>
       </div>
     </AccessTracker>
@@ -151,38 +158,40 @@ const ProductsPage = ({ products }) => {
 };
 `;
 
+  const componentContent = (
+    <pre className="bg-light p-3 rounded">
+      <code>{componentCode}</code>
+    </pre>
+  );
+
+  const usageContent = (
+    <>
+      <p>
+        Copy this component into your React project to easily track page views and item interactions.
+        The component wraps your content and is invisible to users.
+      </p>
+      <pre className="bg-light p-3 rounded">
+        <code>{usageExample}</code>
+      </pre>
+    </>
+  );
+
+  const tabs = [
+    { key: 'component', title: 'Component Code', content: componentContent },
+    { key: 'usage', title: 'How to Use', content: usageContent }
+  ];
+
   return (
-    <Card className="shadow-sm mb-4">
+    <Card className="shadow-sm mb-4" id="basic-component">
       <Card.Header className="bg-light d-flex justify-content-between align-items-center">
-        <h5 className="mb-0">AccessTracker Component</h5>
+        <h5 className="mb-0">Basic Tracking Component</h5>
         <DownloadButton 
           content={componentCode.trim()} 
           filename="AccessTracker.js" 
         />
       </Card.Header>
       <Card.Body>
-        <p>
-          Copy this component into your React project to easily track page views and item interactions.
-          The component wraps your content and is invisible to users.
-        </p>
-        
-        <Row className="mt-4">
-          <Col>
-            <h6>Component Implementation</h6>
-            <pre className="bg-light p-3 rounded">
-              <code>{componentCode}</code>
-            </pre>
-          </Col>
-        </Row>
-        
-        <Row className="mt-4">
-          <Col>
-            <h6>Usage Examples</h6>
-            <pre className="bg-light p-3 rounded">
-              <code>{usageExample}</code>
-            </pre>
-          </Col>
-        </Row>
+        <TabMenu tabs={tabs} defaultActiveKey="component" />
       </Card.Body>
     </Card>
   );

@@ -30,9 +30,13 @@ const VisibilityTracker = ({
   const hasTracked = useRef(false);
   const observerRef = useRef(null);
 
+  // If no API key is provided, try to use the current application's API key
+  // This is a placeholder that will be replaced with the actual API key when downloaded
+  const effectiveApiKey = apiKey || "CURRENT_APP_API_KEY";
+
   useEffect(() => {
     // Skip if missing required props
-    if (!apiKey || !page || !itemId) {
+    if (!effectiveApiKey || !page || !itemId) {
       console.warn('VisibilityTracker: Missing required props (apiKey, page, or itemId)');
       return;
     }
@@ -84,7 +88,7 @@ const VisibilityTracker = ({
         observerRef.current.disconnect();
       }
     };
-  }, [apiKey, page, itemId, title, threshold, trackOnce]);
+  }, [effectiveApiKey, page, itemId, title, threshold, trackOnce]);
 
   const trackItemView = async () => {
     try {
@@ -103,7 +107,7 @@ const VisibilityTracker = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'Authorization': `Bearer ${effectiveApiKey}`
         },
         body: JSON.stringify(payload)
       });

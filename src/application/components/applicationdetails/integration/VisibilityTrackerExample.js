@@ -1,8 +1,12 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import DownloadButton from '../DownloadButton';
+import TabMenu from './TabMenu';
 
 const VisibilityTrackerExample = ({ apiKey }) => {
+  // Use the provided API key or a placeholder
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
   const componentCode = `
 import React, { useEffect, useRef } from 'react';
 
@@ -36,9 +40,12 @@ const VisibilityTracker = ({
   const hasTracked = useRef(false);
   const observerRef = useRef(null);
 
+  // If no API key is provided, try to use the current application's API key
+  const effectiveApiKey = apiKey || "${displayApiKey}";
+
   useEffect(() => {
     // Skip if missing required props
-    if (!apiKey || !page || !itemId) {
+    if (!effectiveApiKey || !page || !itemId) {
       console.warn('VisibilityTracker: Missing required props (apiKey, page, or itemId)');
       return;
     }
@@ -90,7 +97,7 @@ const VisibilityTracker = ({
         observerRef.current.disconnect();
       }
     };
-  }, [apiKey, page, itemId, title, threshold, trackOnce]);
+  }, [effectiveApiKey, page, itemId, title, threshold, trackOnce]);
 
   const trackItemView = async () => {
     try {
@@ -109,7 +116,7 @@ const VisibilityTracker = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': \`Bearer \${apiKey}\`
+          'Authorization': \`Bearer \${effectiveApiKey}\`
         },
         body: JSON.stringify(payload)
       });
@@ -138,9 +145,10 @@ export default VisibilityTracker;
 
 import React from 'react';
 import VisibilityTracker from './VisibilityTracker';
+import AccessTracker from './AccessTracker';
 
 // Your API key from Access Tracker dashboard
-const API_KEY = "${apiKey}";
+const API_KEY = "${displayApiKey}";
 
 // Product listing component
 const ProductListing = ({ products }) => {
@@ -174,7 +182,7 @@ const ProductListing = ({ products }) => {
                 <img src={product.image} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
-                <div className="price">\${product.price}</div>
+                <div className="price">${product.price}</div>
                 <button>Add to Cart</button>
               </div>
             </VisibilityTracker>
@@ -184,53 +192,45 @@ const ProductListing = ({ products }) => {
     </div>
   );
 };
-
-// Blog posts example 
-const BlogListing = ({ posts }) => {
-  return (
-    <div className="blog-listing">
-      <h1>Latest Articles</h1>
-      
-      {/* Track the page view */}
-      <AccessTracker
-        apiKey={API_KEY}
-        page="blog"
-        title="Blog Listing"
-      >
-        <div className="posts-container">
-          {posts.map(post => (
-            <VisibilityTracker
-              key={post.id}
-              apiKey={API_KEY}
-              page="blog"
-              itemId={post.id}
-              title={post.title}
-              data={{ 
-                category: post.category,
-                author: post.author,
-                publishDate: post.publishDate
-              }}
-              threshold={0.4} // Track when 40% of the post is visible
-            >
-              <article className="blog-post">
-                <h2>{post.title}</h2>
-                <div className="meta">
-                  By {post.author} on {post.publishDate}
-                </div>
-                <p>{post.excerpt}</p>
-                <a href={post.url}>Read More</a>
-              </article>
-            </VisibilityTracker>
-          ))}
-        </div>
-      </AccessTracker>
-    </div>
-  );
-};
 `;
 
+  const componentContent = (
+    <pre className="bg-light p-3 rounded">
+      <code>{componentCode}</code>
+    </pre>
+  );
+
+  const usageContent = (
+    <>
+      <p>
+        For more advanced use cases like product listings, blog posts, or forum threads, 
+        this component only tracks items when they become visible in the viewport. This is more 
+        efficient and provides more accurate data about what users actually see.
+      </p>
+      
+      <h6 className="mt-3">How It Works</h6>
+      <ul>
+        <li>Uses the <strong>Intersection Observer API</strong> to detect when elements enter the viewport</li>
+        <li>Only sends tracking data when items are actually visible to the user</li>
+        <li>Configurable visibility threshold (e.g., track when 50% of the item is visible)</li>
+        <li>Option to track only once or every time an item becomes visible</li>
+        <li>Includes fallback for browsers that don't support Intersection Observer</li>
+      </ul>
+      
+      <h6 className="mt-4">Usage Example</h6>
+      <pre className="bg-light p-3 rounded">
+        <code>{usageExample}</code>
+      </pre>
+    </>
+  );
+
+  const tabs = [
+    { key: 'component', title: 'Component Code', content: componentContent },
+    { key: 'usage', title: 'How to Use', content: usageContent }
+  ];
+
   return (
-    <Card className="shadow-sm mb-4">
+    <Card className="shadow-sm mb-4" id="advanced-component">
       <Card.Header className="bg-light d-flex justify-content-between align-items-center">
         <h5 className="mb-0">Advanced: Visibility-Based Tracking</h5>
         <DownloadButton 
@@ -239,31 +239,7 @@ const BlogListing = ({ posts }) => {
         />
       </Card.Header>
       <Card.Body>
-        <p>
-          For more advanced use cases like product listings, blog posts, or forum threads, 
-          you can use our <code>VisibilityTracker</code> component that only tracks items 
-          when they become visible in the viewport. This is more efficient and provides 
-          more accurate data about what users actually see.
-        </p>
-        
-        <h6 className="mt-4">How It Works</h6>
-        <ul>
-          <li>Uses the <strong>Intersection Observer API</strong> to detect when elements enter the viewport</li>
-          <li>Only sends tracking data when items are actually visible to the user</li>
-          <li>Configurable visibility threshold (e.g., track when 50% of the item is visible)</li>
-          <li>Option to track only once or every time an item becomes visible</li>
-          <li>Includes fallback for browsers that don't support Intersection Observer</li>
-        </ul>
-        
-        <h6 className="mt-4">Component Implementation</h6>
-        <pre className="bg-light p-3 rounded">
-          <code>{componentCode}</code>
-        </pre>
-        
-        <h6 className="mt-4">Usage Examples</h6>
-        <pre className="bg-light p-3 rounded">
-          <code>{usageExample}</code>
-        </pre>
+        <TabMenu tabs={tabs} defaultActiveKey="component" />
       </Card.Body>
     </Card>
   );

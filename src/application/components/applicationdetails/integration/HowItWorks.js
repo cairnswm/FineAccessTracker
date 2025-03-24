@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 
 const HowItWorks = ({ apiKey }) => {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm" id="how-it-works">
       <Card.Header className="bg-light">
         <h5 className="mb-0">How Access Tracker Works</h5>
       </Card.Header>
