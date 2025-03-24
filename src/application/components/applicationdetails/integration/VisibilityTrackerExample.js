@@ -174,7 +174,7 @@ const ProductListing = ({ products }) => {
                 <img src={product.image} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
-                <div className="price">${product.price}</div>
+                <div className="price">\${product.price}</div>
                 <button>Add to Cart</button>
               </div>
             </VisibilityTracker>
@@ -185,7 +185,7 @@ const ProductListing = ({ products }) => {
   );
 };
 
-// Blog posts example
+// Blog posts example 
 const BlogListing = ({ posts }) => {
   return (
     <div className="blog-listing">
