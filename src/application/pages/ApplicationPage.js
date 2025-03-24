@@ -10,7 +10,6 @@ import ApplicationTabs from '../components/applicationdetails/ApplicationTabs';
 import OverviewTab from '../components/applicationdetails/OverviewTab';
 import TrackingDataTab from '../components/applicationdetails/TrackingDataTab';
 import ActivityTab from '../components/applicationdetails/ActivityTab';
-import ImplementationTab from '../components/applicationdetails/ImplementationTab';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
 import NotFoundView from '../components/applicationdetails/NotFoundView';
 
@@ -78,12 +77,6 @@ const ApplicationPage = () => {
           <ActivityTab 
             application={application} 
             activityData={activityData} 
-          />
-        );
-      case 'implementation':
-        return (
-          <ImplementationTab 
-            apiKey={application.apiKey} 
           />
         );
       case 'integration':

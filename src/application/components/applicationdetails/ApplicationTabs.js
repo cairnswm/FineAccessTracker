@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { BarChartFill, FileEarmarkText, ClockFill, CodeSquare, CodeSlash } from 'react-bootstrap-icons';
+import { BarChartFill, FileEarmarkText, ClockFill, CodeSlash } from 'react-bootstrap-icons';
 
 const ApplicationTabs = ({ activeTab, onTabSelect }) => {
   return (
@@ -36,17 +36,6 @@ const ApplicationTabs = ({ activeTab, onTabSelect }) => {
         >
           <ClockFill className="me-2" />
           <span>Activity</span>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link 
-          eventKey="implementation" 
-          active={activeTab === 'implementation'}
-          onClick={() => onTabSelect('implementation')}
-          className="d-flex align-items-center"
-        >
-          <CodeSquare className="me-2" />
-          <span>Implementation</span>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
