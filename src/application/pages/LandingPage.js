@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button, Row, Col, Card } from 'react-bootstrap';
+import { Button, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/context/AuthContext';
 import PageLayout from '../../auth/components/pagelayout';
@@ -123,7 +123,7 @@ const LandingPage = () => {
           </p>
         </Col>
         <Col md={10} className="mx-auto">
-          <TrackerExample />
+          <TrackerDemo />
         </Col>
       </Row>
 
