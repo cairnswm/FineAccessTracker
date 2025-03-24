@@ -20,6 +20,9 @@ import DashboardPage from './application/pages/DashboardPage';
 // Components
 import Navigation from './application/components/Navigation';
 
+// Styles
+import './App.css';
+
 function App() {
   const { user } = useAuth();
 
