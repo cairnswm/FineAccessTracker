@@ -1,5 +1,6 @@
 import React from 'react';
 import PageLayout from '../../auth/components/pagelayout';
+import PageMenu from '../components/pagemenu';
 import HeroSection from '../components/landingpage/HeroSection';
 import BenefitsSection from '../components/landingpage/BenefitsSection';
 import IntegrationSection from '../components/landingpage/IntegrationSection';
@@ -12,6 +13,7 @@ import './LandingPage.css';
 const LandingPage = () => {
   return (
     <PageLayout>
+      <PageMenu />
       <HeroSection />
       <BenefitsSection />
       <IntegrationSection />

@@ -45,6 +45,7 @@ function App() {
         
         {/* Public Routes */}
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/documentation" element={<DocumentationPage />} />
         
         {/* Protected Routes */}
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
@@ -53,7 +54,6 @@ function App() {
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/subscriptions" element={user ? <SubscriptionsPage /> : <Navigate to="/login" />} />
-        <Route path="/documentation" element={user ? <DocumentationPage /> : <Navigate to="/login" />} />
         
         {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />
