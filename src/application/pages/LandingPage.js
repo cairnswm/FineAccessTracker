@@ -11,7 +11,6 @@ import {
   SpeedometerFill, 
   ArrowRepeat 
 } from 'react-bootstrap-icons';
-import TrackerDemo from '../components/TrackerDemo';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -122,7 +121,7 @@ const LandingPage = () => {
           </p>
         </Col>
         <Col md={10} className="mx-auto">
-          <TrackerDemo />
+          TrackerDemo />
         </Col>
       </Row>
 

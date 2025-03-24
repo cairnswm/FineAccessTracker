@@ -4,21 +4,6 @@ import { CodeSlash } from 'react-bootstrap-icons';
 
 const TrackerDemo = () => {
   const [copied, setCopied] = useState(false);
-  
-  const sampleCode = `// Add this to your React application
-import { FineTracker } from '@fine/access-tracker';
-
-function YourApp() {
-  return (
-    <div>
-      <h1>Your Application</h1>
-      {/* Your app content */}
-      
-      {/* FineAccessTracker component */}
-      <FineTracker apiKey="your-api-key" />
-    </div>
-  );
-}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(sampleCode);
