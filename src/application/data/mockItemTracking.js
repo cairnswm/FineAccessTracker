@@ -3,7 +3,7 @@ const mockItemTracking = [
   {
     applicationId: 1,
     page: "products",
-    itemId: "toaster",
+    itemId: "1001",
     title: "Toaster",
     views: 1245,
     uniqueViewers: 1023,
@@ -12,7 +12,7 @@ const mockItemTracking = [
   {
     applicationId: 1,
     page: "products",
-    itemId: "iron",
+    itemId: "1002",
     title: "Iron",
     views: 987,
     uniqueViewers: 876,
@@ -21,7 +21,7 @@ const mockItemTracking = [
   {
     applicationId: 1,
     page: "products",
-    itemId: "kettle",
+    itemId: "1003",
     title: "Kettle",
     views: 1532,
     uniqueViewers: 1245,
@@ -30,7 +30,7 @@ const mockItemTracking = [
   {
     applicationId: 1,
     page: "products",
-    itemId: "fridge",
+    itemId: "1004",
     title: "Fridge",
     views: 856,
     uniqueViewers: 743,
@@ -41,7 +41,7 @@ const mockItemTracking = [
   {
     applicationId: 2,
     page: "articles",
-    itemId: "industry-trends",
+    itemId: "2001",
     title: "Industry Trends 2024",
     views: 1245,
     uniqueViewers: 1023,
@@ -50,7 +50,7 @@ const mockItemTracking = [
   {
     applicationId: 2,
     page: "articles",
-    itemId: "case-study",
+    itemId: "2002",
     title: "Client Success Story",
     views: 876,
     uniqueViewers: 765,
@@ -61,7 +61,7 @@ const mockItemTracking = [
   {
     applicationId: 3,
     page: "dashboard",
-    itemId: "quick-actions",
+    itemId: "3001",
     title: "Quick Actions Widget",
     views: 8765,
     uniqueViewers: 5432,
@@ -70,7 +70,7 @@ const mockItemTracking = [
   {
     applicationId: 3,
     page: "dashboard",
-    itemId: "notifications",
+    itemId: "3002",
     title: "Notifications Center",
     views: 7654,
     uniqueViewers: 4321,

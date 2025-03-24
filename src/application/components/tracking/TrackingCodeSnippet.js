@@ -74,7 +74,7 @@ trackEvent({
   apiKey: "${apiKey}",
   eventType: "itemview",
   page: "products",
-  itemId: "toaster",
+  itemId: "1001",
   title: "Toaster"
 });` : ''}`;
 
