@@ -34,10 +34,15 @@ const Navigation = () => {
 
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
-            {user && (
+            {user ? (
               <>
                 <Nav.Link as={Link} to="/home">Home</Nav.Link>
                 <Nav.Link as={Link} to="/applications">Applications</Nav.Link>
+                <Nav.Link as={Link} to="/documentation">Documentation</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/#pricing">Pricing</Nav.Link>
                 <Nav.Link as={Link} to="/documentation">Documentation</Nav.Link>
               </>
             )}

@@ -5,6 +5,7 @@ import BenefitsSection from '../components/landingpage/BenefitsSection';
 import IntegrationSection from '../components/landingpage/IntegrationSection';
 import HowItWorksSection from '../components/landingpage/HowItWorksSection';
 import FeaturesSection from '../components/landingpage/FeaturesSection';
+import PricingSection from '../components/landingpage/PricingSection';
 import CTASection from '../components/landingpage/CTASection';
 import './LandingPage.css';
 
@@ -16,6 +17,7 @@ const LandingPage = () => {
       <IntegrationSection />
       <HowItWorksSection />
       <FeaturesSection />
+      <PricingSection />
       <CTASection />
     </PageLayout>
   );
