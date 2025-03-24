@@ -130,7 +130,7 @@ const ProductDetail = ({ product }) => {
       <div className="product-detail">
         <h1>{product.name}</h1>
         <p>{product.description}</p>
-        <div className="price">${product.price}</div>
+        <div className="price">\${product.price}</div>
         <button>Add to Cart</button>
       </div>
     </AccessTracker>
@@ -144,7 +144,7 @@ const ProductsPage = ({ products }) => {
       apiKey={API_KEY}
       page="products"
       title="Products Page"
-    >
+    > 
       <div className="products-page">
         <h1>Our Products</h1>
         <div className="product-grid">
