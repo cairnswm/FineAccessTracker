@@ -1,13 +1,9 @@
 import React from 'react';
-import ActivityTable from '../tracking/ActivityTable';
+import RecentActivityTable from '../dashboard/RecentActivityTable';
 
 const ActivityTab = ({ application, activityData }) => {
   return (
-    <ActivityTable 
-      activities={activityData}
-      title={`Recent Activity for ${application.name}`}
-      showApplicationColumn={false}
-    />
+    <RecentActivityTable activities={activityData} />
   );
 };
 

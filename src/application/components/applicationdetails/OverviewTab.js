@@ -1,8 +1,13 @@
 import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import TrackingOverview from '../tracking/TrackingOverview';
+import TrafficOverview from '../dashboard/TrafficOverview';
+import TopLocations from '../dashboard/TopLocations';
+import RecentActivityTable from '../dashboard/RecentActivityTable';
 
 const OverviewTab = ({ application, pageTrackingData, activityData }) => {
+  const applicationId = application.id;
+
   return (
     <>
       <TrackingOverview application={application} />
@@ -26,6 +31,16 @@ const OverviewTab = ({ application, pageTrackingData, activityData }) => {
               </div>
             </Card.Body>
           </Card>
+        </Col>
+      </Row>
+      
+      <Row className="g-4 mb-4">
+        <Col md={8}>
+          <TrafficOverview applicationId={applicationId} />
+        </Col>
+        
+        <Col md={4}>
+          <TopLocations applicationId={applicationId} />
         </Col>
       </Row>
       
@@ -88,6 +103,12 @@ const OverviewTab = ({ application, pageTrackingData, activityData }) => {
               )}
             </Card.Body>
           </Card>
+        </Col>
+      </Row>
+      
+      <Row className="mt-4">
+        <Col>
+          <RecentActivityTable activities={activityData} />
         </Col>
       </Row>
     </>
