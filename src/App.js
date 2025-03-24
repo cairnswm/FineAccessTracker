@@ -21,7 +21,7 @@ import DashboardPage from './application/pages/DashboardPage';
 import Navigation from './application/components/Navigation';
 
 // Styles
-import './App.css';
+import './app.css';
 
 function App() {
   const { user } = useAuth();
