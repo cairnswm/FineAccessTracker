@@ -112,7 +112,7 @@ const ProductDetail = ({ product }) => {
       <div className="product-detail">
         <h1>{product.name}</h1>
         <p>{product.description}</p>
-        <div className="price">${product.price}</div>
+        <div className="price">\${product.price}</div>
         <button>Add to Cart</button>
       </div>
     </AccessTracker>
