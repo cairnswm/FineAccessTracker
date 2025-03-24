@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { 
   ShieldLockFill, 
-  SpeedometerFill, 
+  Speedometer, 
   ArrowRepeat, 
   GeoAltFill 
 } from 'react-bootstrap-icons';
@@ -25,7 +25,7 @@ const FeaturesSection = () => {
         </div>
         <div className="d-flex mb-4">
           <div className="flex-shrink-0">
-            <SpeedometerFill size={30} className="text-primary me-3" />
+            <Speedometer size={30} className="text-primary me-3" />
           </div>
           <div>
             <h4>Lightweight Performance</h4>
