@@ -21,7 +21,7 @@ import DashboardPage from './application/pages/DashboardPage';
 import Navigation from './application/components/Navigation';
 
 // Styles
-import './app.css';
+import './app.scss';
 
 function App() {
   const { user } = useAuth();
@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     document.title = "Access Tracker - Application Usage Analytics";
   }, []);
-
+ 
   return (
     <>
       <Navigation />
