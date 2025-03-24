@@ -31,13 +31,6 @@ const PageMenu = () => {
           </Nav.Link>
           <Nav.Link 
             as={Link} 
-            to="/dashboard" 
-            className={isActive("/dashboard") ? "active" : ""}
-          >
-            Dashboard
-          </Nav.Link>
-          <Nav.Link 
-            as={Link} 
             to="/documentation" 
             className={isActive("/documentation") ? "active" : ""}
           >
