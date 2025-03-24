@@ -1,13 +1,11 @@
 import React from 'react';
 import PageLayout from '../../auth/components/pagelayout';
-import {
-  HeroSection,
-  BenefitsSection,
-  IntegrationSection,
-  HowItWorksSection,
-  FeaturesSection,
-  CTASection
-} from '../components/landingpage';
+import { HeroSection } from '../components/landingpage/HeroSection';
+import { BenefitsSection } from '../components/landingpage/BenefitsSection';
+import { IntegrationSection } from '../components/landingpage/IntegrationSection';
+import { HowItWorksSection } from '../components/landingpage/HowItWorksSection';
+import { FeaturesSection } from '../components/landingpage/FeaturesSection';
+import { CTASection } from '../components/landingpage/CTASection';
 import './LandingPage.css';
 
 const LandingPage = () => {
