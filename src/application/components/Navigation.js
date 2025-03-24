@@ -24,10 +24,10 @@ const Navigation = () => {
         <Navbar.Brand
           as={Link}
           to={user ? "/home" : "/"}
-          style={{ cursor: "pointer" }}
+          className="d-flex align-items-center"
         >
           <BarChartFill className="me-2" />
-          FineAccessTracker
+          <span>FineAccessTracker</span>
         </Navbar.Brand>
         <Navbar.Toggle />
 
@@ -45,13 +45,13 @@ const Navigation = () => {
             {user ? (
               <NavDropdown
                 title={
-                  <span>
+                  <span className="d-flex align-items-center">
                     {isPremium ? (
-                      <StarFill size={20} className="me-1" style={{color:"gold", marginTop: "-7px"}} />
+                      <StarFill size={20} className="me-1" style={{color:"gold"}} />
                     ) : (
-                      <PersonCircle size={20} className="me-1" style={{marginTop: "-7px"}} />
+                      <PersonCircle size={20} className="me-1" />
                     )}
-                    {user.firstname || "User"}
+                    <span>{user.firstname || "User"}</span>
                   </span>
                 }
                 id="user-dropdown"
@@ -67,7 +67,7 @@ const Navigation = () => {
                 )}
                 <NavDropdown.Item as={Link} to="/settings">
                   Settings
-                </NavDropdown.Item>{" "}
+                </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/properties">
                   Properties
                 </NavDropdown.Item>
