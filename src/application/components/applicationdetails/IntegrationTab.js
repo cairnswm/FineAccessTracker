@@ -5,6 +5,7 @@ import IntegrationOptions from './integration/IntegrationOptions';
 import HowItWorks from './integration/HowItWorks';
 import ManualApiIntegration from './integration/ManualApiIntegration';
 import TrackingExamples from './integration/TrackingExamples';
+import VisibilityTrackerExample from './integration/VisibilityTrackerExample';
 
 const IntegrationTab = ({ apiKey }) => {
   return (
@@ -24,6 +25,12 @@ const IntegrationTab = ({ apiKey }) => {
       <Row className="mb-4">
         <Col>
           <AccessTrackerExample apiKey={apiKey} />
+        </Col>
+      </Row>
+      
+      <Row className="mb-4">
+        <Col>
+          <VisibilityTrackerExample apiKey={apiKey} />
         </Col>
       </Row>
       
