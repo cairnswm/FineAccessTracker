@@ -3,9 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './auth/context/AuthContext';
 
 // Auth Pages
-import LoginPage from './auth/pages/LoginPage';
-import RegisterPage from './auth/pages/RegisterPage';
-import ForgotPasswordPage from './auth/pages/ForgotPasswordPage';
+import Login from './auth/pages/Login';
+import Register from './auth/pages/Register';
+import ForgotPassword from './auth/pages/ForgotPassword';
 import ProfilePage from './auth/pages/ProfilePage';
 import SettingsPage from './auth/pages/SettingsPage';
 import SubscriptionsPage from './auth/pages/subscriptionsPage';
@@ -38,9 +38,9 @@ function App() {
         <Route path="/" element={user ? <Navigate to="/home" /> : <LandingPage />} />
         
         {/* Auth Routes */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         
         {/* Protected Routes */}
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
