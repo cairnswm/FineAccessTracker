@@ -5,6 +5,8 @@ import { CodeSlash } from 'react-bootstrap-icons';
 const TrackerDemo = () => {
   const [copied, setCopied] = useState(false);
 
+  const sampleCode = "Do this"
+
   const handleCopy = () => {
     navigator.clipboard.writeText(sampleCode);
     setCopied(true);
