@@ -7,6 +7,7 @@ import IntegrationSection from '../components/landingpage/IntegrationSection';
 import HowItWorksSection from '../components/landingpage/HowItWorksSection';
 import FeaturesSection from '../components/landingpage/FeaturesSection';
 import PricingSection from '../components/landingpage/PricingSection';
+import TrackingInformation from '../components/documentation/TrackingInformation';
 
 const AboutPage = () => {
   return (
@@ -21,6 +22,12 @@ const AboutPage = () => {
               understand how users interact with their applications. Our mission is to provide 
               simple yet powerful tracking tools that give you actionable insights.
             </p>
+          </Col>
+        </Row>
+        
+        <Row className="mb-5">
+          <Col>
+            <TrackingInformation />
           </Col>
         </Row>
         

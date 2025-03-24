@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
+import TrackingInformation from '../components/documentation/TrackingInformation';
 
 const DocumentationPage = () => {
   // Example API key for documentation purposes
@@ -17,6 +18,8 @@ const DocumentationPage = () => {
           Learn how to integrate Access Tracker into your applications. 
           The examples below use a sample API key for demonstration purposes.
         </p>
+        
+        <TrackingInformation />
         
         <IntegrationTab apiKey={exampleApiKey} />
       </Container>

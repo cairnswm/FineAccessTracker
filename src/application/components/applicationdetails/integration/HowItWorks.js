@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Alert } from 'react-bootstrap';
+import { InfoCircleFill, GeoAltFill } from 'react-bootstrap-icons';
 
 const HowItWorks = ({ apiKey }) => {
   // Use a display-friendly API key
@@ -15,6 +16,23 @@ const HowItWorks = ({ apiKey }) => {
           Access Tracker works by sending tracking data to our API whenever a user views a page or interacts with an item.
           The tracking is done through simple HTTP requests with your API key for authentication.
         </p>
+        
+        <Alert variant="info" className="d-flex align-items-start mb-4">
+          <InfoCircleFill className="me-2 mt-1" size={20} />
+          <div>
+            <strong>Session Tracking:</strong> Users accessing the same page/item within a 15-minute window will only be counted once. 
+            If a user returns to the same page after 15 minutes, it will be recorded as a new access.
+          </div>
+        </Alert>
+        
+        <Alert variant="info" className="d-flex align-items-start mb-4">
+          <GeoAltFill className="me-2 mt-1" size={20} />
+          <div>
+            <strong>Location Tracking:</strong> Only application-level tracking calls (without specific page and item IDs) 
+            will capture IP address and location data. To ensure you collect geographic information about your users, 
+            always include Access Tracker on your home page or main entry points.
+          </div>
+        </Alert>
         
         <h6 className="mt-3">Core Concepts</h6>
         <ul>
@@ -90,6 +108,18 @@ function trackItemView(apiKey, page, itemId, title, additionalData = {}) {
 document.addEventListener('DOMContentLoaded', function() {
   const API_KEY = "${displayApiKey}";
   
+  // Track application-level access to capture location data
+  fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': \`Bearer \${API_KEY}\`
+    },
+    body: JSON.stringify({
+      timestamp: new Date().toISOString()
+    })
+  });
+  
   // Track the current page view
   trackPageView(API_KEY, 'products', 'Products Page', { 
     referrer: document.referrer 
@@ -117,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><strong>Handle errors gracefully</strong> so tracking failures don't affect your application</li>
           <li><strong>Track meaningful events</strong> that provide insights into user behavior</li>
           <li><strong>Include relevant context data</strong> to make your analytics more valuable</li>
+          <li><strong>Add application-level tracking</strong> on your main page to capture location data</li>
         </ul>
       </Card.Body>
     </Card>

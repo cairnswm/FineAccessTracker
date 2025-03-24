@@ -69,7 +69,7 @@ const PricingSection = () => {
               </li>
               <li className="d-flex align-items-center mb-3">
                 <X className="text-danger me-2" size={20} />
-                <span className="text-muted">Limited reporting options</span>
+                <span className="text-muted">No geo-location tracking</span>
               </li>
             </ul>
             
@@ -119,12 +119,12 @@ const PricingSection = () => {
                 <span>Item-level tracking</span>
               </li>
               <li className="d-flex align-items-center mb-3">
-                <X className="text-danger me-2" size={20} />
-                <span className="text-muted">Data older than 30 days is deleted</span>
+                <Check2 className="text-success me-2" size={20} />
+                <span>Geo-location tracking</span>
               </li>
               <li className="d-flex align-items-center mb-3">
-                <Check2 className="text-success me-2" size={20} />
-                <span>Export options (CSV, JSON)</span>
+                <X className="text-danger me-2" size={20} />
+                <span className="text-muted">Data older than 30 days is deleted</span>
               </li>
             </ul>
             
@@ -175,11 +175,11 @@ const PricingSection = () => {
               </li>
               <li className="d-flex align-items-center mb-3">
                 <Check2 className="text-success me-2" size={20} />
-                <span><strong>Unlimited</strong> data retention</span>
+                <span>Advanced geo-location insights</span>
               </li>
               <li className="d-flex align-items-center mb-3">
                 <Check2 className="text-success me-2" size={20} />
-                <span>Advanced reporting & API access</span>
+                <span><strong>Unlimited</strong> data retention</span>
               </li>
             </ul>
             
