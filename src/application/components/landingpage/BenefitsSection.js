@@ -7,7 +7,7 @@ const BenefitsSection = () => {
     <>
       <Row className="py-3">
         <Col xs={12}>
-          <h2 className="text-center mb-4">Why Choose FineAccessTracker?</h2>
+          <h2 className="text-center mb-4">Why Choose Access Tracker?</h2>
         </Col>
       </Row>
       <Row className="g-4 mb-5">

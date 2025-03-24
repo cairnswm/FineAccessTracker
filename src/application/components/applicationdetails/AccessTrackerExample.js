@@ -1,12 +1,26 @@
 import React from 'react';
-import { Row, Col, Card, Tab, Nav } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import DownloadButton from './DownloadButton';
+import TabMenu from './integration/TabMenu';
 
-const IntegrationSection = () => {
-  const apiKey = "example-api-key-12345";
-
-  const basicTrackerCode = `
+const AccessTrackerExample = ({ apiKey }) => {
+  // Use the provided API key or a placeholder
+  const displayApiKey = apiKey || "YOUR_API_KEY";
+  
+  const componentCode = `
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * AccessTracker - A component to track page views and item interactions
+ * 
+ * @param {Object} props
+ * @param {string} props.apiKey - Your Access Tracker API key
+ * @param {string} props.page - The page identifier (e.g., "products", "cart")
+ * @param {string} [props.itemId] - Optional item identifier for tracking specific items
+ * @param {string} props.title - Human-readable title for the page or item
+ * @param {Object} [props.data] - Optional additional data to track (e.g., user info, context)
+ * @param {React.ReactNode} props.children - The content to render inside the tracker
+ */
 const AccessTracker = ({ 
   apiKey, 
   page, 
@@ -21,9 +35,12 @@ const AccessTracker = ({
   // Debounce timer reference
   const timerRef = useRef(null);
 
+  // If no API key is provided, try to use the current application's API key
+  const effectiveApiKey = apiKey || "${displayApiKey}";
+
   useEffect(() => {
     // Skip if already tracked or missing required props
-    if (hasTracked.current || !apiKey || !page) {
+    if (hasTracked.current || !effectiveApiKey || !page) {
       return;
     }
 
@@ -46,7 +63,7 @@ const AccessTracker = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [apiKey, page, itemId, title]);
+  }, [effectiveApiKey, page, itemId, title]);
 
   const trackView = async () => {
     try {
@@ -71,7 +88,7 @@ const AccessTracker = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': \`Bearer \${apiKey}\`
+          'Authorization': \`Bearer \${effectiveApiKey}\`
         },
         body: JSON.stringify(payload)
       });
@@ -88,7 +105,8 @@ const AccessTracker = ({
   return <>{children}</>;
 };
 
-export default AccessTracker;`;
+export default AccessTracker;
+`;
 
   const usageExample = `
 // Example usage in your application
@@ -97,7 +115,7 @@ import React from 'react';
 import AccessTracker from './AccessTracker';
 
 // Your API key from Access Tracker dashboard
-const API_KEY = "${apiKey}";
+const API_KEY = "${displayApiKey}";
 
 // Example product component
 const ProductDetail = ({ product }) => {
@@ -126,7 +144,7 @@ const ProductsPage = ({ products }) => {
       apiKey={API_KEY}
       page="products"
       title="Products Page"
-    >
+    > 
       <div className="products-page">
         <h1>Our Products</h1>
         <div className="product-grid">
@@ -137,47 +155,46 @@ const ProductsPage = ({ products }) => {
       </div>
     </AccessTracker>
   );
-};`;
+};
+`;
+
+  const componentContent = (
+    <pre className="bg-light p-3 rounded">
+      <code>{componentCode}</code>
+    </pre>
+  );
+
+  const usageContent = (
+    <>
+      <p>
+        Copy this component into your React project to easily track page views and item interactions.
+        The component wraps your content and is invisible to users.
+      </p>
+      <pre className="bg-light p-3 rounded">
+        <code>{usageExample}</code>
+      </pre>
+    </>
+  );
+
+  const tabs = [
+    { key: 'component', title: 'Component Code', content: componentContent },
+    { key: 'usage', title: 'How to Use', content: usageContent }
+  ];
 
   return (
-    <Row className="py-4">
-      <Col xs={12}>
-        <h2 className="text-center mb-4">Easy to Integrate</h2>
-        <p className="text-center mb-4">
-          Just add our component to your application and you're ready to go.
-        </p>
-      </Col>
-      <Col md={10} className="mx-auto">
-        <Card className="shadow-sm">
-          <Card.Body>
-            <Card.Title>Integration Examples</Card.Title>
-            <Tab.Container defaultActiveKey="component">
-              <Nav variant="tabs" className="mb-3">
-                <Nav.Item>
-                  <Nav.Link eventKey="component">Component</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="usage">Usage</Nav.Link>
-                </Nav.Item>
-              </Nav>
-              <Tab.Content>
-                <Tab.Pane eventKey="component">
-                  <pre className="bg-dark text-light p-3 rounded" style={{ overflowX: 'auto' }}>
-                    <code>{basicTrackerCode}</code>
-                  </pre>
-                </Tab.Pane>
-                <Tab.Pane eventKey="usage">
-                  <pre className="bg-dark text-light p-3 rounded" style={{ overflowX: 'auto' }}>
-                    <code>{usageExample}</code>
-                  </pre>
-                </Tab.Pane>
-              </Tab.Content>
-            </Tab.Container>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+    <Card className="shadow-sm mb-4" id="basic-component">
+      <Card.Header className="bg-light d-flex justify-content-between align-items-center">
+        <h5 className="mb-0">Basic Tracking Component</h5>
+        <DownloadButton 
+          content={componentCode.trim()} 
+          filename="AccessTracker.js" 
+        />
+      </Card.Header>
+      <Card.Body>
+        <TabMenu tabs={tabs} defaultActiveKey="component" />
+      </Card.Body>
+    </Card>
   );
 };
 
-export default IntegrationSection;
+export default AccessTrackerExample;

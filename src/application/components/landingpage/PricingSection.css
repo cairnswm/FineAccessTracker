@@ -1,0 +1,20 @@
+.pricing-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.pricing-price {
+  font-weight: 700;
+}
+
+.pricing-features li {
+  padding: 0.5rem 0;
+}
+
+.border-primary {
+  border-width: 2px !important;
+}

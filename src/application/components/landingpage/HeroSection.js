@@ -20,7 +20,7 @@ const HeroSection = () => {
       <Col md={8} className="mx-auto">
         <h1 className="display-4 fw-bold mb-3">Track Your Application Usage with Ease</h1>
         <p className="lead mb-4">
-          FineAccessTracker provides simple, powerful analytics for your web applications.
+          Access Tracker provides simple, powerful analytics for your web applications.
           Drop in our lightweight component and start tracking user access instantly.
         </p>
         <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">

@@ -5,6 +5,7 @@ import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
 import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
 import { useSummary } from "../context/SummaryContext";
+import "./Navigation.css";
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -24,10 +25,10 @@ const Navigation = () => {
         <Navbar.Brand
           as={Link}
           to={user ? "/home" : "/"}
-          style={{ cursor: "pointer" }}
+          className="d-flex align-items-center"
         >
           <BarChartFill className="me-2" />
-          FineAccessTracker
+          <span>Access Tracker</span>
         </Navbar.Brand>
         <Navbar.Toggle />
 
@@ -36,17 +37,18 @@ const Navigation = () => {
             {user ? (
               <NavDropdown
                 title={
-                  <span>
+                  <div className="d-inline-flex align-items-center">
                     {isPremium ? (
-                      <StarFill size={20} className="me-1" style={{color:"gold", marginTop: "-7px"}} />
+                      <StarFill size={20} className="me-1" style={{color:"gold"}} />
                     ) : (
-                      <PersonCircle size={20} className="me-1" style={{marginTop: "-7px"}} />
+                      <PersonCircle size={20} className="me-1" />
                     )}
-                    {user.firstname || "User"}
-                  </span>
+                    <span>{user.firstname || "User"}</span>
+                  </div>
                 }
                 id="user-dropdown"
                 align="end"
+                className="nav-dropdown-fix"
               >
                 <NavDropdown.Item as={Link} to="/profile">
                   Profile
@@ -58,7 +60,7 @@ const Navigation = () => {
                 )}
                 <NavDropdown.Item as={Link} to="/settings">
                   Settings
-                </NavDropdown.Item>{" "}
+                </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/properties">
                   Properties
                 </NavDropdown.Item>
