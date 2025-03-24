@@ -6,6 +6,7 @@ import { useApplications } from '../context/ApplicationContext';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import TrackingChart from '../components/tracking/TrackingChart';
+import ActivityTable from '../components/tracking/ActivityTable';
 import { 
   BarChartFill, 
   PeopleFill, 
@@ -20,7 +21,12 @@ import {
 const DashboardPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { applications, pageTracking, itemTracking } = useApplications();
+  const { 
+    applications, 
+    pageTracking, 
+    itemTracking,
+    getActivityTracking
+  } = useApplications();
   
   const [selectedApp, setSelectedApp] = useState('all');
   const [timeRange, setTimeRange] = useState('7');
@@ -78,51 +84,15 @@ const DashboardPage = () => {
       }));
   };
   
-  // Get recent activity data
+  // Get recent activity data from context
   const getRecentActivity = () => {
-    // In a real implementation, this would fetch actual activity data
-    // For this mock, we'll create some sample data
-    const mockActivity = [
-      {
-        application: "E-commerce Website",
-        page: "products",
-        timestamp: "2023-05-15 14:32:45",
-        ipAddress: "192.168.1.1",
-        location: "New York, US",
-        device: "Desktop - Chrome"
-      },
-      {
-        application: "E-commerce Website",
-        page: "cart",
-        timestamp: "2023-05-15 14:30:12",
-        ipAddress: "192.168.1.1",
-        location: "New York, US",
-        device: "Desktop - Chrome"
-      },
-      {
-        application: "Mobile App",
-        page: "dashboard",
-        timestamp: "2023-05-15 14:28:55",
-        ipAddress: "10.0.0.2",
-        location: "London, UK",
-        device: "Mobile - Safari"
-      },
-      {
-        application: "Company Blog",
-        page: "articles",
-        timestamp: "2023-05-15 14:25:33",
-        ipAddress: "172.16.0.5",
-        location: "Toronto, CA",
-        device: "Tablet - Firefox"
-      }
-    ];
+    const filters = {};
     
     if (selectedApp !== 'all') {
-      const app = applications.find(a => a.id === parseInt(selectedApp));
-      return mockActivity.filter(activity => activity.application === app?.name);
+      filters.applicationId = parseInt(selectedApp);
     }
     
-    return mockActivity;
+    return getActivityTracking(filters).slice(0, 10); // Get the 10 most recent activities
   };
   
   return (
@@ -299,35 +269,10 @@ const DashboardPage = () => {
       
       <Row className="g-4">
         <Col md={12}>
-          <Card className="shadow-sm">
-            <Card.Body>
-              <Card.Title>Recent Activity</Card.Title>
-              <Table responsive className="mt-3">
-                <thead>
-                  <tr>
-                    <th>Application</th>
-                    <th>Page</th>
-                    <th>Timestamp</th>
-                    <th>IP Address</th>
-                    <th>Location</th>
-                    <th>Device</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {getRecentActivity().map((activity, index) => (
-                    <tr key={index}>
-                      <td>{activity.application}</td>
-                      <td>{activity.page}</td>
-                      <td>{activity.timestamp}</td>
-                      <td>{activity.ipAddress}</td>
-                      <td>{activity.location}</td>
-                      <td>{activity.device}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
+          <ActivityTable 
+            activities={getRecentActivity()} 
+            title="Recent Activity"
+          />
         </Col>
       </Row>
     </PageLayout>

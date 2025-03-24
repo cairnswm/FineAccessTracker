@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext } from "react";
 import mockApplications from "../data/mockApplications";
 import mockPageTracking from "../data/mockPageTracking";
 import mockItemTracking from "../data/mockItemTracking";
+import mockActivityTracking from "../data/mockActivityTracking";
 
 const ApplicationContext = createContext(null);
 
@@ -18,6 +19,7 @@ export const ApplicationProvider = ({ children }) => {
   const [applications, setApplications] = useState(mockApplications);
   const [pageTracking, setPageTracking] = useState(mockPageTracking);
   const [itemTracking, setItemTracking] = useState(mockItemTracking);
+  const [activityTracking, setActivityTracking] = useState(mockActivityTracking);
   const [loading, setLoading] = useState(false);
 
   // Application CRUD operations
@@ -48,6 +50,7 @@ export const ApplicationProvider = ({ children }) => {
     // Also delete related page and item tracking data
     setPageTracking(pageTracking.filter(page => page.applicationId !== id));
     setItemTracking(itemTracking.filter(item => item.applicationId !== id));
+    setActivityTracking(activityTracking.filter(activity => activity.applicationId !== id));
   };
 
   const getApplication = (id) => {
@@ -79,6 +82,9 @@ export const ApplicationProvider = ({ children }) => {
     setItemTracking(itemTracking.filter(item => 
       !(item.applicationId === parseInt(applicationId) && item.page === page)
     ));
+    setActivityTracking(activityTracking.filter(activity => 
+      !(activity.applicationId === parseInt(applicationId) && activity.page === page)
+    ));
   };
 
   // Item tracking operations
@@ -104,6 +110,42 @@ export const ApplicationProvider = ({ children }) => {
     setItemTracking(itemTracking.filter(item => 
       !(item.applicationId === parseInt(applicationId) && item.page === page && item.itemId === itemId)
     ));
+    setActivityTracking(activityTracking.filter(activity => 
+      !(activity.applicationId === parseInt(applicationId) && activity.page === page && activity.itemId === itemId)
+    ));
+  };
+
+  // Activity tracking operations
+  const getActivityTracking = (filters = {}) => {
+    let filtered = [...activityTracking];
+    
+    if (filters.applicationId) {
+      filtered = filtered.filter(activity => 
+        activity.applicationId === parseInt(filters.applicationId)
+      );
+    }
+    
+    if (filters.page) {
+      filtered = filtered.filter(activity => activity.page === filters.page);
+    }
+    
+    if (filters.itemId) {
+      filtered = filtered.filter(activity => activity.itemId === filters.itemId);
+    }
+    
+    // Sort by timestamp (most recent first)
+    return filtered.sort((a, b) => 
+      new Date(b.timestamp) - new Date(a.timestamp)
+    );
+  };
+
+  const addActivityTracking = (newActivity) => {
+    const activityWithId = {
+      ...newActivity,
+      id: activityTracking.length > 0 ? Math.max(...activityTracking.map(a => a.id)) + 1 : 1,
+      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19)
+    };
+    setActivityTracking([activityWithId, ...activityTracking]);
   };
 
   return (
@@ -129,6 +171,11 @@ export const ApplicationProvider = ({ children }) => {
         addItemTracking,
         updateItemTracking,
         deleteItemTracking,
+        
+        // Activity tracking data and operations
+        activityTracking,
+        getActivityTracking,
+        addActivityTracking,
         
         loading
       }}
