@@ -22,7 +22,7 @@ import DocumentationPage from './application/pages/DocumentationPage';
 import Navigation from './application/components/Navigation';
 
 // Styles
-import './app.css';
+import './app.scss';
 
 function App() {
   const { user } = useAuth();
