@@ -3,6 +3,8 @@ import mockApplications from "../data/mockApplications";
 import mockPageTracking from "../data/mockPageTracking";
 import mockItemTracking from "../data/mockItemTracking";
 import mockActivityTracking from "../data/mockActivityTracking";
+import mockApplicationUsers from "../data/mockApplicationUsers";
+import mockInvites from "../data/mockInvites";
 
 const ApplicationContext = createContext(null);
 
@@ -20,6 +22,8 @@ export const ApplicationProvider = ({ children }) => {
   const [pageTracking, setPageTracking] = useState(mockPageTracking);
   const [itemTracking, setItemTracking] = useState(mockItemTracking);
   const [activityTracking, setActivityTracking] = useState(mockActivityTracking);
+  const [applicationUsers, setApplicationUsers] = useState(mockApplicationUsers);
+  const [invites, setInvites] = useState(mockInvites);
   const [loading, setLoading] = useState(false);
 
   // Application CRUD operations
@@ -148,6 +152,88 @@ export const ApplicationProvider = ({ children }) => {
     setActivityTracking([activityWithId, ...activityTracking]);
   };
 
+  // Application users operations
+  const getApplicationUsers = (applicationId) => {
+    return applicationUsers.filter(user => 
+      user.applicationId === parseInt(applicationId)
+    );
+  };
+
+  const addApplicationUser = (newUser) => {
+    const userWithId = {
+      ...newUser,
+      id: applicationUsers.length > 0 ? Math.max(...applicationUsers.map(user => user.id)) + 1 : 1,
+      status: "active",
+      joinedAt: new Date().toISOString().split('T')[0]
+    };
+    setApplicationUsers([...applicationUsers, userWithId]);
+    return userWithId;
+  };
+
+  const updateApplicationUser = (id, updatedData) => {
+    setApplicationUsers(applicationUsers.map(user => 
+      user.id === id ? { ...user, ...updatedData } : user
+    ));
+  };
+
+  const removeApplicationUser = (id) => {
+    setApplicationUsers(applicationUsers.filter(user => user.id !== id));
+  };
+
+  // Invites operations
+  const getUserInvites = (email) => {
+    return invites.filter(invite => invite.email === email && invite.status === "pending");
+  };
+
+  const getApplicationInvites = (applicationId) => {
+    return invites.filter(invite => 
+      invite.applicationId === parseInt(applicationId) && invite.status === "pending"
+    );
+  };
+
+  const addInvite = (newInvite) => {
+    const inviteWithId = {
+      ...newInvite,
+      id: invites.length > 0 ? Math.max(...invites.map(invite => invite.id)) + 1 : 1,
+      status: "pending",
+      invitedAt: new Date().toISOString().split('T')[0]
+    };
+    setInvites([...invites, inviteWithId]);
+    return inviteWithId;
+  };
+
+  const updateInvite = (id, updatedData) => {
+    setInvites(invites.map(invite => 
+      invite.id === id ? { ...invite, ...updatedData } : invite
+    ));
+  };
+
+  const deleteInvite = (id) => {
+    setInvites(invites.filter(invite => invite.id !== id));
+  };
+
+  const acceptInvite = (id, userData) => {
+    const invite = invites.find(invite => invite.id === id);
+    
+    if (invite) {
+      // Add user to application
+      addApplicationUser({
+        applicationId: invite.applicationId,
+        userId: userData.userId,
+        email: invite.email,
+        name: userData.name,
+        role: invite.role
+      });
+      
+      // Update invite status
+      updateInvite(id, { status: "accepted" });
+    }
+  };
+
+  const rejectInvite = (id) => {
+    updateInvite(id, { status: "rejected" });
+  };
+
   return (
     <ApplicationContext.Provider 
       value={{ 
@@ -176,6 +262,23 @@ export const ApplicationProvider = ({ children }) => {
         activityTracking,
         getActivityTracking,
         addActivityTracking,
+        
+        // Application users operations
+        applicationUsers,
+        getApplicationUsers,
+        addApplicationUser,
+        updateApplicationUser,
+        removeApplicationUser,
+        
+        // Invites operations
+        invites,
+        getUserInvites,
+        getApplicationInvites,
+        addInvite,
+        updateInvite,
+        deleteInvite,
+        acceptInvite,
+        rejectInvite,
         
         loading
       }}

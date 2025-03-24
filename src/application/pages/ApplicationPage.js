@@ -11,6 +11,7 @@ import OverviewTab from '../components/applicationdetails/OverviewTab';
 import TrackingDataTab from '../components/applicationdetails/TrackingDataTab';
 import ActivityTab from '../components/applicationdetails/ActivityTab';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
+import UsersTab from '../components/applicationdetails/UsersTab';
 import NotFoundView from '../components/applicationdetails/NotFoundView';
 
 const ApplicationPage = () => {
@@ -83,6 +84,12 @@ const ApplicationPage = () => {
         return (
           <IntegrationTab 
             apiKey={application.apiKey} 
+          />
+        );
+      case 'users':
+        return (
+          <UsersTab 
+            application={application} 
           />
         );
       default:
