@@ -10,6 +10,7 @@ import HomePage from '../pages/HomePage';
 import Settings from '../../auth/pages/SettingsPage';
 import Properties from '../../auth/pages/PropertiesPage';
 import Payment from '../../auth/pages/PaymentPage';
+import InvitesPage from '../../auth/pages/InvitesPage';
 import ProtectedRoute from '../../auth/components/ProtectedRoute';
 import PublicRoute from '../../auth/components/PublicRoute';
 import AdminRoute from '../../auth/components/AdminRoute';
@@ -61,6 +62,14 @@ const Routing = () => {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/invites"
+          element={
+            <ProtectedRoute>
+              <InvitesPage />
             </ProtectedRoute>
           }
         />

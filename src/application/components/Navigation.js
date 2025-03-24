@@ -1,9 +1,10 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown, Badge } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
-import { PersonCircle, StarFill, BarChartFill } from "react-bootstrap-icons";
+import { PersonCircle, StarFill, BarChartFill, EnvelopeFill } from "react-bootstrap-icons";
+import { useApplications } from "../context/ApplicationContext";
 import { useSummary } from "../context/SummaryContext";
 import "./Navigation.css";
 
@@ -11,8 +12,13 @@ const Navigation = () => {
   const { user, logout } = useAuth();
   const isAdmin = useAdmin();
   const navigate = useNavigate();
+  const { getUserInvites } = useApplications();
 
   const { isPremium } = useSummary();
+  
+  // Get pending invites count for the current user
+  const pendingInvites = user ? getUserInvites(user.email) : [];
+  const inviteCount = pendingInvites.length;
 
   const handleLogout = () => {
     logout();
@@ -52,6 +58,14 @@ const Navigation = () => {
               >
                 <NavDropdown.Item as={Link} to="/profile">
                   Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/invites">
+                  Invites
+                  {inviteCount > 0 && (
+                    <Badge bg="danger" pill className="ms-2">
+                      {inviteCount}
+                    </Badge>
+                  )}
                 </NavDropdown.Item>
                 {isAdmin && (
                   <NavDropdown.Item as={Link} to="/admin">
