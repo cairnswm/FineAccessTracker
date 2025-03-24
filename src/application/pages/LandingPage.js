@@ -12,7 +12,6 @@ import {
   ArrowRepeat 
 } from 'react-bootstrap-icons';
 import TrackerDemo from '../components/TrackerDemo';
-import TrackerExample from '../components/TrackerExample';
 import './LandingPage.css';
 
 const LandingPage = () => {
