@@ -32,7 +32,7 @@ const PricingSection = () => {
         <p className="lead">Choose the plan that's right for your needs</p>
       </Col>
       
-      <Col md={6} className="mb-4">
+      <Col md={4} className="mb-4">
         <Card className="h-100 shadow pricing-card">
           <Card.Header className="bg-light text-center py-3">
             <h3 className="mb-0">Free</h3>
@@ -87,7 +87,7 @@ const PricingSection = () => {
         </Card>
       </Col>
       
-      <Col md={6} className="mb-4">
+      <Col md={4} className="mb-4">
         <Card className="h-100 shadow pricing-card border-primary">
           <Card.Header className="bg-primary text-white text-center py-3">
             <h3 className="mb-0">Basic</h3>
@@ -119,8 +119,8 @@ const PricingSection = () => {
                 <span>Item-level tracking</span>
               </li>
               <li className="d-flex align-items-center mb-3">
-                <Check2 className="text-success me-2" size={20} />
-                <span>Data retention for 30 days</span>
+                <X className="text-danger me-2" size={20} />
+                <span className="text-muted">Data older than 30 days is deleted</span>
               </li>
               <li className="d-flex align-items-center mb-3">
                 <Check2 className="text-success me-2" size={20} />
@@ -136,6 +136,61 @@ const PricingSection = () => {
                 onClick={handleUpgrade}
               >
                 Upgrade Now
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+      
+      <Col md={4} className="mb-4">
+        <Card className="h-100 shadow pricing-card border-dark">
+          <Card.Header className="bg-dark text-white text-center py-3">
+            <h3 className="mb-0">Pro</h3>
+            <div className="mt-2">
+              <Badge bg="warning" text="dark">Enterprise Ready</Badge>
+            </div>
+          </Card.Header>
+          <Card.Body className="d-flex flex-column">
+            <div className="pricing-price text-center mb-4">
+              <span className="display-4">$49</span>
+              <span className="text-muted">/month</span>
+            </div>
+            
+            <ul className="pricing-features list-unstyled">
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span><strong>Unlimited</strong> interactions</span>
+              </li>
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span>Premium analytics dashboard</span>
+              </li>
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span>Page-level tracking</span>
+              </li>
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span>Item-level tracking</span>
+              </li>
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span><strong>Unlimited</strong> data retention</span>
+              </li>
+              <li className="d-flex align-items-center mb-3">
+                <Check2 className="text-success me-2" size={20} />
+                <span>Advanced reporting & API access</span>
+              </li>
+            </ul>
+            
+            <div className="mt-auto">
+              <Button 
+                variant="dark" 
+                size="lg" 
+                className="w-100"
+                onClick={handleUpgrade}
+              >
+                Go Pro
               </Button>
             </div>
           </Card.Body>

@@ -36,6 +36,13 @@ const PageMenu = () => {
           >
             Documentation
           </Nav.Link>
+          <Nav.Link 
+            as={Link} 
+            to="/about" 
+            className={isActive("/about") ? "active" : ""}
+          >
+            About
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

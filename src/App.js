@@ -16,6 +16,7 @@ import HomePage from './application/pages/HomePage';
 import ApplicationsPage from './application/pages/ApplicationsPage';
 import ApplicationPage from './application/pages/ApplicationPage';
 import DocumentationPage from './application/pages/DocumentationPage';
+import AboutPage from './application/pages/AboutPage';
 
 // Components
 import Navigation from './application/components/Navigation';
@@ -41,6 +42,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        
+        {/* Public Routes */}
+        <Route path="/about" element={<AboutPage />} />
         
         {/* Protected Routes */}
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
