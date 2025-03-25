@@ -14,7 +14,7 @@ const SubscriptionsReturn = () => {
           Thank you for your Payment
           </Card.Header>
           <Card.Body>
-            You subscription will be loaded as a soon as we recieve your payment.
+            Your subscription will be loaded as soon as we receive your payment.
           </Card.Body>
           <Card.Body>
             <Link to="/subscriptions">Return to Subscriptions</Link>
