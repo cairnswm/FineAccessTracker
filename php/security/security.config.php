@@ -21,14 +21,13 @@ function createToken($payload) {
     $jwt = jwt_token();
     return $jwt;
 }
-function validateJwt($token,$time=false,$aud=NULL) {
-    if ($aud == NULL) {
+function validateJwt($token,$time=false,$aud="") {
+    if (!isset($aud) || $aud="") {
         $aud = getSecret("jwt_audience", "cairnsgames client");
     }
     global $JWTSECRET, $jwtError;
     jwt_set_secret($JWTSECRET);
     $valid = validate_jwt($token,$time,$aud);
-    // var_dump($jwtError);
     return $valid;
 }
 

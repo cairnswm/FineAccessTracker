@@ -2,11 +2,11 @@ import React from 'react';
 import { Table, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { BarChartFill, ArrowRightCircle } from 'react-bootstrap-icons';
-import { useApplications } from '../../context/ApplicationContext';
+import { useItemTracking } from '../../context/ApplicationContext';
 
 const PageTrackingTable = ({ applicationId, pageTracking, onViewItems }) => {
   const navigate = useNavigate();
-  const { getItemTrackingByAppIdAndPage } = useApplications();
+  const { getItemTrackingByAppIdAndPage } = useItemTracking();
   
   // Function to check if a page has items
   const pageHasItems = (page) => {
@@ -50,8 +50,8 @@ const PageTrackingTable = ({ applicationId, pageTracking, onViewItems }) => {
               <tr key={index}>
                 <td><code>{page.page}</code></td>
                 <td>{page.title}</td>
-                <td>{page.visits.toLocaleString()}</td>
-                <td>{page.uniqueVisitors.toLocaleString()}</td>
+                <td>{page.visits}</td>
+                <td>{page.uniqueVisitors}</td>
                 <td>{page.avgTimeOnPage}</td>
                 <td>
                   {pageHasItems(page.page) ? (

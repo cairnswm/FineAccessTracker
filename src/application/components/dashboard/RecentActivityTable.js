@@ -34,9 +34,9 @@ const RecentActivityTable = ({ activities }) => {
             {activities.map((activity) => (
               <tr key={activity.id}>
                 <td><code>{activity.page}</code></td>
-                <td>{activity.itemId ? <code>{activity.itemId}</code> : '-'}</td>
-                <td>{activity.timestamp}</td>
-                <td>{activity.ipAddress}</td>
+                <td>{activity.item_id ? <code>{activity.item_id}</code> : '-'}</td>
+                <td>{activity.event_date}</td>
+                <td>{activity.ip_address}</td>
                 <td>{activity.location}</td>
                 <td>{activity.device}</td>
               </tr>

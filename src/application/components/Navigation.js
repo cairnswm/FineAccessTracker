@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useAdmin } from "../../auth/hooks/useAdmin";
 import { PersonCircle, StarFill, BarChartFill, EnvelopeFill } from "react-bootstrap-icons";
-import { useApplications } from "../context/ApplicationContext";
+import { useApplicationUsers } from "../context/UsersContext";
 import { useSummary } from "../context/SummaryContext";
 import "./Navigation.css";
 
@@ -12,7 +12,7 @@ const Navigation = () => {
   const { user, logout } = useAuth();
   const isAdmin = useAdmin();
   const navigate = useNavigate();
-  const { getUserInvites } = useApplications();
+  const { getUserInvites } = useApplicationUsers();
 
   const { isPremium } = useSummary();
   

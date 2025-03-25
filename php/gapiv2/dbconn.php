@@ -1,10 +1,10 @@
 <?php
 
-include_once __DIR__ . "/../podcastconfig.php";
+include_once __DIR__ . "/../trackerconfig.php";
 
 // Create a global $gapiconn exists for the MySQL connection
 global $gapiconn;
-$gapiconn = new mysqli($podcastconfig["server"], $podcastconfig["username"], $podcastconfig["password"], $podcastconfig["database"]);
+$gapiconn = new mysqli($trackerconfig["server"], $trackerconfig["username"], $trackerconfig["password"], $trackerconfig["database"]);
 
 if ($gapiconn->connect_error) {
     die("Connection failed: " . $gapiconn->connect_error);

@@ -1,15 +1,15 @@
 <?php
 
 
-include_once "./podcastconfig.php";
+include_once "./trackerconfig.php";
 global $conn;
 
 function getConnection() {
     global $conn;
     
     if (!isset($conn)) {
-        global $podcastconfig;
-        $conn = new mysqli($podcastconfig["server"], $podcastconfig["username"], $podcastconfig["password"], $podcastconfig["database"]);
+        global $trackerconfig;
+        $conn = new mysqli($trackerconfig["server"], $trackerconfig["username"], $trackerconfig["password"], $trackerconfig["database"]);
         
         if ($conn->connect_error) {
             throw new Exception("Connection failed: " . $conn->connect_error);

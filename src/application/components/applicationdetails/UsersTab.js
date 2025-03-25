@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import { Row, Col, Card, Table, Button, Form, Alert } from 'react-bootstrap';
 import { PersonPlusFill, TrashFill, SendFill, XCircleFill } from 'react-bootstrap-icons';
-import { useApplications } from '../../context/ApplicationContext';
+import { useApplicationUsers } from '../../context/ApplicationContext';
 import { useAuth } from '../../../auth/context/AuthContext';
+import ComingSoon from '../../../auth/components/comingsoon';
 
 const UsersTab = ({ application }) => {
   const { user } = useAuth();
   const { 
-    getApplicationUsers, 
+    applicationUsers,
+    applicationInvites,
     removeApplicationUser, 
     addInvite,
     getApplicationInvites,
     deleteInvite,
     updateInvite
-  } = useApplications();
+  } = useApplicationUsers();
+
+  console.log("==== UsersTab applicationUsers", applicationUsers);
+  console.log("==== UsersTab applicationInvites", applicationInvites);
   
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('viewer');
   const [alert, setAlert] = useState(null);
-  
-  const applicationUsers = getApplicationUsers(application.id);
-  const pendingInvites = getApplicationInvites(application.id);
-  
+    
   const handleInviteUser = (e) => {
     e.preventDefault();
     
@@ -81,6 +83,8 @@ const UsersTab = ({ application }) => {
       setAlert(null);
     }, 3000);
   };
+
+  return <ComingSoon more="You will be able to add your team to monitor your application."/>
   
   return (
     <div>
@@ -146,7 +150,7 @@ const UsersTab = ({ application }) => {
         </Col>
       </Row>
       
-      {pendingInvites.length > 0 && (
+      {applicationInvites.length > 0 && (
         <Row className="mb-4">
           <Col>
             <Card className="shadow-sm">
@@ -164,7 +168,7 @@ const UsersTab = ({ application }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {pendingInvites.map(invite => (
+                    {applicationInvites.map(invite => (
                       <tr key={invite.id}>
                         <td>{invite.email}</td>
                         <td>
@@ -227,7 +231,7 @@ const UsersTab = ({ application }) => {
                   {applicationUsers.length > 0 ? (
                     applicationUsers.map(user => (
                       <tr key={user.id}>
-                        <td>{user.name}</td>
+                        <td>{user.firstname} {user.lastname}</td>
                         <td>{user.email}</td>
                         <td>
                           <span className={`badge bg-${

@@ -119,14 +119,6 @@ const Routing = () => {
           }
         />
         
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
     </>
   );
