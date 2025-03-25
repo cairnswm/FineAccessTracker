@@ -8,7 +8,7 @@ import Register from './auth/pages/Register';
 import ForgotPassword from './auth/pages/ForgotPassword';
 import ProfilePage from './auth/pages/ProfilePage';
 import SettingsPage from './auth/pages/SettingsPage';
-import SubscriptionRouting from './auth/routing/subscriptionRouting';
+import SubscriptionRouting from './auth/routing/subscriptionrouting';
 
 // Application Pages
 import LandingPage from './application/pages/LandingPage';
