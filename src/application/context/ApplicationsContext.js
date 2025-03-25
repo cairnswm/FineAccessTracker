@@ -1,8 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import mockApplications from "../data/mockApplications";
-import mockAnalytics from "../data/mockAnalytics";
+import { combineUrlAndPath } from "../../auth/utils/combineUrlAndPath";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { useTenant } from "../../auth/hooks/useTenant";
+import { REACT_APP_ACCESS_API } from "../../env";
 
 const ApplicationsContext = createContext(null);
 
@@ -32,7 +32,7 @@ export const ApplicationsProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost/AccessTracker/php/api/api.php/application/${appId}/sitebyday`,
+        combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${appId}/sitebyday`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ export const ApplicationsProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost/AccessTracker/php/api/api.php/application/${appId}/site`,
+        combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${appId}/site`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ export const ApplicationsProvider = ({ children }) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost/AccessTracker/php/api/api.php/user/${user.id}/applications`,
+          combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/user/${user.id}/applications`),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -131,7 +131,7 @@ export const ApplicationsProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost/AccessTracker/php/api/api.php/createApplication",
+       combineUrlAndPath(REACT_APP_ACCESS_API,"api/api.php/createApplication"),
         {
           method: "POST",
           headers: {
@@ -177,7 +177,7 @@ export const ApplicationsProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost/AccessTracker/php/api/api.php/application/${id}`,
+        combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${id}`),
         {
           method: "PUT",
           headers: {
@@ -215,7 +215,7 @@ export const ApplicationsProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost/AccessTracker/php/api/api.php/deleteApplication",
+        combineUrlAndPath(REACT_APP_ACCESS_API,"api/api.php/deleteApplication"),
         {
           method: "POST",
           headers: {

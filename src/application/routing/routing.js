@@ -16,7 +16,6 @@ import PublicRoute from '../../auth/components/PublicRoute';
 import AdminRoute from '../../auth/components/AdminRoute';
 import Admin from '../../auth/pages/Admin';
 import ComingsoonPage from '../../auth/pages/ComingSoonPage';
-import DashboardPage from '../pages/DashboardPage';
 const SubscriptionRouting = React.lazy(() => import('../../auth/routing/subscriptionrouting'));
 
 const Routing = () => {

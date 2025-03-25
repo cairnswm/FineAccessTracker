@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-
 import { useAuth } from '../../auth/context/AuthContext';
 import { useApplications } from './ApplicationsContext';
 import { useTenant } from "../../auth/hooks/useTenant";
+import { REACT_APP_ACCESS_API } from "../../env";
 
 const UsersContext = createContext(null);
 
@@ -23,7 +23,7 @@ export const UsersProvider = ({ children }) => {
 
   const fetchUsers = async () => {
     try {
-      const usersResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${activeApplicationId}/users`, {
+      const usersResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${activeApplicationId}/users`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const UsersProvider = ({ children }) => {
 
   const fetchInvites = async () => {
     try {
-      const invitesResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${activeApplicationId}/invites`, {
+      const invitesResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${activeApplicationId}/invites`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

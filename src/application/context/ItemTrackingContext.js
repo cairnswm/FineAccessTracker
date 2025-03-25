@@ -3,6 +3,7 @@ import mockItemTracking from "../data/mockItemTracking";
 import { useApplications } from "./ApplicationsContext";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { useTenant } from "../../auth/hooks/useTenant";
+import { REACT_APP_ACCESS_API } from "../../env";
 
 const ItemTrackingContext = createContext(null);
 
@@ -27,7 +28,7 @@ export const ItemTrackingProvider = ({ children }) => {
     setLoading(true);
     try {
       // Fetch summary data
-      const summaryResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${applicationId}/item`, {
+      const summaryResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${applicationId}/item`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export const ItemTrackingProvider = ({ children }) => {
       const summaryData = await summaryResponse.json();
       
       // Fetch day by day data
-      const dayByDayResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${applicationId}/itembyday`, {
+      const dayByDayResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${applicationId}/itembyday`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

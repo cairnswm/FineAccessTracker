@@ -24,7 +24,7 @@ const Providers = () => {
             <SubscriptionsProvider onError={(message, error) => console.error(message, error)}>
               <SummaryProvider onError={(message, error) => console.error(message, error)}>
                 <ApplicationProvider>
-                  <BrowserRouter basename={process.env.PUBLIC_URL}>
+                  <BrowserRouter basename={process.env.PUBLIC_URL ?? "/"}>
                     <App />
                   </BrowserRouter>
                 </ApplicationProvider>

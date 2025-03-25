@@ -3,6 +3,8 @@ import mockActivityTracking from "../data/mockActivityTracking";
 import { useApplications } from "./ApplicationsContext";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { useTenant } from "../../auth/hooks/useTenant";
+import { combineUrlAndPath } from "../../auth/utils/combineUrlAndPath";
+import { REACT_APP_ACCESS_API } from "../../env";
 
 const ActivityTrackingContext = createContext(null);
 
@@ -28,7 +30,7 @@ export const ActivityTrackingProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost/AccessTracker/php/api/api.php/application/${activeApplicationId}/events?limit=100`, 
+        combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${activeApplicationId}/events?limit=100`), 
         {
           headers: {
             'Authorization': `Bearer ${token}`,

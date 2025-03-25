@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useAuth } from './AuthContext';
 import { useApplications } from './ApplicationsContext';
+import { combineUrlAndPath } from '../auth/utils/combineUrlAndPath';
+import { REACT_APP_ACCESS_API } from "../../env";
 
 const UsersContext = createContext();
 
@@ -13,7 +15,7 @@ export const UsersProvider = ({ children }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${activeApplication}/users`);
+        const usersResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`/api/api.php/application/${activeApplication}/users`));
         const usersData = await usersResponse.json();
         
         // Add the current user to the users list
@@ -35,7 +37,7 @@ export const UsersProvider = ({ children }) => {
 
     const fetchInvites = async () => {
       try {
-        const invitesResponse = await fetch(`http://localhost/AccessTracker/php/api/api.php/application/${activeApplication}/invites`);
+        const invitesResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${activeApplication}/invites`));
         const invitesData = await invitesResponse.json();
         setInvites(invitesData);
       } catch (error) {

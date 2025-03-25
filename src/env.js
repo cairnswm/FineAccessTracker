@@ -5,8 +5,9 @@ let CONTENT = "https://cairnsgames.co.za/php/content/";
 let FILES = "https://cairnsgames.co.za/files/";
 // let PAYWEB3 = "http://localhost/cairnsgames/php/payweb3/";
 let PAYWEB3 = "http://cairnsgames.co.za/php/payweb3/";
-let SUBSCRIPTIONS = "http://localhost/cairnsgames/php/subscriptions/";
-// let SUBSCRIPTIONS = "http://cairnsgames.co.za/php/subscriptions/";
+// let SUBSCRIPTIONS = "http://localhost/cairnsgames/php/subscriptions/";
+let SUBSCRIPTIONS = "http://cairnsgames.co.za/php/subscriptions/";
+let ACCESS = "https://accesself.co.za/php/";
 
 if (typeof process !== 'undefined' && process?.env) {
   TENANT = process.env.REACT_APP_TENANT_API;
@@ -16,6 +17,7 @@ if (typeof process !== 'undefined' && process?.env) {
   FILES = process.env.REACT_APP_FILES;
   PAYWEB3 = process.env.REACT_APP_PAYWEB3_API;
   SUBSCRIPTIONS = process.env.REACT_APP_SUBSCRIPTIONS_API;
+  ACCESS = process.env.REACT_APP_ACCESS_API;
 }
 
 export const REACT_APP_TENANT_API = TENANT;
@@ -25,3 +27,4 @@ export const REACT_APP_CONTENT_API = CONTENT;
 export const REACT_APP_FILES = FILES;
 export const REACT_APP_PAYWEB3_API = PAYWEB3;
 export const REACT_APP_SUBSCRIPTIONS_API = SUBSCRIPTIONS;
+export const REACT_APP_ACCESS_API = ACCESS;
