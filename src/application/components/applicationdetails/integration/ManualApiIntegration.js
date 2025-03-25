@@ -20,7 +20,7 @@ const ManualApiIntegration = ({ apiKey }) => {
         <pre className="bg-light p-3 rounded">
           <code>{`
 // Track page views
-POST https://cairns.co.za/accesstracker/php/trackitem.php
+POST https://accesself.co.za/php/api/track.php
 
 // Headers
 Content-Type: application/json

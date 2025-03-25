@@ -1,8 +1,8 @@
 <?php
 
+include_once dirname(__FILE__) . "/../corsheaders.php";
 include_once dirname(__FILE__)."/../utils.php";
 include_once dirname(__FILE__)."/../trackerconfig.php";
-
 
 function getIpInfo($ipAddress) {
   $token = 'd4ca2fb7404647';

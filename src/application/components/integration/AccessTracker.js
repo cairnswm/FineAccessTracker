@@ -21,6 +21,9 @@ const AccessTracker = ({
 }) => {
   // Use a ref to track if the component has already sent the tracking data
   const hasTracked = useRef(false);
+  if (!apiKey) {
+    apiKey = "caa1f4d6-caa1f4d7-411a-97bf-8b5fa72a1b0d";
+  }
   
   // Debounce timer reference
   const timerRef = useRef(null);
@@ -31,7 +34,7 @@ const AccessTracker = ({
 
   useEffect(() => {
     // Skip if already tracked or missing required props
-    if (hasTracked.current || !effectiveApiKey || !page) {
+    if (hasTracked.current || !effectiveApiKey) {
       return;
     }
 
@@ -75,7 +78,7 @@ const AccessTracker = ({
       }
 
       // Send the tracking data to the API
-      const response = await fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+      const response = await fetch('https://accesself.co.za/php/api/track.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

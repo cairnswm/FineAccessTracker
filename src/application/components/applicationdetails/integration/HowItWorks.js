@@ -56,7 +56,7 @@ function trackPageView(apiKey, page, title, additionalData = {}) {
   };
 
   // Send the tracking data to the API
-  fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+  fetch('https://accesself.co.za/php/api/track.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ function trackItemView(apiKey, page, itemId, title, additionalData = {}) {
   };
 
   // Send the tracking data to the API
-  fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+  fetch('https://accesself.co.za/php/api/track.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const API_KEY = "${displayApiKey}";
   
   // Track application-level access to capture location data
-  fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+  fetch('https://accesself.co.za/php/api/track.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

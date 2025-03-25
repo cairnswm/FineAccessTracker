@@ -84,7 +84,7 @@ const AccessTracker = ({
       }
 
       // Send the tracking data to the API
-      const response = await fetch('https://cairns.co.za/accesstracker/php/trackitem.php', {
+      const response = await fetch('https://accesself.co.za/php/api/track.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
