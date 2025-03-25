@@ -13,6 +13,7 @@ import useDeviceInfo from '../hooks/useDeviceInfo';
 import { combineUrlAndPath } from '../utils/combineUrlAndPath';
 import useEventing from '../hooks/useEventing';
 import { REACT_APP_AUTH_API } from "../../env";
+import Spinner from "../components/spinner";
 
 const AuthenticationContext = createContext(null);
 
@@ -31,6 +32,7 @@ const AuthenticationProvider = (props) => {
   const [user, setUser] = useState();
   const { decodedToken } = useJwt(googleAccessToken || "");
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { tenant } = useTenant();
   const { deviceId } = useDeviceInfo();
@@ -93,6 +95,8 @@ const AuthenticationProvider = (props) => {
         if (onError) {
           onError("Auth: Unable to Validate Token", err);
         }
+      }).finally(() => {
+        setLoading(false);
       });
     settoken(token);
   };
@@ -104,6 +108,8 @@ const AuthenticationProvider = (props) => {
     const savedToken = localStorage.getItem("cg." + tenant + ".auth");
     if (savedToken && savedToken !== "undefined") {
       validateToken(savedToken);
+    } else {
+      setLoading(false);
     }
   }, [tenant]);
 
@@ -615,6 +621,10 @@ const AuthenticationProvider = (props) => {
         </p>
       </div>
     );
+  }
+
+  if (loading) {
+    return <Spinner />;
   }
 
   return (

@@ -8,7 +8,7 @@ import Register from './auth/pages/Register';
 import ForgotPassword from './auth/pages/ForgotPassword';
 import ProfilePage from './auth/pages/ProfilePage';
 import SettingsPage from './auth/pages/SettingsPage';
-import SubscriptionsPage from './auth/pages/subscriptionsPage';
+import SubscriptionRouting from './auth/routing/subscriptionRouting';
 
 // Application Pages
 import LandingPage from './application/pages/LandingPage';
@@ -53,7 +53,7 @@ function App() {
         <Route path="/application/:id" element={user ? <ApplicationPage /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
-        <Route path="/subscriptions" element={user ? <SubscriptionsPage /> : <Navigate to="/login" />} />
+        <Route path="/subscriptions/*" element={user ? <SubscriptionRouting /> : <Navigate to="/login" />} />
         
         {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />
