@@ -6,14 +6,14 @@ import React, { useEffect, useRef } from 'react';
  * @param {Object} props
  * @param {string} props.apiKey - Your Access Tracker API key
  * @param {string} props.page - The page identifier (e.g., "products", "cart")
- * @param {string} [props.itemId] - Optional item identifier for tracking specific items
+ * @param {string} [props.id] - Optional item identifier for tracking specific items
  * @param {string} props.title - Human-readable title for the page or item
  * @param {Object} [props.data] - Optional additional data to track (e.g., user info, context)
  * @param {React.ReactNode} props.children - The content to render inside the tracker
  */
 const AccessTracker = ({ 
   page, 
-  itemId, 
+  id, 
   title, 
   data = {}, 
   children 
@@ -51,12 +51,12 @@ const AccessTracker = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [page, itemId, title]);
+  }, [page, id, title]);
 
   const trackView = async () => {
     try {
       // Determine if this is a page view or item view
-      const eventType = itemId ? 'item' : 'page';
+      const eventType = id ? 'item' : 'page';
       
       // Prepare the payload
       const payload = {
@@ -66,9 +66,9 @@ const AccessTracker = ({
         ...data
       };
       
-      // Add itemId if available
-      if (itemId) {
-        payload.itemId = itemId;
+      // Add id if available
+      if (id) {
+        payload.id = id;
       }
 
       const trackerUrl = 'https://accesself.co.za/php/api/track.php';
