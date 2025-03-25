@@ -61,13 +61,6 @@ const PageMenu = () => {
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
-                to="/#pricing" 
-                className={location.hash === "#pricing" ? "active" : ""}
-              >
-                Pricing
-              </Nav.Link>
-              <Nav.Link 
-                as={Link} 
                 to="/documentation" 
                 className={isActive("/documentation") ? "active" : ""}
               >

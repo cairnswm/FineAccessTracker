@@ -97,7 +97,7 @@ const PricingSection = () => {
           </Card.Header>
           <Card.Body className="d-flex flex-column">
             <div className="pricing-price text-center mb-4">
-              <span className="display-4">$19</span>
+              <span className="display-4">R100</span>
               <span className="text-muted">/month</span>
             </div>
             
@@ -135,7 +135,7 @@ const PricingSection = () => {
                 className="w-100"
                 onClick={handleUpgrade}
               >
-                Upgrade Now
+                Get Started, upgrade later
               </Button>
             </div>
           </Card.Body>
@@ -152,7 +152,7 @@ const PricingSection = () => {
           </Card.Header>
           <Card.Body className="d-flex flex-column">
             <div className="pricing-price text-center mb-4">
-              <span className="display-4">$49</span>
+              <span className="display-4">R300</span>
               <span className="text-muted">/month</span>
             </div>
             
@@ -190,7 +190,7 @@ const PricingSection = () => {
                 className="w-100"
                 onClick={handleUpgrade}
               >
-                Go Pro
+                Get Started, upgrade later
               </Button>
             </div>
           </Card.Body>

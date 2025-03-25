@@ -10,6 +10,7 @@ import PricingSection from "../components/landingpage/PricingSection";
 import CTASection from "../components/landingpage/CTASection";
 import "./LandingPage.css";
 import AccessTracker from "../components/integration/AccessTracker";
+import WhySection from "../components/landingpage/WhySection";
 
 const LandingPage = () => {
   return (
@@ -17,6 +18,7 @@ const LandingPage = () => {
       <AccessTracker page="landing" />
       <PageMenu />
       <HeroSection />
+      <WhySection />
       <BenefitsSection />
       <IntegrationSection />
       <HowItWorksSection />
