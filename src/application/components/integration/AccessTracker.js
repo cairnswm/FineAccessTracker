@@ -71,8 +71,8 @@ const AccessTracker = ({
         payload.itemId = itemId;
       }
 
-      // const trackerUrl = 'https://accesself.co.za/php/api/track.php';
-      const trackerUrl = 'http://localhost/AccessTracker/php/api/track.php';
+      const trackerUrl = 'https://accesself.co.za/php/api/track.php';
+      // const trackerUrl = 'http://localhost/AccessTracker/php/api/track.php';
 
       // Send the tracking data to the API
       const response = await fetch(trackerUrl, {

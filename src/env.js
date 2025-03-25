@@ -6,7 +6,7 @@ let FILES = "https://cairnsgames.co.za/files/";
 // let PAYWEB3 = "http://localhost/cairnsgames/php/payweb3/";
 let PAYWEB3 = "http://cairnsgames.co.za/php/payweb3/";
 // let SUBSCRIPTIONS = "http://localhost/cairnsgames/php/subscriptions/";
-let SUBSCRIPTIONS = "http://cairnsgames.co.za/php/subscriptions/";
+let SUBSCRIPTIONS = "https://cairnsgames.co.za/php/subscriptions/";
 let ACCESS = "https://accesself.co.za/php/";
 
 if (typeof process !== 'undefined' && process?.env) {
