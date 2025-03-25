@@ -48,17 +48,18 @@ function updateIpAddress($ipAddress)
         $country = isset($ipInfo['country']) ? $ipInfo['country'] : 'Unknown';
         $region = isset($ipInfo['region']) ? $ipInfo['region'] : 'Unknown';
         $city = isset($ipInfo['city']) ? $ipInfo['city'] : 'Unknown';
+        $data = json_encode($ipInfo);
 
         if ($row) {
             // Update existing record
-            $query = "UPDATE ip_geolocation_cache SET country = ?, region = ?, city = ?, last_updated = NOW() WHERE id = ?";
+            $query = "UPDATE ip_geolocation_cache SET country = ?, region = ?, city = ?, data=?, last_updated = NOW() WHERE id = ?";
             $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("sssi", $country, $region, $city, $row['id']);
+            $stmt->bind_param("ssssi", $country, $region, $city, $data, $row['id']);
         } else {
             // Insert new record
-            $query = "INSERT INTO ip_geolocation_cache (ip_address, country, region, city, last_updated) VALUES (?, ?, ?, ?, NOW())";
+            $query = "INSERT INTO ip_geolocation_cache (ip_address, country, region, city, data, last_updated) VALUES (?, ?, ?, ?, ?, NOW())";
             $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("ssss", $ipAddress, $country, $region, $city);
+            $stmt->bind_param("sssss", $ipAddress, $country, $region, $city, $data);
         }
 
         $stmt->execute();
