@@ -59,7 +59,7 @@ const Navigation = () => {
                 <NavDropdown.Item as={Link} to="/profile">
                   Profile
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/invites">
+                {/* <NavDropdown.Item as={Link} to="/invites">
                   Invites
                   {inviteCount > 0 && (
                     <Badge bg="danger" pill className="ms-2">
@@ -77,13 +77,13 @@ const Navigation = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/properties">
                   Properties
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
                 <NavDropdown.Item as={Link} to="/subscriptions">
                   Subscriptions
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/comingsoon">
+                {/* <NavDropdown.Item as={Link} to="/comingsoon">
                   Coming Soon
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>
                   Logout
