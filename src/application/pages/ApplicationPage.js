@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Tab } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApplications } from '../context/ApplicationContext';
+import { usePageTracking } from '../context/ApplicationContext';
+import { useItemTracking } from '../context/ApplicationContext';
+import { useActivityTracking } from '../context/ApplicationContext';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 
@@ -17,15 +20,20 @@ import NotFoundView from '../components/applicationdetails/NotFoundView';
 const ApplicationPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { 
-    getApplication, 
-    getPageTrackingByAppId, 
-    getItemTrackingByAppIdAndPage,
-    getActivityTracking
-  } = useApplications();
+  const { getApplication, setActiveApplicationId, analytics, dailyAnalytics } = useApplications();
+  const { getPageTrackingByAppId } = usePageTracking();
+  const { getItemTrackingByAppIdAndPage } = useItemTracking();
+  const { getActivityTracking } = useActivityTracking();
+
   
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedPage, setSelectedPage] = useState(null);
+  
+  useEffect(() => {
+    if (id) {
+      setActiveApplicationId(parseInt(id));
+    }
+  }, [id, setActiveApplicationId]);
   
   const application = getApplication(id);
   
@@ -39,6 +47,7 @@ const ApplicationPage = () => {
     ? getItemTrackingByAppIdAndPage(applicationId, selectedPage) 
     : [];
   const activityData = getActivityTracking({ applicationId }).slice(0, 10);
+  const sessionData = getActivityTracking({ applicationId, type: 'site' });
   
   const handleViewItems = (page) => {
     setSelectedPage(page);
@@ -58,8 +67,11 @@ const ApplicationPage = () => {
         return (
           <OverviewTab 
             application={application} 
+            nalytics={analytics}
             pageTrackingData={pageTrackingData} 
             activityData={activityData} 
+            sessionData={sessionData}
+            dailyAnalytics={dailyAnalytics}
           />
         );
       case 'tracking':
@@ -83,7 +95,7 @@ const ApplicationPage = () => {
       case 'integration':
         return (
           <IntegrationTab 
-            apiKey={application.apiKey} 
+            apiKey={application.api_key} 
           />
         );
       case 'users':
@@ -108,7 +120,7 @@ const ApplicationPage = () => {
         <Col xs="auto">
           <Button 
             variant="outline-secondary" 
-            onClick={() => navigate('/applications')}
+            onClick={() => navigate('/home')}
             className="d-flex align-items-center"
           >
             <span>Back to Applications</span>

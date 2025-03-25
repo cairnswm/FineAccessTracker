@@ -1,80 +1,47 @@
-import React from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
-import TrackingOverview from '../tracking/TrackingOverview';
-import TrafficOverview from '../dashboard/TrafficOverview';
-import TopLocations from '../dashboard/TopLocations';
-import RecentActivityTable from '../dashboard/RecentActivityTable';
+import React from "react";
+import { Row, Col, Card } from "react-bootstrap";
+import TrackingOverview from "../tracking/TrackingOverview";
+import TrafficOverview from "../tracking/TrafficOverview";
+import TopLocations from "../dashboard/TopLocations";
+import RecentActivityTable from "../dashboard/RecentActivityTable";
+import RecentSessions from "../dashboard/RecentSessions";
+import ApplicationOverview from "./ApplicationOverview";
 
-const OverviewTab = ({ application, pageTrackingData, activityData }) => {
+const OverviewTab = ({
+  application,
+  analytics,
+  pageTrackingData,
+  activityData,
+  sessionData,
+  dailyAnalytics
+}) => {
   const applicationId = application.id;
 
   return (
     <>
-      <TrackingOverview application={application} />
-      
+      <TrackingOverview application={application} analytics={analytics}/>
+
       <Row className="mb-4">
         <Col>
-          <Card className="shadow-sm">
-            <Card.Body>
-              <Card.Title>Application Overview</Card.Title>
-              <Card.Text>
-                This dashboard shows analytics for your {application.name} application. 
-                You can view detailed page and item tracking data in the Tracking Data tab.
-              </Card.Text>
-              <div className="d-flex">
-                <div className="me-4">
-                  <strong>API Key:</strong> <code>{application.apiKey}</code>
-                </div>
-                <div>
-                  <strong>Created:</strong> {application.createdAt}
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
+          <ApplicationOverview application={application} />
         </Col>
       </Row>
-      
+
       <Row className="g-4 mb-4">
         <Col md={8}>
-          <TrafficOverview applicationId={applicationId} />
+          <TrafficOverview analytics={dailyAnalytics} />
         </Col>
-        
+
         <Col md={4}>
           <TopLocations applicationId={applicationId} />
         </Col>
       </Row>
-      
+
       <Row className="g-4">
         <Col md={6}>
-          <Card className="shadow-sm h-100">
-            <Card.Body>
-              <Card.Title>Recent Activity</Card.Title>
-              {activityData && activityData.length > 0 ? (
-                <ul className="list-group list-group-flush">
-                  {activityData.slice(0, 5).map((activity) => (
-                    <li key={activity.id} className="list-group-item">
-                      <div className="d-flex justify-content-between">
-                        <div>
-                          <strong>Page:</strong> <code>{activity.page}</code>
-                          {activity.itemId && (
-                            <span> / <strong>Item:</strong> <code>{activity.itemId}</code></span>
-                          )}
-                        </div>
-                        <small className="text-muted">{activity.timestamp}</small>
-                      </div>
-                      <small className="text-muted">{activity.location} • {activity.device}</small>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-muted">
-                  No recent activity to display. Add the tracking component to your application to start collecting data.
-                </p>
-              )}
-            </Card.Body>
-          </Card>
+          <RecentSessions activities={sessionData} />
         </Col>
-        
+
         <Col md={6}>
           <Card className="shadow-sm h-100">
             <Card.Body>
@@ -82,19 +49,26 @@ const OverviewTab = ({ application, pageTrackingData, activityData }) => {
               {pageTrackingData && pageTrackingData.length > 0 ? (
                 <ul className="list-group list-group-flush">
                   {pageTrackingData
-                    .sort((a, b) => b.visits - a.visits)
+                    .sort((a, b) => b.totalVisits - a.totalVisits)
                     .slice(0, 5)
-                    .map((page, index) => (
-                      <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                          <div>{page.title}</div>
-                          <small className="text-muted"><code>{page.page}</code></small>
-                        </div>
-                        <span className="badge bg-primary rounded-pill">
-                          {page.visits.toLocaleString()} visits
-                        </span>
-                      </li>
-                    ))}
+                    .map((page, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                          <div>
+                            <div>{page.title}</div>
+                            <small className="text-muted">
+                              <code>{page.page}</code>
+                            </small>
+                          </div>
+                          <span className="badge bg-primary rounded-pill">
+                            {page.totalVisits} visits
+                          </span>
+                        </li>
+                      );
+                    })}
                 </ul>
               ) : (
                 <Card.Text className="text-muted">
@@ -105,7 +79,7 @@ const OverviewTab = ({ application, pageTrackingData, activityData }) => {
           </Card>
         </Col>
       </Row>
-      
+
       <Row className="mt-4">
         <Col>
           <RecentActivityTable activities={activityData} />

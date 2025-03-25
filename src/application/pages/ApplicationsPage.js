@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Button, Table, Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/context/AuthContext';
@@ -6,35 +6,51 @@ import { useApplications } from '../context/ApplicationContext';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import { PlusLg, PencilFill, TrashFill, EyeFill } from 'react-bootstrap-icons';
+import AddApplicationModal from '../components/AddApplicationModal';
 
 const ApplicationsPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { applications, addApplication, updateApplication, deleteApplication } = useApplications();
+  const { 
+    applications, 
+    addApplication, 
+    updateApplication, 
+    deleteApplication, 
+    setActiveApplicationId
+  } = useApplications();
   
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentApp, setCurrentApp] = useState(null);
   const [formData, setFormData] = useState({ name: '', description: '' });
   
+  useEffect(() => {
+    // Set the first application as active when the page loads
+    if (applications.length > 0) {
+      setActiveApplicationId(applications[0].id);
+    }
+  }, [applications, setActiveApplicationId]);
+  
   const handleCloseModals = () => {
-    setShowAddModal(false);
-    setShowEditModal(false);
+    setShowModal(false);
     setShowDeleteModal(false);
     setCurrentApp(null);
     setFormData({ name: '', description: '' });
+    setIsEditMode(false);
   };
   
   const handleShowAddModal = () => {
     setFormData({ name: '', description: '' });
-    setShowAddModal(true);
+    setShowModal(true);
+    setIsEditMode(false);
   };
   
   const handleShowEditModal = (app) => {
     setCurrentApp(app);
     setFormData({ name: app.name, description: app.description });
-    setShowEditModal(true);
+    setShowModal(true);
+    setIsEditMode(true);
   };
   
   const handleShowDeleteModal = (app) => {
@@ -47,28 +63,24 @@ const ApplicationsPage = () => {
     setFormData({ ...formData, [name]: value });
   };
   
-  const handleAddApplication = () => {
+  const handleSaveApplication = () => {
     if (formData.name.trim() === '') return;
-    
-    const apiKey = `${formData.name.toLowerCase().replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2, 10)}`;
-    
-    addApplication({
-      name: formData.name,
-      description: formData.description,
-      apiKey
-    });
-    
-    handleCloseModals();
-  };
-  
-  const handleEditApplication = () => {
-    if (formData.name.trim() === '' || !currentApp) return;
-    
-    updateApplication(currentApp.id, {
-      name: formData.name,
-      description: formData.description
-    });
-    
+
+    if (isEditMode && currentApp) {
+      updateApplication(currentApp.id, {
+        name: formData.name,
+        description: formData.description
+      });
+    } else {
+      const apiKey = `${formData.name.toLowerCase().replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2, 10)}`;
+      const newApp = addApplication({
+        name: formData.name,
+        description: formData.description,
+        apiKey
+      });
+      setActiveApplicationId(newApp.id);
+    }
+
     handleCloseModals();
   };
   
@@ -120,13 +132,16 @@ const ApplicationsPage = () => {
                     <td>{app.description}</td>
                     <td><code>{app.apiKey}</code></td>
                     <td>{app.createdAt}</td>
-                    <td>{app.stats.totalVisits.toLocaleString()}</td>
+                    <td>{app.totalVisits}</td>
                     <td>
                       <Button 
                         variant="outline-primary" 
                         size="sm" 
                         className="me-2 d-inline-flex align-items-center"
-                        onClick={() => navigate(`/application/${app.id}`)}
+                        onClick={() => {
+                          setActiveApplicationId(app.id);
+                          navigate(`/application/${app.id}`);
+                        }}
                       >
                         <EyeFill />
                         <span className="ms-1">View</span>
@@ -173,97 +188,15 @@ const ApplicationsPage = () => {
         </Card.Body>
       </Card>
       
-      {/* Add Application Modal */}
-      <Modal show={showAddModal} onHide={handleCloseModals}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Application</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Application Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Enter application name"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Enter a brief description"
-                rows={3}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModals}>
-            Cancel
-          </Button>
-          <Button 
-            variant="primary" 
-            onClick={handleAddApplication}
-            className="d-flex align-items-center"
-          >
-            <PlusLg className="me-2" />
-            <span>Add Application</span>
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      
-      {/* Edit Application Modal */}
-      <Modal show={showEditModal} onHide={handleCloseModals}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Application</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Application Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Enter application name"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Enter a brief description"
-                rows={3}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModals}>
-            Cancel
-          </Button>
-          <Button 
-            variant="primary" 
-            onClick={handleEditApplication}
-            className="d-flex align-items-center"
-          >
-            <PencilFill className="me-2" />
-            <span>Save Changes</span>
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Add/Edit Application Modal */}
+      <AddApplicationModal 
+        show={showModal} 
+        handleClose={handleCloseModals} 
+        formData={formData} 
+        handleInputChange={handleInputChange} 
+        handleSaveApplication={handleSaveApplication} 
+        isEditMode={isEditMode}
+      />
       
       {/* Delete Application Modal */}
       <Modal show={showDeleteModal} onHide={handleCloseModals}>

@@ -53,6 +53,7 @@ function hasAccess($id, $permission)
 
 function getSecret($secretname, $default)
 {
+
     global $debugValues;
     $appid = getAppId();
     if ($appid == null) {
@@ -62,9 +63,11 @@ function getSecret($secretname, $default)
     $params = [$appid, $secretname];
     $sss = "ss";
     $result = PrepareExecSQL($sql, $sss, $params);
+    
     if (empty($result)) {
         return $default;
     }
+
     return $result[0]["value"];
 }
 

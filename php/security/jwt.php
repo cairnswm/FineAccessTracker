@@ -128,7 +128,6 @@ function validate_jwt($token, $time = false, $aud = null)
         }
         return true;
     } else {
-        echo "Signature does not match";
         $jwtError[] = "Signature does not match";
         return false;
     }

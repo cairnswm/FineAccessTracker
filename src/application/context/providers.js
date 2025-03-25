@@ -12,7 +12,7 @@ const Providers = () => {
   return (
     <React.StrictMode>
       <TenantProvider
-        applicationId="950ef1d9-c657-11ed-95d1-f0a654c38aa6"
+        applicationId="83b8771c-07f9-11f0-9750-1a220d8ac2c9"
         config={{}}
         onError={(message, error) => console.error(message, error)}
       >

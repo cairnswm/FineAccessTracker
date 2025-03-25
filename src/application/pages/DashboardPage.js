@@ -3,6 +3,9 @@ import { Container, Row, Col, Card, Button, Form, Table, Dropdown } from 'react-
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/context/AuthContext';
 import { useApplications } from '../context/ApplicationContext';
+import { usePageTracking } from '../context/ApplicationContext';
+import { useItemTracking } from '../context/ApplicationContext';
+import { useActivityTracking } from '../context/ApplicationContext';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import TrackingChart from '../components/tracking/TrackingChart';
@@ -21,12 +24,10 @@ import {
 const DashboardPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { 
-    applications, 
-    pageTracking, 
-    itemTracking,
-    getActivityTracking
-  } = useApplications();
+  const { applications, analytics } = useApplications();
+  const { pageTracking } = usePageTracking();
+  const { itemTracking } = useItemTracking();
+  const { getActivityTracking } = useActivityTracking();
   
   const [selectedApp, setSelectedApp] = useState('all');
   const [timeRange, setTimeRange] = useState('7');
@@ -35,17 +36,16 @@ const DashboardPage = () => {
   const calculateTotalStats = () => {
     if (selectedApp === 'all') {
       return {
-        totalVisits: applications.reduce((sum, app) => sum + app.stats.totalVisits, 0),
-        uniqueVisitors: applications.reduce((sum, app) => sum + app.stats.uniqueVisitors, 0),
-        bounceRate: Math.round(applications.reduce((sum, app) => {
-          const rate = parseInt(app.stats.bounceRate);
+        totalVisits: analytics.reduce((sum, a) => sum + a.totalVisits, 0),
+        uniqueVisitors: analytics.reduce((sum, a) => sum + a.uniqueVisitors, 0),
+        bounceRate: Math.round(analytics.reduce((sum, a) => {
+          const rate = parseInt(a.bounceRate);
           return sum + rate;
-        }, 0) / applications.length) + '%',
+        }, 0) / (analytics.length || 1)) + '%',
         avgSession: "2m 45s" // This would be calculated properly in a real implementation
       };
     } else {
-      const app = applications.find(a => a.id === parseInt(selectedApp));
-      return app ? app.stats : { totalVisits: 0, uniqueVisitors: 0, bounceRate: "0%", avgSession: "0m 0s" };
+      return analytics;
     }
   };
   
