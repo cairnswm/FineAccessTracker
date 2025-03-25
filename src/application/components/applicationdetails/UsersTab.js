@@ -17,8 +17,6 @@ const UsersTab = ({ application }) => {
     updateInvite
   } = useApplicationUsers();
 
-  console.log("==== UsersTab applicationUsers", applicationUsers);
-  console.log("==== UsersTab applicationInvites", applicationInvites);
   
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('viewer');

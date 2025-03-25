@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { useAuth } from '../../auth/context/AuthContext';
 import { useApplications } from './ApplicationsContext';
 import { useTenant } from "../../auth/hooks/useTenant";
+import { combineUrlAndPath } from "../../auth/utils/combineUrlAndPath";
 import { REACT_APP_ACCESS_API } from "../../env";
 
 const UsersContext = createContext(null);
@@ -68,8 +69,6 @@ export const UsersProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("==== UsersProvider activeApplicationId", activeApplicationId);
-    console.log("==== UsersProvider user", user);
     if (activeApplicationId) {
       fetchInvites();
       fetchUsers();

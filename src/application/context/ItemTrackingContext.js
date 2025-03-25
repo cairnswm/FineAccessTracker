@@ -4,6 +4,7 @@ import { useApplications } from "./ApplicationsContext";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { useTenant } from "../../auth/hooks/useTenant";
 import { REACT_APP_ACCESS_API } from "../../env";
+import { combineUrlAndPath } from "../../auth/utils/combineUrlAndPath";
 
 const ItemTrackingContext = createContext(null);
 
