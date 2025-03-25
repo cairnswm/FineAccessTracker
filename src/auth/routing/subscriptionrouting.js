@@ -4,6 +4,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Subscriptions from "../pages/subscriptionsPage";
 import BuySubscription from "../pages/subscriptionBuyPage";
 import { SubscriptionsProvider } from "../context/SubscriptionsContext";
+import SubscriptionsReturn from "../pages/subscriptionReturn";
 
 const SubscriptionRouting = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const SubscriptionRouting = () => {
       <ProtectedRoute>
         {path === "" && <Subscriptions />}
         {path === "/buy" && <BuySubscription />}
+        {path === "/return" && <SubscriptionsReturn />}
       </ProtectedRoute>
     </SubscriptionsProvider>
   );
