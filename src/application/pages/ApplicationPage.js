@@ -5,6 +5,7 @@ import { useApplications } from '../context/ApplicationContext';
 import { usePageTracking } from '../context/ApplicationContext';
 import { useItemTracking } from '../context/ApplicationContext';
 import { useActivityTracking } from '../context/ApplicationContext';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 
@@ -111,6 +112,8 @@ const ApplicationPage = () => {
   
   return (
     <PageLayout>
+      
+      <AccessTracker page="application" id={id} />
       <PageMenu />
       <Row className="mb-4">
         <Col>

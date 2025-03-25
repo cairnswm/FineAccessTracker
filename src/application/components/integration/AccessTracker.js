@@ -12,7 +12,6 @@ import React, { useEffect, useRef } from 'react';
  * @param {React.ReactNode} props.children - The content to render inside the tracker
  */
 const AccessTracker = ({ 
-  apiKey, 
   page, 
   itemId, 
   title, 
@@ -21,20 +20,15 @@ const AccessTracker = ({
 }) => {
   // Use a ref to track if the component has already sent the tracking data
   const hasTracked = useRef(false);
-  if (!apiKey) {
-    apiKey = "caa1f4d6-caa1f4d7-411a-97bf-8b5fa72a1b0d";
-  }
+  const apiKey = "caa1f4d6-caa1f4d7-411a-97bf-8b5fa72a1b0d";
+  
   
   // Debounce timer reference
   const timerRef = useRef(null);
 
-  // If no API key is provided, try to use the current application's API key
-  // This is a placeholder that will be replaced with the actual API key when downloaded
-  const effectiveApiKey = apiKey || "CURRENT_APP_API_KEY";
-
   useEffect(() => {
     // Skip if already tracked or missing required props
-    if (hasTracked.current || !effectiveApiKey) {
+    if (hasTracked.current || !apiKey) {
       return;
     }
 
@@ -57,7 +51,7 @@ const AccessTracker = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [effectiveApiKey, page, itemId, title]);
+  }, [page, itemId, title]);
 
   const trackView = async () => {
     try {
@@ -77,12 +71,15 @@ const AccessTracker = ({
         payload.itemId = itemId;
       }
 
+      // const trackerUrl = 'https://accesself.co.za/php/api/track.php';
+      const trackerUrl = 'http://localhost/AccessTracker/php/api/track.php';
+
       // Send the tracking data to the API
-      const response = await fetch('https://accesself.co.za/php/api/track.php', {
+      const response = await fetch(trackerUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${effectiveApiKey}`
+          'apikey': `${apiKey}`
         },
         body: JSON.stringify(payload)
       });

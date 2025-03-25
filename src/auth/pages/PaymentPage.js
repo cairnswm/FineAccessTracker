@@ -5,6 +5,7 @@ import PageLayout from '../components/pagelayout';
 import { useTenant } from '../hooks/useTenant';
 import { useAuth } from '../context/AuthContext';
 import { useSubscriptions } from '../context/SubscriptionsContext';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 
 const Payment = ({ subscriptionItems = [], onPaid }) => {
   const [amount, setAmount] = useState('0.00');
@@ -48,6 +49,8 @@ const Payment = ({ subscriptionItems = [], onPaid }) => {
 
   return (
     <PageLayout>
+      
+      <AccessTracker page="payment" />
       <Card style={{ maxWidth: '600px' }} className="mx-auto">
         <Card.Body>
           <h2 className="text-center mb-4">Make Payment</h2>

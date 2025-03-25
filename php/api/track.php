@@ -1,10 +1,17 @@
 <?php
 
 include_once dirname(__FILE__) . "/../corsheaders.php";
-include_once dirname(__FILE__)."/../utils.php";
-include_once dirname(__FILE__)."/../trackerconfig.php";
 
-function getIpInfo($ipAddress) {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+include_once dirname(__FILE__) . "/../utils.php";
+include_once dirname(__FILE__) . "/../trackerconfig.php";
+
+function getIpInfo($ipAddress)
+{
   $token = 'd4ca2fb7404647';
   $url = "http://ipinfo.io/{$ipAddress}?token={$token}";
 
@@ -18,57 +25,54 @@ function getIpInfo($ipAddress) {
 }
 function updateIpAddress($ipAddress)
 {
-    global $mysqli;
+  global $mysqli;
 
-    // Check if the IP address exists and is not older than 30 days
-    $query = "SELECT id, last_updated FROM ip_geolocation_cache WHERE ip_address = ?";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("s", $ipAddress);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $stmt->close();
+  // Check if the IP address exists and is not older than 30 days
+  $query = "SELECT id, last_updated FROM ip_geolocation_cache WHERE ip_address = ?";
+  $stmt = $mysqli->prepare($query);
+  $stmt->bind_param("s", $ipAddress);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $row = $result->fetch_assoc();
+  $stmt->close();
 
-    $currentDate = new DateTime();
-    $updateRequired = false;
+  $currentDate = new DateTime();
+  $updateRequired = false;
+
+  if ($row) {
+    $lastUpdated = new DateTime($row['last_updated']);
+    $interval = $currentDate->diff($lastUpdated);
+    if ($interval->days > 30) {
+      $updateRequired = true;
+    }
+  } else {
+    $updateRequired = true;
+  }
+
+  if ($updateRequired) {
+    // Generate random data for country, region, and city
+    $ipInfo = getIpInfo($ipAddress);
+    $country = isset($ipInfo['country']) ? $ipInfo['country'] : 'Unknown';
+    $region = isset($ipInfo['region']) ? $ipInfo['region'] : 'Unknown';
+    $city = isset($ipInfo['city']) ? $ipInfo['city'] : 'Unknown';
+    $data = json_encode($ipInfo);
 
     if ($row) {
-        $lastUpdated = new DateTime($row['last_updated']);
-        $interval = $currentDate->diff($lastUpdated);
-        if ($interval->days > 30) {
-            $updateRequired = true;
-        }
+      // Update existing record
+      $query = "UPDATE ip_geolocation_cache SET country = ?, region = ?, city = ?, data=?, last_updated = NOW() WHERE id = ?";
+      $stmt = $mysqli->prepare($query);
+      $stmt->bind_param("ssssi", $country, $region, $city, $data, $row['id']);
     } else {
-        $updateRequired = true;
+      // Insert new record
+      $query = "INSERT INTO ip_geolocation_cache (ip_address, country, region, city, data, last_updated) VALUES (?, ?, ?, ?, ?, NOW())";
+      $stmt = $mysqli->prepare($query);
+      $stmt->bind_param("sssss", $ipAddress, $country, $region, $city, $data);
     }
 
-    if ($updateRequired) {
-        // Generate random data for country, region, and city
-        $ipInfo = getIpInfo($ipAddress);
-        $country = isset($ipInfo['country']) ? $ipInfo['country'] : 'Unknown';
-        $region = isset($ipInfo['region']) ? $ipInfo['region'] : 'Unknown';
-        $city = isset($ipInfo['city']) ? $ipInfo['city'] : 'Unknown';
-        $data = json_encode($ipInfo);
-
-        if ($row) {
-            // Update existing record
-            $query = "UPDATE ip_geolocation_cache SET country = ?, region = ?, city = ?, data=?, last_updated = NOW() WHERE id = ?";
-            $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("ssssi", $country, $region, $city, $data, $row['id']);
-        } else {
-            // Insert new record
-            $query = "INSERT INTO ip_geolocation_cache (ip_address, country, region, city, data, last_updated) VALUES (?, ?, ?, ?, ?, NOW())";
-            $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("sssss", $ipAddress, $country, $region, $city, $data);
-        }
-
-        $stmt->execute();
-        $stmt->close();
-    }
+    $stmt->execute();
+    $stmt->close();
+  }
 }
-
-$headers = getallheaders();
-$apikey = isset($headers['apikey']) ? $headers['apikey'] : '';
 
 function decodeApiKey($guid) {
   $parts = explode('-', $guid);
@@ -85,12 +89,17 @@ function decodeApiKey($guid) {
   return $encodedInt - $baseInt;
 }
 
+$headers = getallheaders();
+$apikey = isset($headers['apikey']) ? $headers['apikey'] : '';
+
+
+
 $appid = decodeApiKey($apikey);
 $user_id = getParam("user_id", "");
 $itemid = getParam("id", "");
 $page = getParam("page", "");
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$out = ["page"=>$page, "itemid"=>$itemid, "user_id"=>$user_id, "ip_address"=>$ip_address];
+$out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address];
 
 $itemtype = "site";
 
@@ -131,9 +140,9 @@ if ($itemtype != "") {
   updateIpAddress($ip_address);
 
   $mysqli->close();
-	$out["data"] = $result;
+  $out["data"] = $result;
 } else {
-	$out["error"] = "All parameters are required!";
+  $out["error"] = "All parameters are required!";
 }
 http_response_code(200);
 echo json_encode($out);

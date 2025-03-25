@@ -4,6 +4,7 @@ import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
 import TrackingInformation from '../components/documentation/TrackingInformation';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 
 const DocumentationPage = () => {
   // Example API key for documentation purposes
@@ -11,6 +12,8 @@ const DocumentationPage = () => {
   
   return (
     <PageLayout>
+      
+      <AccessTracker page="documentation" />
       <PageMenu />
       <Container>
         <h1 className="mb-4">Documentation</h1>

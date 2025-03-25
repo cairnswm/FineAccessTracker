@@ -8,10 +8,13 @@ import HowItWorksSection from '../components/landingpage/HowItWorksSection';
 import FeaturesSection from '../components/landingpage/FeaturesSection';
 import PricingSection from '../components/landingpage/PricingSection';
 import TrackingInformation from '../components/documentation/TrackingInformation';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 
 const AboutPage = () => {
   return (
     <PageLayout>
+      
+      <AccessTracker page="about" />
       <PageMenu />
       <Container>
         <Row className="mb-5">

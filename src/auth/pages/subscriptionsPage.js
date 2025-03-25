@@ -7,6 +7,7 @@ import SubscriptionsTable from '../components/subscriptions/subscriptionstable';
 import CreditsTable from '../components/subscriptions/creditstable';
 import PageLayout from '../components/pagelayout';
 import BackBar from '../components/backbar';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 
 const SubscriptionsPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const SubscriptionsPage = () => {
 
   return (
     <PageLayout>
+      
+      <AccessTracker page="subscriptions" />
       <BackBar />
       <Card>
         <Card.Body>

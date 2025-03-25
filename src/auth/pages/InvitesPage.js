@@ -4,6 +4,7 @@ import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useApplications } from '../../application/context/ApplicationContext';
+import AccessTracker from '../../application/components/integration/AccessTracker';
 import PageLayout from '../components/pagelayout';
 
 const InvitesPage = () => {
@@ -53,6 +54,8 @@ const InvitesPage = () => {
   
   return (
     <PageLayout>
+      
+      <AccessTracker page="invitations" />
       <Row className="mb-4">
         <Col>
           <h1>Application Invites</h1>
