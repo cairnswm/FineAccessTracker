@@ -16,7 +16,7 @@ const ApplicationTabs = ({ activeTab, onTabSelect }) => {
           <span>Overview</span>
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item>
+      {/* <Nav.Item>
         <Nav.Link 
           eventKey="tracking" 
           active={activeTab === 'tracking'}
@@ -26,7 +26,7 @@ const ApplicationTabs = ({ activeTab, onTabSelect }) => {
           <FileEarmarkText className="me-2" />
           <span>Tracking Data</span>
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
       <Nav.Item>
         <Nav.Link 
           eventKey="activity" 
@@ -49,7 +49,7 @@ const ApplicationTabs = ({ activeTab, onTabSelect }) => {
           <span>Integration</span>
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item>
+      {/* <Nav.Item>
         <Nav.Link 
           eventKey="users" 
           active={activeTab === 'users'}
@@ -59,7 +59,7 @@ const ApplicationTabs = ({ activeTab, onTabSelect }) => {
           <PeopleFill className="me-2" />
           <span>Users</span>
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
     </Nav>
   );
 };

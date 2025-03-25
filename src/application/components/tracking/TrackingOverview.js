@@ -23,12 +23,12 @@ const TrackingOverview = ({ application }) => {
         <Card className="h-100 shadow-sm">
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <div className="text-muted">Total Visits</div>
+              <div className="text-muted">Total Events</div>
               <BarChartFill size={20} className="text-primary" />
             </div>
             <h3 className="mb-0">{application.totalVisits}</h3>
             <div className="small text-success mt-2">
-              <ArrowUpRight /> 12% from last period
+              All events in the last day
             </div>
           </Card.Body>
         </Card>
@@ -43,7 +43,7 @@ const TrackingOverview = ({ application }) => {
             </div>
             <h3 className="mb-0">{application.uniqueVisitors}</h3>
             <div className="small text-success mt-2">
-              <ArrowUpRight /> 8% from last period
+              Derived from unique IP Addresses
             </div>
           </Card.Body>
         </Card>
@@ -58,7 +58,7 @@ const TrackingOverview = ({ application }) => {
             </div>
             <h3 className="mb-0">{formatSessionTime(application.avgSession)}</h3> 
             <div className="small text-success mt-2">
-              <ArrowUpRight /> 5% from last period
+              Estimated time between first and last event
             </div>
             <div className="small text-muted mt-1">
               Last updated: {application.lastUpdated}

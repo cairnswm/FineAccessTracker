@@ -16,7 +16,7 @@ const ApplicationOverview = ({ application }) => {
             <strong>API Key:</strong> <code>{application.api_key}</code>
           </div>
           <div>
-            <strong>Created:</strong> {application.createdAt}
+            <strong>Created:</strong> {application.created_at}
           </div>
         </div>
       </Card.Body>
