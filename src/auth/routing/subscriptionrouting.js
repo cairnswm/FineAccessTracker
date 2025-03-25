@@ -9,6 +9,8 @@ const SubscriptionRouting = () => {
   const location = useLocation();
   const path = location.pathname.replace("/subscriptions", "");
 
+  console.log("SubscriptionRouting path:", path);
+
   return (
     <SubscriptionsProvider
       onError={(message, error) => console.error(message, error)}
