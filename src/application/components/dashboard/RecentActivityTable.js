@@ -14,7 +14,8 @@ const RecentActivityTable = ({ activities }) => {
       </Card>
     );
   }
-
+  
+  console.log("Recent Activities", activities);
   return (
     <Card className="shadow-sm">
       <Card.Body>
@@ -27,18 +28,16 @@ const RecentActivityTable = ({ activities }) => {
               <th>Timestamp</th>
               <th>IP Address</th>
               <th>Location</th>
-              <th>Device</th>
             </tr>
           </thead>
           <tbody>
             {activities.map((activity) => (
               <tr key={activity.id}>
-                <td><code>{activity.page}</code></td>
+                <td><code>{activity.page !== ""? activity.page : "<site>"}</code></td>
                 <td>{activity.item_id ? <code>{activity.item_id}</code> : '-'}</td>
-                <td>{activity.event_date}</td>
+                <td>{activity.modified_at}</td>
                 <td>{activity.ip_address}</td>
-                <td>{activity.location}</td>
-                <td>{activity.device}</td>
+                <td>{activity.country_name}</td>
               </tr>
             ))}
           </tbody>

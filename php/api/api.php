@@ -56,7 +56,7 @@ $accessTrackerConfig = [
             "events" => [
                 "tablename" => "events",
                 "key" => "application_id",
-                "select" => ["id", "application_id", "event_date", "ip_address", "page", "item_id", "type", "data", "created_at", "modified_at"],
+                "select" => "getEvents",
                 "beforeselect" => ""
             ],
             "analytics" => [
@@ -296,6 +296,40 @@ GROUP BY a.id;";
     return $rows;
 }
 
+function getEvents($config, $id)
+{
+    global $gapiconn;
+    $query = "SELECT 
+    e.id,
+    e.application_id,
+    e.page,
+    e.item_id,
+    e.type,
+    e.ip_address,
+    e.event_date,
+    e.modified_at,
+    geo.country AS country_code,
+    c.country_name
+FROM events e
+LEFT JOIN ip_geolocation_cache geo
+  ON e.ip_address = geo.ip_address
+LEFT JOIN apps_countries c
+  ON geo.country = c.country_code
+WHERE e.application_id = ?
+ORDER BY e.modified_at DESC
+LIMIT 100;";
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('s', $config['where']['application_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
+}
 function getSiteEvents($config, $id)
 {
     global $gapiconn;

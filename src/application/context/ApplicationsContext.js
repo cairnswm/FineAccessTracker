@@ -25,7 +25,36 @@ export const ApplicationsProvider = ({ children }) => {
   const [dailyAnalytics, setDailyAnalytics] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeApplicationId, setActiveApplicationId] = useState(null);
+  const [countryAnalytics, setCountryAnalytics] = useState([]);
 
+  const fetchCountryAnalytics = async (appId) => {
+    if (!appId || !token) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${appId}/bycountry`),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCountryAnalytics(data);
+    } catch (error) {
+      console.error("Error fetching country analytics:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
   const fetchDailyAnalytics = async (appId) => {
     if (!appId || !token) return;
 
@@ -121,6 +150,7 @@ export const ApplicationsProvider = ({ children }) => {
     if (activeApplicationId) {
       fetchAnalytics(activeApplicationId);
       fetchDailyAnalytics(activeApplicationId);
+      fetchCountryAnalytics(activeApplicationId);
     }
   }, [activeApplicationId]);
 
@@ -256,6 +286,7 @@ export const ApplicationsProvider = ({ children }) => {
         // Analytics data and operations
         analytics,
         dailyAnalytics,
+        countryAnalytics,
 
         // Active application
         activeApplicationId,
