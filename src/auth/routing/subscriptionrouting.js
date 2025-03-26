@@ -17,7 +17,7 @@ const SubscriptionRouting = () => {
       <ProtectedRoute>
         {path === "" && <Subscriptions />}
         {path === "/buy" && <BuySubscription />}
-        {path === "/return" && <SubscriptionsReturn />}
+        {path === "/payment" && <SubscriptionsReturn />}
       </ProtectedRoute>
     </SubscriptionsProvider>
   );
