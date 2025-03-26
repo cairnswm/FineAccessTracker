@@ -8,13 +8,14 @@ import PageMenu from '../components/pagemenu';
 import ApplicationCard from '../components/ApplicationCard';
 import { PlusLg } from 'react-bootstrap-icons';
 import AddApplicationModal from '../components/AddApplicationModal';
-import AccessTracker from '../../application/components/integration/AccessTracker';
 import './HomePage.css';
+import { accessElf } from '../functions/accessElf';
 
 const HomePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { applications, addApplication, setActiveApplicationId } = useApplications();
+  accessElf.track("home");
   
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', description: '' });
@@ -51,8 +52,6 @@ const HomePage = () => {
   
   return (
     <PageLayout>
-      
-      <AccessTracker page="home" />
       <PageMenu />
       <Row className="mb-4">
         <Col>

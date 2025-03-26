@@ -5,7 +5,6 @@ import { useApplications } from '../context/ApplicationContext';
 import { usePageTracking } from '../context/ApplicationContext';
 import { useItemTracking } from '../context/ApplicationContext';
 import { useActivityTracking } from '../context/ApplicationContext';
-import AccessTracker from '../../application/components/integration/AccessTracker';
 import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 
@@ -17,6 +16,7 @@ import ActivityTab from '../components/applicationdetails/ActivityTab';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
 import UsersTab from '../components/applicationdetails/UsersTab';
 import NotFoundView from '../components/applicationdetails/NotFoundView';
+import { accessElf } from '../functions/accessElf';
 
 const ApplicationPage = () => {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const ApplicationPage = () => {
   const { getPageTrackingByAppId } = usePageTracking();
   const { getItemTrackingByAppIdAndPage } = useItemTracking();
   const { getActivityTracking } = useActivityTracking();
+  accessElf.track("application", id);
 
   
   const [activeTab, setActiveTab] = useState('overview');
@@ -112,8 +113,6 @@ const ApplicationPage = () => {
   
   return (
     <PageLayout>
-      
-      <AccessTracker page="application" id={id} />
       <PageMenu />
       <Row className="mb-4">
         <Col>

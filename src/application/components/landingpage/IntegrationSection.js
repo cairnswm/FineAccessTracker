@@ -151,6 +151,9 @@ const ProductsPage = ({ products }) => {
         <Card className="shadow-sm">
           <Card.Body>
             <Card.Title>Integration Examples</Card.Title>
+            <Card.Text>
+              Create your own integration code, or use our example component to start tracking views in your application.
+            </Card.Text>
             <Tab.Container defaultActiveKey="component">
               <Nav variant="tabs" className="mb-3">
                 <Nav.Item>

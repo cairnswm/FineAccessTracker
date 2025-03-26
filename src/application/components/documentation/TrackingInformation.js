@@ -22,7 +22,7 @@ const TrackingInformation = () => {
           <div>
             <strong>Location Tracking:</strong> Only application-level tracking calls (without specific page and item IDs) 
             will capture IP address and location data. To ensure you collect geographic information about your users, 
-            always include Access Tracker on your home page or main entry points.
+            always trigger a track call on your home page or main entry points.
           </div>
         </Alert>
         
@@ -30,22 +30,18 @@ const TrackingInformation = () => {
           <h6>Recommended Implementation:</h6>
           <pre className="bg-light p-3 rounded">
             <code>{`
-// On your main application wrapper or home page
-<AccessTracker
-  apiKey="YOUR_API_KEY"
-  // No page or itemId specified to capture location data
->
-  <YourAppComponent />
-</AccessTracker>
+// In your main app (e.g., App.js or useEffect in layout)
+import { setApiKey, track } from './accessElf';
 
-// On specific pages (won't capture location data)
-<AccessTracker
-  apiKey="YOUR_API_KEY"
-  page="products"
-  title="Products Page"
->
-  <ProductsPageComponent />
-</AccessTracker>
+// Set API key once
+setApiKey("YOUR_API_KEY");
+
+// On the home page to track location-based site visit
+track(); // no page or id specified
+
+// On specific pages to track views (no location data)
+track("products"); // page only
+track("products", "product-123"); // page and item ID
 `}</code>
           </pre>
         </div>

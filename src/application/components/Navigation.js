@@ -12,13 +12,14 @@ import {
 import { useApplicationUsers } from "../context/UsersContext";
 import { useSummary } from "../context/SummaryContext";
 import "./Navigation.css";
-import AccessTracker from "./integration/AccessTracker";
+import { accessElf } from "../functions/accessElf";
 
 const Navigation = () => {
   const { user, logout } = useAuth();
   const isAdmin = useAdmin();
   const navigate = useNavigate();
   const { getUserInvites } = useApplicationUsers();
+  accessElf.track();
 
   const { isPremium } = useSummary();
 
@@ -33,7 +34,6 @@ const Navigation = () => {
 
   return (
     <>
-      <AccessTracker /> 
 
       <Navbar bg="dark" variant="dark">
         <Container>

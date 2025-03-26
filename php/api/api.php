@@ -119,6 +119,12 @@ $accessTrackerConfig = [
                 "select" => "getItemEventsByDay",
                 "beforeselect" => ""
             ],
+            "bycountry" => [
+                "tablename" => "pages",
+                "key" => "application_id",
+                "select" => "getMostActiveCountries",
+                "beforeselect" => ""
+            ]
         ]
     ],
 
@@ -164,6 +170,7 @@ $accessTrackerConfig = [
         "createApplication" => "insertApplication",
         "decodeApiKey" => "reverseApiKey",
         "deleteApplication" => "deleteApplication"
+
     ]
 ];
 
@@ -559,3 +566,36 @@ function deleteApplication($fields)
     ];
 }
 
+
+function getMostActiveCountries($config, $id)
+{
+    global $gapiconn;
+    $query = "SELECT 
+    c.country_name,
+    c.country_code,
+    COUNT(DISTINCT CASE WHEN e.event_date >= CURDATE() - INTERVAL 30 DAY THEN e.ip_address END) AS ip_last_30_days,
+    COUNT(DISTINCT CASE WHEN e.event_date >= CURDATE() - INTERVAL 7 DAY THEN e.ip_address END) AS ip_last_7_days,
+    COUNT(DISTINCT CASE WHEN e.event_date = CURDATE() - INTERVAL 1 DAY THEN e.ip_address END) AS ip_yesterday,
+    COUNT(DISTINCT CASE WHEN e.event_date = CURDATE() THEN e.ip_address END) AS ip_today
+FROM events e
+JOIN ip_geolocation_cache geo
+  ON e.ip_address = geo.ip_address
+JOIN apps_countries c
+  ON geo.country = c.country_code
+WHERE 
+    e.application_id = ? AND
+    e.event_date >= CURDATE() - INTERVAL 30 DAY
+GROUP BY c.country_code, c.country_name
+ORDER BY ip_last_30_days DESC;";
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('s', $config['where']['application_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
+}

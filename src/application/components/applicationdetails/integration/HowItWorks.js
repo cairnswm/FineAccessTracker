@@ -39,21 +39,22 @@ const HowItWorks = ({ apiKey }) => {
           <li><strong>API Key</strong> - Your unique identifier for authentication (found in your dashboard)</li>
           <li><strong>Page Tracking</strong> - Records when users visit specific pages in your application</li>
           <li><strong>Item Tracking</strong> - Records when users interact with specific items (products, articles, etc.)</li>
-          <li><strong>Additional Data</strong> - Optional context information you can include with each tracking event</li>
+          <li><strong>Error Tracking</strong> - Capture Errors as they happen</li>
         </ul>
         
         <h6 className="mt-4">Vanilla JavaScript Example</h6>
         <pre className="bg-light p-3 rounded">
           <code>{`
 // Function to track a page view
-function trackPageView(apiKey, page, title, additionalData = {}) {
+function trackPageView(apiKey, page, id, error) {
   // Create the payload
   const payload = {
     page: page,
-    title: title,
-    timestamp: new Date().toISOString(),
-    ...additionalData
+    id: id
   };
+  if (error) {
+    payload.error = error;
+    }
 
   // Send the tracking data to the API
   fetch('https://accesself.co.za/php/api/track.php', {
@@ -75,14 +76,11 @@ function trackPageView(apiKey, page, title, additionalData = {}) {
 }
 
 // Function to track an item view
-function trackItemView(apiKey, page, itemId, title, additionalData = {}) {
+function trackItemView(apiKey, page, id) {
   // Create the payload
   const payload = {
     page: page,
-    itemId: itemId,
-    title: title,
-    timestamp: new Date().toISOString(),
-    ...additionalData
+    id: itemId,
   };
 
   // Send the tracking data to the API
@@ -103,41 +101,6 @@ function trackItemView(apiKey, page, itemId, title, additionalData = {}) {
     console.error('Error tracking item view:', error);
   });
 }
-
-// Usage examples
-document.addEventListener('DOMContentLoaded', function() {
-  const API_KEY = "${displayApiKey}";
-  
-  // Track application-level access to capture location data
-  fetch('https://accesself.co.za/php/api/track.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': \`Bearer \${API_KEY}\`
-    },
-    body: JSON.stringify({
-      timestamp: new Date().toISOString()
-    })
-  });
-  
-  // Track the current page view
-  trackPageView(API_KEY, 'products', 'Products Page', { 
-    referrer: document.referrer 
-  });
-  
-  // Track item views when a product is clicked
-  document.querySelectorAll('.product-item').forEach(product => {
-    product.addEventListener('click', function() {
-      const productId = this.getAttribute('data-product-id');
-      const productName = this.getAttribute('data-product-name');
-      
-      trackItemView(API_KEY, 'products', productId, productName, {
-        category: this.getAttribute('data-category'),
-        price: this.getAttribute('data-price')
-      });
-    });
-  });
-});
 `}</code>
         </pre>
         
@@ -146,8 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><strong>Debounce your tracking calls</strong> to prevent excessive API requests</li>
           <li><strong>Handle errors gracefully</strong> so tracking failures don't affect your application</li>
           <li><strong>Track meaningful events</strong> that provide insights into user behavior</li>
-          <li><strong>Include relevant context data</strong> to make your analytics more valuable</li>
-          <li><strong>Add application-level tracking</strong> on your main page to capture location data</li>
+          <li><strong>Add site-level tracking</strong> on your main page to capture location data</li>
+          <li><strong>Add Error tracking</strong> where needed so all errors can be monitored in one space</li>
+          <li><strong>Use Intersection Observer API</strong> to track user interactions with elements on the page</li>
         </ul>
       </Card.Body>
     </Card>
