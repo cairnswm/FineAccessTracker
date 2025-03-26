@@ -13,7 +13,8 @@ const OverviewTab = ({
   pageTrackingData,
   activityData,
   sessionData,
-  dailyAnalytics
+  dailyAnalytics,
+  countryAnalytics
 }) => {
   const applicationId = application.id;
 
@@ -33,7 +34,7 @@ const OverviewTab = ({
         </Col>
 
         <Col md={4}>
-          <TopLocations applicationId={applicationId} />
+          <TopLocations analytics={countryAnalytics} />
         </Col>
       </Row>
 

@@ -21,7 +21,7 @@ import { accessElf } from '../functions/accessElf';
 const ApplicationPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { getApplication, setActiveApplicationId, analytics, dailyAnalytics } = useApplications();
+  const { getApplication, setActiveApplicationId, analytics, dailyAnalytics, countryAnalytics } = useApplications();
   const { getPageTrackingByAppId } = usePageTracking();
   const { getItemTrackingByAppIdAndPage } = useItemTracking();
   const { getActivityTracking } = useActivityTracking();
@@ -69,11 +69,12 @@ const ApplicationPage = () => {
         return (
           <OverviewTab 
             application={application} 
-            nalytics={analytics}
+            analytics={analytics}
             pageTrackingData={pageTrackingData} 
             activityData={activityData} 
             sessionData={sessionData}
             dailyAnalytics={dailyAnalytics}
+            countryAnalytics={countryAnalytics}
           />
         );
       case 'tracking':
