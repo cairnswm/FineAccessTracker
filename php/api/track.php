@@ -126,6 +126,7 @@ if ($itemtype != "") {
     die("Connection failed: " . $mysqli->connect_error);
   }
 
+  echo "Inserting data...";
   $sql = "INSERT INTO events (application_id, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE count = count + 1";
 
