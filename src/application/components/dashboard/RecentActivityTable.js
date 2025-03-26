@@ -20,6 +20,7 @@ const RecentActivityTable = ({ activities }) => {
     <Card className="shadow-sm">
       <Card.Body>
         <Card.Title>Recent Activity</Card.Title>
+        <small>Showing only the latest 100 events</small>
         <Table responsive hover className="mt-3">
           <thead>
             <tr>
