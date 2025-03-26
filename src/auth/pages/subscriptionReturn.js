@@ -3,8 +3,10 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PageLayout from "../components/pagelayout";
 import BackBar from "../components/backbar";
+import { accessElf } from "../../application/functions/accessElf";
 
 const SubscriptionsReturn = () => {
+  accessElf.track("subscriptions/return", "return");
   return (
     <PageLayout>
       <BackBar />
