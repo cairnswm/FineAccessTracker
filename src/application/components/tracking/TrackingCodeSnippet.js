@@ -6,77 +6,45 @@ const TrackingCodeSnippet = ({ apiKey, trackingType }) => {
   const [copied, setCopied] = useState(false);
   
   const reactCode = `
-// React Component Example
-import { FineTracker } from '@fine/access-tracker';
+// React Example using accessElf.js
+import { useEffect } from 'react';
+import { accessElf } from './accessElf'; // adjust path as needed
 
 function App() {
+  useEffect(() => {
+    accessElf.setApiKey("${apiKey}");
+    accessElf.track("home"); // replace "home" with actual page name
+
+    ${trackingType === 'item' ? 'accessElf.track("product", "1234");' : ''}
+  }, []);
+
   return (
     <div className="App">
       {/* Your app content */}
-      
-      <FineTracker 
-        apiKey="${apiKey}" 
-        trackPageViews={true}
-        trackUserLocation={true}
-        ${trackingType === 'item' ? 'trackItemViews={true}' : ''}
-      />
     </div>
   );
-}`;
+}
+`;
 
   const htmlCode = `
-<!-- HTML Example -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <script src="https://cdn.fineaccesstracker.com/tracker.min.js"></script>
-</head>
-<body>
-  <!-- Your website content -->
-  
-  <script>
-    // Initialize FineAccessTracker
-    FineTracker.init({
-      apiKey: '${apiKey}',
-      trackPageViews: true,
-      trackUserLocation: true,
-      ${trackingType === 'item' ? 'trackItemViews: true,' : ''}
-    });
-  </script>
-</body>
-</html>`;
+<!-- HTML Example using window.accessElf -->
+<script src="https://yourcdn.com/accessElf.min.js"></script>
+<script>
+  window.accessElf.setApiKey("${apiKey}");
+  window.accessElf.track("home"); // replace "home" with your page name
+
+  ${trackingType === 'item' ? 'window.accessElf.track("product", "1234");' : ''}
+</script>
+`;
 
   const jsCode = `
-// JavaScript API Example
-import { trackEvent } from '@fine/access-tracker';
+// JavaScript Example using accessElf.js
+import { accessElf } from './accessElf'; // adjust path
 
-// Track application visit
-trackEvent({
-  apiKey: "${apiKey}",
-  eventType: "visit"
-});
+accessElf.setApiKey("${apiKey}");
+accessElf.track("home");
 
-${trackingType === 'page' || trackingType === 'item' ? `
-// Track page view
-trackEvent({
-  apiKey: "${apiKey}",
-  eventType: "pageview",
-  page: "products",
-  title: "Products Page"
-});` : ''}
-
-${trackingType === 'item' ? `
-// Track item view
-trackEvent({
-  apiKey: "${apiKey}",
-  eventType: "itemview",
-  page: "products",
-  itemId: "1001",
-  title: "Toaster"
-});` : ''}`;
+${trackingType === 'item' ? 'accessElf.track("product", "1234");' : ''}`;
 
   const copyToClipboard = (code) => {
     navigator.clipboard.writeText(code);
@@ -97,7 +65,7 @@ trackEvent({
               <Nav.Link eventKey="html">HTML</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="js">JavaScript API</Nav.Link>
+              <Nav.Link eventKey="js">JavaScript</Nav.Link>
             </Nav.Item>
           </Nav>
           <Tab.Content>

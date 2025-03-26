@@ -4,8 +4,8 @@ import { CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useApplications } from '../../application/context/ApplicationContext';
-import AccessTracker from '../../application/components/integration/AccessTracker';
 import PageLayout from '../components/pagelayout';
+import { accessElf } from '../../application/functions/accessElf';
 
 const InvitesPage = () => {
   const navigate = useNavigate();
@@ -15,6 +15,8 @@ const InvitesPage = () => {
     acceptInvite, 
     rejectInvite 
   } = useApplications();
+
+  accessElf.track("invitations");
   
   const [alert, setAlert] = useState(null);
   
@@ -54,8 +56,6 @@ const InvitesPage = () => {
   
   return (
     <PageLayout>
-      
-      <AccessTracker page="invitations" />
       <Row className="mb-4">
         <Col>
           <h1>Application Invites</h1>

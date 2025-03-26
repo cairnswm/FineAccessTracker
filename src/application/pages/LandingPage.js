@@ -9,21 +9,21 @@ import FeaturesSection from "../components/landingpage/FeaturesSection";
 import PricingSection from "../components/landingpage/PricingSection";
 import CTASection from "../components/landingpage/CTASection";
 import "./LandingPage.css";
-import AccessTracker from "../components/integration/AccessTracker";
 import WhySection from "../components/landingpage/WhySection";
+import { accessElf } from "../functions/accessElf";
 
 const LandingPage = () => {
+  accessElf.track("landing");
   return (
     <PageLayout>
-      <AccessTracker page="landing" />
       <PageMenu />
       <HeroSection />
-      <WhySection />
       <BenefitsSection />
       <IntegrationSection />
       <HowItWorksSection />
       <FeaturesSection />
       <PricingSection />
+      <WhySection />
       <CTASection />
     </PageLayout>
   );

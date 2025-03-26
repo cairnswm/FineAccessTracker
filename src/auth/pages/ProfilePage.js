@@ -5,7 +5,7 @@ import AvatarUpload from '../components/profile/AvatarUpload';
 import ProfileForm from '../components/profile/ProfileForm';
 import PageLayout from '../components/pagelayout';
 import BackBar from '../components/backbar';
-import AccessTracker from '../../application/components/integration/AccessTracker';
+import { accessElf } from '../../application/functions/accessElf';
 
 const Profile = () => {
   const { user, saveUser } = useAuth();
@@ -14,6 +14,8 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  accessElf.track('profile');
 
   useEffect(() => {
     if (user) {
@@ -100,8 +102,6 @@ const Profile = () => {
 
   return (
     <PageLayout>
-      
-      <AccessTracker page="profile" />
       <BackBar />
       <Card style={{ maxWidth: '600px' }} className="mx-auto">
         <Card.Body>

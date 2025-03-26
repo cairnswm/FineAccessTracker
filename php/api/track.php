@@ -74,10 +74,11 @@ function updateIpAddress($ipAddress)
   }
 }
 
-function decodeApiKey($guid) {
+function decodeApiKey($guid)
+{
   $parts = explode('-', $guid);
   if (count($parts) < 2) {
-      throw new Exception("Invalid GUID format.");
+    throw new Exception("Invalid GUID format.");
   }
 
   $base = $parts[0];
@@ -98,6 +99,7 @@ $appid = decodeApiKey($apikey);
 $user_id = getParam("user_id", "");
 $itemid = getParam("id", "");
 $page = getParam("page", "");
+$error = getParam("error", "");
 $ip_address = $_SERVER['REMOTE_ADDR'];
 $out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address];
 
@@ -111,6 +113,10 @@ if (isset($itemid) && $itemid != "") {
   $itemtype = "item";
 }
 
+if (isset($error) && $error != "") {
+  $itemtype = "error";
+}
+
 $out["type"] = $itemtype;
 
 if ($itemtype != "") {
@@ -120,7 +126,7 @@ if ($itemtype != "") {
     die("Connection failed: " . $mysqli->connect_error);
   }
 
-  $sql = "INSERT INTO events (application_id, type, page, item_id, ip_address) VALUES (?, ?, ?, ?, ?)
+  $sql = "INSERT INTO events (application_id, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE count = count + 1";
 
   $stmt = $mysqli->prepare($sql);
@@ -128,7 +134,7 @@ if ($itemtype != "") {
     die("Prepare failed: " . $mysqli->error);
   }
 
-  $stmt->bind_param("sssss", $appid, $itemtype, $page, $itemid, $ip_address);
+  $stmt->bind_param("ssssss", $appid, $itemtype, $page, $itemid, $message, $ip_address);
 
   if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
