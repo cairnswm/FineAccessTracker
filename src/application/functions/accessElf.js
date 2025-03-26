@@ -2,7 +2,6 @@ let accessElfApikey = "";
 const accessElfTrackerUrl = "https://accesself.co.za/php/api/track.php";
 
 export const setApiKey = (key) => {
-  console.log("Setting new APIKey", key);
   accessElfApikey = key;
 };
 

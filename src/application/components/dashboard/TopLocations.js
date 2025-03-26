@@ -9,7 +9,6 @@ const TopLocations = ({ analytics }) => {
     const display = [...analytics].filter(
       (location) => location[option] > 0
     );
-    console.log("number to display", display.length);
     let sorted = [...display].sort((a, b) => b[option] - a[option]);
     setAnalyticsToDisplay(sorted);
   }, [analytics, option]);

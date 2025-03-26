@@ -15,7 +15,6 @@ const RecentActivityTable = ({ activities }) => {
     );
   }
   
-  console.log("Recent Activities", activities);
   return (
     <Card className="shadow-sm">
       <Card.Body>

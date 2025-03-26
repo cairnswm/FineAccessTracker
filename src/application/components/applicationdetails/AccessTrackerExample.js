@@ -12,13 +12,14 @@ let accessElfApikey = "";
 const accessElfTrackerUrl = "https://accesself.co.za/php/api/track.php";
 
 export const setApiKey = (key) => {
-  console.log("Setting new APIKey", key);
   accessElfApikey = key;
 };
 
 const accessElfDebounceMap = new Map();
 
 const sendAccessElfTracking = (page, id, message) => {
+  
+  const key = page + "-" + id + "-" + message;
   const payload = {
     page,
     id,
