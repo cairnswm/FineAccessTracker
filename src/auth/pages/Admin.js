@@ -4,9 +4,11 @@ import { useSettings } from '../context/SettingsContext';
 import ComingSoon from '../components/comingsoon';
 import PageLayout from '../components/pagelayout';
 import BackBar from '../components/backbar';
+import { accessElf } from '../utils/accessElf';
 
 const Admin = () => {
   const { settings } = useSettings();
+  accessElf.track("Admin");
 
   return (
     <PageLayout>

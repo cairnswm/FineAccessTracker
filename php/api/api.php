@@ -37,7 +37,12 @@ $accessTrackerConfig = [
                 "tablename" => "application",
                 "key" => "user_id",
                 "select" => "getApplicationsForUser",
-            ]
+            ],
+            "campaigns" => [
+                "tablename" => "campaigns",
+                "key" => "user_id",
+                "select" => ["id", "name", "user_id", "application_id"],
+            ],
         ]
     ],
 
@@ -166,6 +171,44 @@ $accessTrackerConfig = [
         "beforeupdate" => "",
         "beforedelete" => ""
     ],
+    "campaign" => [
+        "tablename" => "campaigns",
+        "key" => "id",
+        "select" => ["id", "name", "user_id", "application_id", "created_at", "modified_at"],
+        "create" => ["name", "user_id", "application_id"],
+        "update" => ["name"],
+        "delete" => true,
+        "beforeselect" => "",
+        "beforecreate" => "",
+        "beforeupdate" => "",
+        "beforedelete" => "",
+        "subkeys" => [
+            "links" => [
+                "tablename" => "links",
+                "key" => "campaign_id",
+                "select" => ["id", "campaign_id", "short_code", "destination", "title", "expires_at"],
+            ],
+        ]
+    ],
+    "link" => [
+        "tablename" => "links",
+        "key" => "id",
+        "select" => ["id", "campaign_id", "short_code", "destination", "title", "expires_at"],
+        "create" => ["campaign_id", "short_code", "destination", "title", "expires_at"],
+        "update" => ["short_code", "destination", "title", "expires_at"],
+        "delete" => true,
+        "beforeselect" => "",
+        "beforecreate" => "",
+        "beforeupdate" => "",
+        "beforedelete" => "",
+        "subkeys" => [
+            "visits" => [
+                "tablename" => "clicks",
+                "key" => "link_id",
+                "select" => ["id", "link_id", "ip_address", "user_agent", "referer", "created_at"],
+            ],
+        ]
+    ],
     "post" => [
         "createApplication" => "insertApplication",
         "decodeApiKey" => "reverseApiKey",
@@ -271,7 +314,7 @@ LEFT JOIN application_users au ON a.id = au.application_id
 LEFT JOIN events e ON e.application_id = a.id
 WHERE a.user_id = ? OR au.user_id = ?
 GROUP BY a.id;";
-//     $query = "SELECT 
+    //     $query = "SELECT 
 //     a.id AS application_id,
 //     a.name,
 //     a.description,
@@ -515,7 +558,8 @@ function insertApplication($fields)
     ];
 }
 
-function createApiKey($id) {
+function createApiKey($id)
+{
     // Generate a full UUID (random 16 bytes)
     $data = random_bytes(16);
     $uuid = vsprintf('%08s-%04s-%04x-%04x-%012x', [
@@ -538,7 +582,8 @@ function createApiKey($id) {
     return implode('-', $parts);
 }
 
-function decodeApiKey($guid) {
+function decodeApiKey($guid)
+{
     $parts = explode('-', $guid);
     if (count($parts) < 2) {
         throw new Exception("Invalid GUID format.");

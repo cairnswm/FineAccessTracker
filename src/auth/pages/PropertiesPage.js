@@ -3,6 +3,7 @@ import { Container, Card, Table, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import PageLayout from '../components/pagelayout';
 import BackBar from '../components/backbar';
+import { accessElf } from '../utils/accessElf';
 
 const Properties = () => {
   const { properties, saveProperties } = useAuth();
@@ -10,6 +11,8 @@ const Properties = () => {
   const [editedValues, setEditedValues] = useState({});
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  accessElf.track("Properties");
 
   const handleEdit = (property) => {
     setEditingId(property.id);

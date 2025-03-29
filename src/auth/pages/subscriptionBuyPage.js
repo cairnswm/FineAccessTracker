@@ -11,12 +11,13 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSubscriptions } from "../context/SubscriptionsContext";
 import PageLayout from "../components/pagelayout";
-import { ArrowLeft } from "react-bootstrap-icons";
-import Back from "../components/back";
+import { accessElf } from "../utils/accessElf";
 import Payment from "./PaymentPage";
 import BackBar from "../components/backbar";
 
 const BuySubscription = () => {
+  
+    accessElf.track("Subscriptions/Buy")
   const { subscriptions, purchaseSubscription, loading } = useSubscriptions();
   const [selectedSubscriptions, setSelectedSubscriptions] = useState([]);
   const [purchaseLoading, setPurchaseLoading] = useState(false);
