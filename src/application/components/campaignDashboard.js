@@ -11,7 +11,14 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register(BarElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
+ChartJS.register(
+  BarElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const CampaignDashboard = ({ campaignId }) => {
   const { campaignClicksData } = useCampaigns();
@@ -48,6 +55,12 @@ const CampaignDashboard = ({ campaignId }) => {
       },
       y: {
         beginAtZero: true,
+        ticks: {
+          // Force whole numbers only
+          callback: function (value) {
+            return Number.isInteger(value) ? value : "";
+          },
+        },
       },
     },
   };
