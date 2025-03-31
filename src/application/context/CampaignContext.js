@@ -34,26 +34,26 @@ export const CampaignProvider = ({ children }) => {
     try {
       // In a real implementation, this would fetch from the API
       // For now, we'll use mock data
-      // const response = await fetch(
-      //   combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/user/${user.id}/campaigns`),
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //       App_id: tenant,
-      //     },
-      //   }
-      // );
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/user/${user.id}/campaigns`),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
 
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
 
-      // const data = await response.json();
-      // setCampaigns(data);
+      const data = await response.json();
+      setCampaigns(data);
 
       // Using mock data for now
-      setCampaigns(mockCampaigns);
+      // setCampaigns(mockCampaigns);
     } catch (error) {
       console.error("Error fetching campaigns:", error);
       setError("Failed to fetch campaigns");

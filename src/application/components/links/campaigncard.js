@@ -12,7 +12,8 @@ const CampaignCard = ({
 }) => {
   const navigate = useNavigate();
   // Assuming we have a click count, if not available, default to 0
-  const clickCount = campaign.clickCount || 0;
+  const clickCount = campaign.total_clicks || 0;
+  const clickUnique = campaign.unique_clicks || 0;
   
   return (
     <Card className="h-100 shadow-sm">
@@ -52,16 +53,23 @@ const CampaignCard = ({
         </div>
         
         <Row className="text-center g-2 mb-3">
-          <Col xs={6}>
+          <Col xs={4}>
             <div className="border rounded p-2">
               <div className="small text-muted">Links</div>
               <div className="fw-bold">{linkCount}</div>
             </div>
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <div className="border rounded p-2">
               <div className="small text-muted">Clicks</div>
               <div className="fw-bold">{clickCount}</div>
+            </div>
+          </Col>
+          
+          <Col xs={4}>
+            <div className="border rounded p-2">
+              <div className="small text-muted">Unique</div>
+              <div className="fw-bold">{clickUnique}</div>
             </div>
           </Col>
         </Row>
