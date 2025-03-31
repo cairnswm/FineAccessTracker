@@ -34,34 +34,34 @@ export const LinkProvider = ({ children }) => {
     try {
       // In a real implementation, this would fetch from the API
       // For now, we'll use mock data
-      // const endpoint = campaignId 
-      //   ? `api/api.php/campaign/${campaignId}/links`
-      //   : `api/api.php/user/${user.id}/links`;
+      const endpoint = campaignId 
+        ? `api/api.php/campaign/${campaignId}/links`
+        : `api/api.php/user/${user.id}/links`;
       
-      // const response = await fetch(
-      //   combineUrlAndPath(REACT_APP_ACCESS_API, endpoint),
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //       App_id: tenant,
-      //     },
-      //   }
-      // );
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, endpoint),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
       
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
       
-      // const data = await response.json();
-      // setLinks(data);
+      const data = await response.json();
+      setLinks(data);
       
       // Using mock data for now
-      if (campaignId) {
-        setLinks(mockLinks.filter(link => link.campaign_id === campaignId));
-      } else {
-        setLinks(mockLinks);
-      }
+      // if (campaignId) {
+      //   setLinks(mockLinks.filter(link => link.campaign_id === campaignId));
+      // } else {
+      //   setLinks(mockLinks);
+      // }
     } catch (error) {
       console.error("Error fetching links:", error);
       setError("Failed to fetch links");

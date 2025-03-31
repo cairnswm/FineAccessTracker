@@ -63,19 +63,31 @@ export const CampaignProvider = ({ children }) => {
   };
 
   const fetchCampaignClicksData = async (campaignId) => {
-    // Example data for the last 30 days
-    const exampleData = Array.from({ length: 30 }, (_, i) => ({
-      date: new Date(Date.now() - i * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0],
-      clicks: Math.floor(Math.random() * 100),
-    })).reverse();
+    try {
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/campaign/${campaignId}/clicks`),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
 
-    exampleData.forEach((d) => {
-      d.unique = Math.floor(d.clicks * 0.8);
-    });
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
 
-    setCampaignClicksData(exampleData);
+      const data = await response.json();
+      setCampaignClicksData(data);
+    } catch (error) {
+      console.error("Error fetching campaigns:", error);
+      setError("Failed to fetch campaigns");
+    } finally {
+      setLoading(false);
+    }
+   
   };
 
   useEffect(() => {

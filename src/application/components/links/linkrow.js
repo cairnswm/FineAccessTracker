@@ -19,8 +19,8 @@ const LinkRow = ({
         </a>
       </td>
       <td>{getCampaignName(link.campaign_id)}</td>
-      <td>{getClickCount(link)}</td>
-      <td>{formatDate(link.expires_at)}</td>
+      <td>{link.total_clicks}</td>
+      <td>{link.unique_clicks}</td>
       <td>
         <Button variant="outline-primary" size="sm" className="me-1" onClick={() => onEdit(link)}>
           Edit

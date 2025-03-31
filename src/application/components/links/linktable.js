@@ -19,7 +19,7 @@ const LinkTable = ({
           <th>Destination</th>
           <th>Campaign</th>
           <th>Clicks</th>
-          <th>Expires</th>
+          <th>Unique</th>
           <th>Actions</th>
         </tr>
       </thead>

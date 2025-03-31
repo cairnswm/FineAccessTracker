@@ -16,18 +16,24 @@ ChartJS.register(BarElement, LinearScale, CategoryScale, Title, Tooltip, Legend)
 const CampaignDashboard = ({ campaignId }) => {
   const { campaignClicksData } = useCampaigns();
 
+  console.log("CLICKS", campaignClicksData);
+
+  const reversedData = [...campaignClicksData].reverse(); // Create a reversed copy
+
   const data = {
-    labels: campaignClicksData.map((entry) => entry.date),
+    labels: reversedData.map((entry) => entry.click_date),
     datasets: [
       {
         label: "Clicks",
-        data: campaignClicksData.map((entry) => entry.clicks),
+        data: reversedData.map((entry) => entry.unique_clicks),
         backgroundColor: "rgba(75,192,192,0.6)",
         borderColor: "rgba(75,192,192,1)",
         borderWidth: 1,
       },
     ],
   };
+
+  console.log("GRAPH DATA", data);
 
   const options = {
     responsive: true,
