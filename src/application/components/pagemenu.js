@@ -1,16 +1,18 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
+import { House, FileText, InfoCircle, App, Link45deg } from "react-bootstrap-icons";
+import useIsMobile from "../../application/hooks/useIsMobile";
 import "./pagemenu.css";
 
 const PageMenu = () => {
   const location = useLocation();
   const { user } = useAuth();
+  const isMobile = useIsMobile();
 
   const isLocalHost = window.location.hostname === "localhost";
 
-  // Helper function to check if a path is active
   const isActive = (path) => {
     return (
       location.pathname === path || location.pathname.startsWith(`${path}/`)
@@ -20,76 +22,125 @@ const PageMenu = () => {
   return (
     <Navbar bg="dark" variant="dark" className="page-menu mb-4">
       <Container>
-        <Nav className="me-auto">
-          {user ? (
-            // Menu for logged-in users
-            <>
+        {isMobile ? (
+          <Row className="w-100 text-center">
+            <Col>
               <Nav.Link
                 as={Link}
                 to="/home"
                 className={isActive("/home") ? "active" : ""}
               >
-                Home
+                <House size={24} color="white" />
               </Nav.Link>
+            </Col>
+            <Col>
               <Nav.Link
                 as={Link}
                 to="/applications"
                 className={isActive("/applications") ? "active" : ""}
               >
-                Applications
+                <App size={24} color="white" />
               </Nav.Link>
-              {isLocalHost && (
+            </Col>
+            {isLocalHost && (
+              <Col>
                 <Nav.Link
                   as={Link}
-                  to="/links"
-                  className={location.pathname === "/links" ? "active" : ""}
+                  to="/campaigns"
+                  className={location.pathname === "/campaigns" ? "active" : ""}
                 >
-                  Links
+                  <Link45deg size={24} color="white" />
                 </Nav.Link>
-              )}
+              </Col>
+            )}
+            <Col>
               <Nav.Link
                 as={Link}
                 to="/documentation"
                 className={isActive("/documentation") ? "active" : ""}
               >
-                Documentation
+                <FileText size={24} color="white" />
               </Nav.Link>
+            </Col>
+            <Col>
               <Nav.Link
                 as={Link}
                 to="/about"
                 className={isActive("/about") ? "active" : ""}
               >
-                About
+                <InfoCircle size={24} color="white" />
               </Nav.Link>
-            </>
-          ) : (
-            // Menu for non-logged-in users
-            <>
-              <Nav.Link
-                as={Link}
-                to="/"
-                className={location.pathname === "/" ? "active" : ""}
-              >
-                Home
-              </Nav.Link>
-
-              <Nav.Link
-                as={Link}
-                to="/documentation"
-                className={isActive("/documentation") ? "active" : ""}
-              >
-                Documentation
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                to="/about"
-                className={isActive("/about") ? "active" : ""}
-              >
-                About
-              </Nav.Link>
-            </>
-          )}
-        </Nav>
+            </Col>
+          </Row>
+        ) : (
+          <Nav className="me-auto">
+            {user ? (
+              <>
+                <Nav.Link
+                  as={Link}
+                  to="/home"
+                  className={isActive("/home") ? "active" : ""}
+                >
+                  Home
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/applications"
+                  className={isActive("/applications") ? "active" : ""}
+                >
+                  Applications
+                </Nav.Link>
+                {isLocalHost && (
+                  <Nav.Link
+                    as={Link}
+                    to="/campaigns"
+                    className={location.pathname === "/campaigns" ? "active" : ""}
+                  >
+                    Campaigns
+                  </Nav.Link>
+                )}
+                <Nav.Link
+                  as={Link}
+                  to="/documentation"
+                  className={isActive("/documentation") ? "active" : ""}
+                >
+                  Documentation
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/about"
+                  className={isActive("/about") ? "active" : ""}
+                >
+                  About
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link
+                  as={Link}
+                  to="/"
+                  className={location.pathname === "/" ? "active" : ""}
+                >
+                  Home
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/documentation"
+                  className={isActive("/documentation") ? "active" : ""}
+                >
+                  Documentation
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/about"
+                  className={isActive("/about") ? "active" : ""}
+                >
+                  About
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
+        )}
       </Container>
     </Navbar>
   );

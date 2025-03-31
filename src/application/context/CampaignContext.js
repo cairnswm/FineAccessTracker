@@ -22,13 +22,15 @@ export const CampaignProvider = ({ children }) => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeCampaign, setActiveCampaign] = useState(null);
+  const [campaignClicksData, setCampaignClicksData] = useState([]);
 
   const fetchCampaigns = async () => {
     if (!user || !token) return;
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would fetch from the API
       // For now, we'll use mock data
@@ -42,14 +44,14 @@ export const CampaignProvider = ({ children }) => {
       //     },
       //   }
       // );
-      
+
       // if (!response.ok) {
       //   throw new Error(`API request failed with status ${response.status}`);
       // }
-      
+
       // const data = await response.json();
       // setCampaigns(data);
-      
+
       // Using mock data for now
       setCampaigns(mockCampaigns);
     } catch (error) {
@@ -60,16 +62,38 @@ export const CampaignProvider = ({ children }) => {
     }
   };
 
+  const fetchCampaignClicksData = async (campaignId) => {
+    // Example data for the last 30 days
+    const exampleData = Array.from({ length: 30 }, (_, i) => ({
+      date: new Date(Date.now() - i * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0],
+      clicks: Math.floor(Math.random() * 100),
+    })).reverse();
+
+    exampleData.forEach((d) => {
+      d.unique = Math.floor(d.clicks * 0.8);
+    });
+
+    setCampaignClicksData(exampleData);
+  };
+
   useEffect(() => {
     fetchCampaigns();
   }, [user, token, tenant]);
+
+  useEffect(() => {
+    if (activeCampaign) {
+      fetchCampaignClicksData(activeCampaign.id);
+    }
+  }, [activeCampaign]);
 
   const addCampaign = async (newCampaign) => {
     if (!token) return;
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       // const response = await fetch(
@@ -84,19 +108,19 @@ export const CampaignProvider = ({ children }) => {
       //     body: JSON.stringify(newCampaign),
       //   }
       // );
-      
+
       // if (!response.ok) {
       //   throw new Error(`API request failed with status ${response.status}`);
       // }
-      
+
       // const data = await response.json();
-      
+
       // Mock implementation
       const campaignWithId = {
         ...newCampaign,
-        id: Math.max(...campaigns.map(c => c.id), 0) + 1
+        id: Math.max(...campaigns.map((c) => c.id), 0) + 1,
       };
-      
+
       setCampaigns([...campaigns, campaignWithId]);
       return campaignWithId;
     } catch (error) {
@@ -112,7 +136,7 @@ export const CampaignProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       // const response = await fetch(
@@ -127,19 +151,19 @@ export const CampaignProvider = ({ children }) => {
       //     body: JSON.stringify(updatedData),
       //   }
       // );
-      
+
       // if (!response.ok) {
       //   throw new Error(`API request failed with status ${response.status}`);
       // }
-      
+
       // Mock implementation
       setCampaigns(
-        campaigns.map((campaign) => 
+        campaigns.map((campaign) =>
           campaign.id === id ? { ...campaign, ...updatedData } : campaign
         )
       );
-      
-      return campaigns.find(campaign => campaign.id === id);
+
+      return campaigns.find((campaign) => campaign.id === id);
     } catch (error) {
       console.error("Error updating campaign:", error);
       setError("Failed to update campaign");
@@ -153,7 +177,7 @@ export const CampaignProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       // const response = await fetch(
@@ -168,11 +192,11 @@ export const CampaignProvider = ({ children }) => {
       //     body: JSON.stringify({ id }),
       //   }
       // );
-      
+
       // if (!response.ok) {
       //   throw new Error(`API request failed with status ${response.status}`);
       // }
-      
+
       // Mock implementation
       setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
     } catch (error) {
@@ -187,6 +211,11 @@ export const CampaignProvider = ({ children }) => {
     return campaigns.find((campaign) => campaign.id === parseInt(id));
   };
 
+  const setActiveCampaignById = (id) => {
+    const campaign = campaigns.find((c) => c.id === id);
+    setActiveCampaign(campaign || null);
+  };
+
   return (
     <CampaignContext.Provider
       value={{
@@ -197,7 +226,10 @@ export const CampaignProvider = ({ children }) => {
         addCampaign,
         updateCampaign,
         deleteCampaign,
-        getCampaign
+        getCampaign,
+        activeCampaign,
+        setActiveCampaignById,
+        campaignClicksData,
       }}
     >
       {children}

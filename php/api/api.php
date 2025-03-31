@@ -41,7 +41,7 @@ $accessTrackerConfig = [
             "campaigns" => [
                 "tablename" => "campaigns",
                 "key" => "user_id",
-                "select" => ["id", "name", "user_id", "application_id"],
+                "select" => "getCampaignsForUser",
             ],
         ]
     ],
@@ -188,6 +188,11 @@ $accessTrackerConfig = [
                 "key" => "campaign_id",
                 "select" => ["id", "campaign_id", "short_code", "destination", "title", "expires_at"],
             ],
+            "clicks" => [
+                "tablename" => "clicks",
+                "key" => "campaign_id",
+                "select" => "getClicksForCampaign",
+            ],
         ]
     ],
     "link" => [
@@ -314,18 +319,6 @@ LEFT JOIN application_users au ON a.id = au.application_id
 LEFT JOIN events e ON e.application_id = a.id
 WHERE a.user_id = ? OR au.user_id = ?
 GROUP BY a.id;";
-    //     $query = "SELECT 
-//     a.id AS application_id,
-//     a.name,
-//     a.description,
-//     COUNT(e.id) AS totalVisits,
-//     COUNT(DISTINCT e.ip_address) AS uniqueVisitors,
-//     a.created_at 
-// FROM applications a
-// LEFT JOIN application_users au ON a.id = au.application_id
-// LEFT JOIN events e ON e.application_id = a.id AND e.modified_at >= NOW() - INTERVAL 1 DAY
-// WHERE a.user_id = ? OR au.user_id = ?
-// GROUP BY a.id;";
     $stmt = $gapiconn->prepare($query);
     $stmt->bind_param('ss', $config['where']['user_id'], $config['where']['user_id']);
     $stmt->execute();
@@ -668,6 +661,63 @@ GROUP BY c.country_code, c.country_name
 ORDER BY ip_last_30_days DESC;";
     $stmt = $gapiconn->prepare($query);
     $stmt->bind_param('s', $config['where']['application_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
+}
+
+function getCampaignsForUser($config, $id)
+{
+    global $gapiconn;
+
+    $query = "SELECT 
+    c.id, c.name, c.created_at, c.application_id, a.name application_name, a.description application_description
+FROM campaigns c
+LEFT JOIN applications a on c.application_id = a.id
+LEFT JOIN application_users au ON a.id = au.application_id
+LEFT JOIN events e ON e.application_id = a.id
+WHERE a.user_id = ? OR au.user_id = ?
+GROUP BY a.id;";
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('ss', $config['where']['user_id'], $config['where']['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
+}
+
+function getClicksForCampaign($config, $id)
+{
+    global $gapiconn;
+
+    $query = "SELECT
+    DATE(c.created_at) AS click_date,
+    COUNT(*) AS total_clicks,
+    COUNT(DISTINCT c.ip_address) AS unique_clicks
+FROM
+    clicks c
+JOIN
+    links l ON c.link_id = l.id
+WHERE
+    l.campaign_id = ?
+    AND c.created_at >= CURDATE() - INTERVAL 30 DAY
+GROUP BY
+    DATE(c.created_at)
+ORDER BY
+    click_date DESC;";
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('s', $config['where']['campaign_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $rows = [];

@@ -10,6 +10,12 @@
   transition: all 0.2s ease;
 }
 
+.page-menu .col .nav-link {
+  padding: 0.15rem 0.25rem;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
 .page-menu .nav-link:hover {
   border-bottom-color: rgba(255, 255, 255, 0.3);
 }

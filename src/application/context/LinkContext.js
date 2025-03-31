@@ -4,6 +4,7 @@ import { useAuth } from "../../auth/hooks/useAuth";
 import { useTenant } from "../../auth/hooks/useTenant";
 import { REACT_APP_ACCESS_API } from "../../env";
 import mockLinks from "../data/mockLinks";
+import { useCampaigns } from "./CampaignContext";
 
 const LinkContext = createContext(null);
 
@@ -18,6 +19,7 @@ export const useLinks = () => {
 export const LinkProvider = ({ children }) => {
   const { user, token } = useAuth();
   const { tenant } = useTenant();
+  const { activeCampaign } = useCampaigns();
 
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -69,8 +71,10 @@ export const LinkProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchLinks();
-  }, [user, token, tenant]);
+    if (user && token && tenant) {
+      fetchLinks(activeCampaign?.id || null);
+    }
+  }, [user?.id, token, tenant, activeCampaign?.id]);
 
   const addLink = async (newLink) => {
     if (!token) return;
@@ -268,7 +272,6 @@ export const LinkProvider = ({ children }) => {
         links,
         loading,
         error,
-        fetchLinks,
         addLink,
         updateLink,
         deleteLink,
