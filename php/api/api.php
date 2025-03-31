@@ -702,8 +702,9 @@ WHERE a.user_id = ? OR au.user_id = ?
 GROUP BY c.id
 ORDER BY c.created_at DESC;
 ";
+    $days = 30;
     $stmt = $gapiconn->prepare($query);
-    $stmt->bind_param('iss', 30, $config['where']['user_id'], $config['where']['user_id']);
+    $stmt->bind_param('iss', $days, $config['where']['user_id'], $config['where']['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $rows = [];
