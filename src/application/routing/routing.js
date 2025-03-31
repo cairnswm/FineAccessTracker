@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import LandingPage from '../pages/LandingPage';
+import LinksPage from '../pages/LinksPage';
 import Login from '../../auth/pages/Login';
 import Register from '../../auth/pages/Register';
 import ForgotPassword from '../../auth/pages/ForgotPassword';
@@ -114,6 +115,14 @@ const Routing = () => {
           element={
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/links"
+          element={
+            <ProtectedRoute>
+              <LinksPage />
             </ProtectedRoute>
           }
         />

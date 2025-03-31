@@ -14,6 +14,7 @@ import SubscriptionRouting from './auth/routing/subscriptionrouting';
 import LandingPage from './application/pages/LandingPage';
 import HomePage from './application/pages/HomePage';
 import ApplicationsPage from './application/pages/ApplicationsPage';
+import LinksPage from './application/pages/LinksPage';
 import ApplicationPage from './application/pages/ApplicationPage';
 import DocumentationPage from './application/pages/DocumentationPage';
 import AboutPage from './application/pages/AboutPage';
@@ -50,6 +51,7 @@ function App() {
         {/* Protected Routes */}
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
         <Route path="/applications" element={user ? <ApplicationsPage /> : <Navigate to="/login" />} />
+        <Route path="/links" element={user ? <LinksPage /> : <Navigate to="/login" />} />
         <Route path="/application/:id" element={user ? <ApplicationPage /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />

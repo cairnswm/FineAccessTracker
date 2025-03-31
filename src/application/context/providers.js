@@ -6,6 +6,8 @@ import { SettingsProvider } from "../../auth/context/SettingsContext";
 import { SubscriptionsProvider } from "../../auth/context/SubscriptionsContext";
 import { SummaryProvider } from "./SummaryContext";
 import { ApplicationProvider } from "./ApplicationContext";
+import { CampaignProvider } from "./CampaignContext";
+import { LinkProvider } from "./LinkContext";
 import App from "../../App";
 
 const Providers = () => {
@@ -24,9 +26,13 @@ const Providers = () => {
             <SubscriptionsProvider onError={(message, error) => console.error(message, error)}>
               <SummaryProvider onError={(message, error) => console.error(message, error)}>
                 <ApplicationProvider>
-                  <BrowserRouter basename={process.env.PUBLIC_URL ?? "/"}>
-                    <App />
-                  </BrowserRouter>
+                  <CampaignProvider>
+                    <LinkProvider>
+                      <BrowserRouter basename={process.env.PUBLIC_URL ?? "/"}>
+                        <App />
+                      </BrowserRouter>
+                    </LinkProvider>
+                  </CampaignProvider>
                 </ApplicationProvider>
               </SummaryProvider>
             </SubscriptionsProvider>

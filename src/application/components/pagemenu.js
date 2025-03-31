@@ -36,6 +36,13 @@ const PageMenu = () => {
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
+                to="/links" 
+                className={location.pathname === "/links" ? "active" : ""}
+              >
+                Links
+              </Nav.Link>
+              <Nav.Link 
+                as={Link} 
                 to="/documentation" 
                 className={isActive("/documentation") ? "active" : ""}
               >
@@ -59,6 +66,7 @@ const PageMenu = () => {
               >
                 Home
               </Nav.Link>
+              
               <Nav.Link 
                 as={Link} 
                 to="/documentation" 

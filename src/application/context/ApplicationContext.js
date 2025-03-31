@@ -30,5 +30,7 @@ export { usePageTracking } from "./PageTrackingContext";
 export { useItemTracking } from "./ItemTrackingContext";
 export { useActivityTracking } from "./ActivityTrackingContext";
 export { useApplicationUsers } from "./UsersContext";
+export { useCampaigns } from "./CampaignContext";
+export { useLinks } from "./LinkContext";
 
 export default ApplicationContext;
