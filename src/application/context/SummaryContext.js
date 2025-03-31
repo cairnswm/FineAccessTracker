@@ -3,8 +3,7 @@ import { useTenant } from "../../auth/hooks/useTenant";
 import { useAuth } from "../../auth/context/AuthContext";
 import { combineUrlAndPath } from "../../auth/utils/combineUrlAndPath";
 import { REACT_APP_SUBSCRIPTIONS_API } from "../../env";
-import { useSettings } from "../../auth/context/SettingsContext";
-import { setApiKey } from "../functions/accessElf";
+import { accessElf } from "../../auth/utils/accessElf";
 
 const SummaryContext = createContext(null);
 
@@ -23,7 +22,7 @@ const SummaryProvider = ({ children, onError }) => {
 
   useEffect(() => {
     const apiKey = params.find((param) => param.name === "AccessElfApiKey");
-    setApiKey(apiKey?.value || "");
+    accessElf.setApiKey(apiKey?.value || "");
   }, [params]);
 
   const fetchActiveSubscription = async () => {

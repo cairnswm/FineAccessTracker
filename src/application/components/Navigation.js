@@ -13,7 +13,8 @@ import {
 import { useApplicationUsers } from "../context/UsersContext";
 import { useSummary } from "../context/SummaryContext";
 import "./Navigation.css";
-import { accessElf } from "../functions/accessElf";
+import { accessElf } from "../../auth/utils/accessElf";
+
 
 const Navigation = () => {
   const { user, logout } = useAuth();

@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSubscriptions } from "../context/SubscriptionsContext";
 import PageLayout from "../components/pagelayout";
-import { accessElf } from "../utils/accessElf";
+import { accessElf } from "../../auth/utils/accessElf";
 import Payment from "./PaymentPage";
 import BackBar from "../components/backbar";
 

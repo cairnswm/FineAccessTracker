@@ -4,7 +4,7 @@ import PageLayout from '../../auth/components/pagelayout';
 import PageMenu from '../components/pagemenu';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
 import TrackingInformation from '../components/documentation/TrackingInformation';
-import { accessElf } from '../functions/accessElf';
+import { accessElf } from "../../auth/utils/accessElf";
 
 const DocumentationPage = () => {
   // Example API key for documentation purposes

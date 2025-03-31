@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useMemo, useState } from "react";
 import { REACT_APP_TENANT_API } from "../../env";
 import Spinner from "../components/spinner";
 import { combineUrlAndPath } from "../utils/combineUrlAndPath";
-import {accessElf} from "../utils/accessElf";
+import { accessElf } from "../../auth/utils/accessElf";
 
 const TenantContext = createContext(null);
 

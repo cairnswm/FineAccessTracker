@@ -9,7 +9,7 @@ import ApplicationCard from '../components/ApplicationCard';
 import { PlusLg } from 'react-bootstrap-icons';
 import AddApplicationModal from '../components/AddApplicationModal';
 import './HomePage.css';
-import { accessElf } from '../functions/accessElf';
+import { accessElf } from "../../auth/utils/accessElf";
 
 const HomePage = () => {
   const { user } = useAuth();

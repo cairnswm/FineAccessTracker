@@ -3,7 +3,6 @@ import { useAuth } from "./AuthContext";
 import { useTenant } from "../hooks/useTenant";
 import { REACT_APP_SETTINGS_API } from "../../env";
 import { combineUrlAndPath } from "../utils/combineUrlAndPath";
-import { accessElf } from "../utils/accessElf";
 
 export const SettingsContext = createContext();
 

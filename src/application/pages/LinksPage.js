@@ -10,6 +10,7 @@ import LinksTab from "../components/links/linkstab";
 import CampaignsTab from "../components/links/campaignstab";
 import CampaignModal from "../components/links/campaignmodal";
 import LinkModal from "../components/links/linkmodal";
+import { accessElf } from "../../auth/utils/accessElf";
 
 const LinksPage = () => {
   const { user } = useAuth();
@@ -30,6 +31,7 @@ const LinksPage = () => {
     title: "",
     expires_at: ""
   });
+  accessElf.track("links");
 
   useEffect(() => {
     if (selectedCampaignId) {

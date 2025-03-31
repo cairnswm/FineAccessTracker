@@ -8,7 +8,7 @@ import HowItWorksSection from '../components/landingpage/HowItWorksSection';
 import FeaturesSection from '../components/landingpage/FeaturesSection';
 import PricingSection from '../components/landingpage/PricingSection';
 import TrackingInformation from '../components/documentation/TrackingInformation';
-import { accessElf } from '../functions/accessElf';
+import { accessElf } from "../../auth/utils/accessElf";
 
 const AboutPage = () => {
   accessElf.track("about");

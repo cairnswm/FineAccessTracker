@@ -10,7 +10,7 @@ import PricingSection from "../components/landingpage/PricingSection";
 import CTASection from "../components/landingpage/CTASection";
 import "./LandingPage.css";
 import WhySection from "../components/landingpage/WhySection";
-import { accessElf } from "../functions/accessElf";
+import { accessElf } from "../../auth/utils/accessElf";
 
 const LandingPage = () => {
   accessElf.track("landing");

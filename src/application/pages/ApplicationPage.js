@@ -16,7 +16,7 @@ import ActivityTab from '../components/applicationdetails/ActivityTab';
 import IntegrationTab from '../components/applicationdetails/IntegrationTab';
 import UsersTab from '../components/applicationdetails/UsersTab';
 import NotFoundView from '../components/applicationdetails/NotFoundView';
-import { accessElf } from '../functions/accessElf';
+import { accessElf } from "../../auth/utils/accessElf";
 
 const ApplicationPage = () => {
   const navigate = useNavigate();

@@ -7,12 +7,16 @@ import "./pagemenu.css";
 const PageMenu = () => {
   const location = useLocation();
   const { user } = useAuth();
-  
+
+  const isLocalHost = window.location.hostname === "localhost";
+
   // Helper function to check if a path is active
   const isActive = (path) => {
-    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+    return (
+      location.pathname === path || location.pathname.startsWith(`${path}/`)
+    );
   };
-  
+
   return (
     <Navbar bg="dark" variant="dark" className="page-menu mb-4">
       <Container>
@@ -20,37 +24,39 @@ const PageMenu = () => {
           {user ? (
             // Menu for logged-in users
             <>
-              <Nav.Link 
-                as={Link} 
-                to="/home" 
+              <Nav.Link
+                as={Link}
+                to="/home"
                 className={isActive("/home") ? "active" : ""}
               >
                 Home
               </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/applications" 
+              <Nav.Link
+                as={Link}
+                to="/applications"
                 className={isActive("/applications") ? "active" : ""}
               >
                 Applications
               </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/links" 
-                className={location.pathname === "/links" ? "active" : ""}
-              >
-                Links
-              </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/documentation" 
+              {isLocalHost && (
+                <Nav.Link
+                  as={Link}
+                  to="/links"
+                  className={location.pathname === "/links" ? "active" : ""}
+                >
+                  Links
+                </Nav.Link>
+              )}
+              <Nav.Link
+                as={Link}
+                to="/documentation"
                 className={isActive("/documentation") ? "active" : ""}
               >
                 Documentation
               </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/about" 
+              <Nav.Link
+                as={Link}
+                to="/about"
                 className={isActive("/about") ? "active" : ""}
               >
                 About
@@ -59,24 +65,24 @@ const PageMenu = () => {
           ) : (
             // Menu for non-logged-in users
             <>
-              <Nav.Link 
-                as={Link} 
-                to="/" 
+              <Nav.Link
+                as={Link}
+                to="/"
                 className={location.pathname === "/" ? "active" : ""}
               >
                 Home
               </Nav.Link>
-              
-              <Nav.Link 
-                as={Link} 
-                to="/documentation" 
+
+              <Nav.Link
+                as={Link}
+                to="/documentation"
                 className={isActive("/documentation") ? "active" : ""}
               >
                 Documentation
               </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/about" 
+              <Nav.Link
+                as={Link}
+                to="/about"
                 className={isActive("/about") ? "active" : ""}
               >
                 About
@@ -86,7 +92,7 @@ const PageMenu = () => {
         </Nav>
       </Container>
     </Navbar>
-  );  
-}
+  );
+};
 
 export default PageMenu;
