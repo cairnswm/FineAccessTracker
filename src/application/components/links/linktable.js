@@ -10,7 +10,6 @@ const LinkTable = ({
   onEditLink,
   onDeleteLink,
 }) => {
-  console.log("LINKS", links);
   if (links.error) {
     return <p>{links.error}</p>;
   }

@@ -8,7 +8,6 @@ const LinkRow = ({
   onEdit, 
   onDelete 
 }) => {
-  console.log("LINK", link);
   return (
     <tr>
       <td>{link.title}</td>

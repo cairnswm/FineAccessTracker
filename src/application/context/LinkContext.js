@@ -119,24 +119,23 @@ export const LinkProvider = ({ children }) => {
     
     try {
       // In a real implementation, this would send to the API
-      // const response = await fetch(
-      //   combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/link/${id}`),
-      //   {
-      //     method: "PUT",
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //       App_id: tenant,
-      //     },
-      //     body: JSON.stringify(updatedData),
-      //   }
-      // );
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/link/${id}`),
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
       
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
       
-      // Mock implementation
       setLinks(
         links.map((link) => 
           link.id === id ? { ...link, ...updatedData } : link
@@ -160,24 +159,24 @@ export const LinkProvider = ({ children }) => {
     
     try {
       // In a real implementation, this would send to the API
-      // const response = await fetch(
-      //   combineUrlAndPath(REACT_APP_ACCESS_API, "api/api.php/deleteLink"),
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //       App_id: tenant,
-      //     },
-      //     body: JSON.stringify({ id }),
-      //   }
-      // );
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, `api/api.php/link/${id}`),
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
       
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      console.log("Link deleted:", id);
       
-      // Mock implementation
       setLinks(links.filter((link) => link.id !== id));
     } catch (error) {
       console.error("Error deleting link:", error);

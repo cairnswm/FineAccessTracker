@@ -7,10 +7,9 @@ let FILES = "https://cairnsgames.co.za/files/";
 let PAYWEB3 = "https://cairnsgames.co.za/php/payweb3/";
 // let SUBSCRIPTIONS = "http://localhost/cairnsgames/php/subscriptions/";
 let SUBSCRIPTIONS = "https://cairnsgames.co.za/php/subscriptions/";
-// let ACCESS = "http://localhost/accesstracker/php/";
 let ACCESS = "https://accesself.co.za/php/";
 
-if (typeof process !== 'undefined' && process?.env) {
+if (typeof process !== "undefined" && process?.env) {
   TENANT = process.env.REACT_APP_TENANT_API;
   AUTH = process.env.REACT_APP_AUTH_API;
   SETTINGS = process.env.REACT_APP_SETTINGS_API;
@@ -20,6 +19,12 @@ if (typeof process !== 'undefined' && process?.env) {
   SUBSCRIPTIONS = process.env.REACT_APP_SUBSCRIPTIONS_API;
   ACCESS = process.env.REACT_APP_ACCESS_API;
 }
+
+if (window.location.hostname === "localhost") {
+  ACCESS = "http://localhost/accesstracker/php/";
+}
+
+console.log("ACCESS API: ", ACCESS);
 
 export const REACT_APP_TENANT_API = TENANT;
 export const REACT_APP_AUTH_API = AUTH;

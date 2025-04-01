@@ -23,8 +23,6 @@ ChartJS.register(
 const CampaignDashboard = ({ campaignId }) => {
   const { campaignClicksData } = useCampaigns();
 
-  console.log("CLICKS", campaignClicksData);
-
   const reversedData = [...campaignClicksData].reverse(); // Create a reversed copy
 
   const data = {
@@ -39,8 +37,6 @@ const CampaignDashboard = ({ campaignId }) => {
       },
     ],
   };
-
-  console.log("GRAPH DATA", data);
 
   const options = {
     responsive: true,
