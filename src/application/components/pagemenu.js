@@ -42,7 +42,6 @@ const PageMenu = () => {
                 <App size={24} color="white" />
               </Nav.Link>
             </Col>
-            {isLocalHost && (
               <Col>
                 <Nav.Link
                   as={Link}
@@ -52,7 +51,6 @@ const PageMenu = () => {
                   <Link45deg size={24} color="white" />
                 </Nav.Link>
               </Col>
-            )}
             <Col>
               <Nav.Link
                 as={Link}
@@ -90,7 +88,6 @@ const PageMenu = () => {
                 >
                   Applications
                 </Nav.Link>
-                {isLocalHost && (
                   <Nav.Link
                     as={Link}
                     to="/campaigns"
@@ -98,7 +95,6 @@ const PageMenu = () => {
                   >
                     Campaigns
                   </Nav.Link>
-                )}
                 <Nav.Link
                   as={Link}
                   to="/documentation"
