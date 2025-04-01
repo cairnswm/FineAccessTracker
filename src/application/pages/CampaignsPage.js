@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Alert } from "react-bootstrap";
 import { useCampaigns } from "../context/CampaignContext";
 import { useLinks } from "../context/LinkContext";
 import { useAuth } from "../../auth/hooks/useAuth";
@@ -95,6 +95,9 @@ const CampaignsPage = () => {
           <p>Create and manage your campaigns</p>
         </Col>
       </Row>
+      <Alert variant="info" className="mb-4">
+        Under Active Development! This page is currently under development. Some features may not be fully functional yet.
+      </Alert>
 
       <CampaignsTab
         campaigns={campaigns}

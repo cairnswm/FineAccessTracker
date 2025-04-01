@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Button, Row, Col, Alert } from "react-bootstrap";
 import { useLinks } from "../context/LinkContext";
 import { useCampaigns } from "../context/CampaignContext";
 import { useAuth } from "../../auth/hooks/useAuth";
@@ -170,6 +170,10 @@ const CampaignLinksPage = () => {
             </div>
           </Col>
         </Row>
+        
+      <Alert variant="info" className="mb-4">
+        Under Active Development! This page is currently under development. Some features may not be fully functional yet.
+      </Alert>
         <CampaignDashboard campaignId={campaignId} />
         <Button
           variant="primary"
