@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Pencil, Trash } from "react-bootstrap-icons";
+import { Copy, Pencil, Trash } from "react-bootstrap-icons";
 
 const LinkRow = ({ 
   link, 
@@ -11,7 +11,16 @@ const LinkRow = ({
   return (
     <tr>
       <td>{link.title}</td>
-      <td><code>{link.short_code}</code></td>
+      <td><code>{link.short_code}</code>
+      <Button 
+        variant="outline-secondary" 
+        size="sm" 
+        className="ms-2" 
+        onClick={() => navigator.clipboard.writeText(`https://accesself.co.za/php/api/lnk.php/${link.short_code}`)}
+      >
+        <Copy />
+      </Button>
+      </td>
       <td>
         <a href={link.destination} target="_blank" rel="noopener noreferrer">
           {link.destination?.length > 30 ? link.destination.substring(0, 30) + "..." : link.destination}

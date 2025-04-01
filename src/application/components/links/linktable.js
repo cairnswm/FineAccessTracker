@@ -2,14 +2,18 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import LinkRow from "./linkrow";
 
-const LinkTable = ({ 
-  links, 
-  getCampaignName, 
-  getClickCount, 
-  formatDate, 
-  onEditLink, 
-  onDeleteLink 
+const LinkTable = ({
+  links,
+  getCampaignName,
+  getClickCount,
+  formatDate,
+  onEditLink,
+  onDeleteLink,
 }) => {
+  console.log("LINKS", links);
+  if (links.error) {
+    return <p>{links.error}</p>;
+  }
   if (!links || links.length === 0) {
     return <p>No links available.</p>;
   }
@@ -27,17 +31,18 @@ const LinkTable = ({
         </tr>
       </thead>
       <tbody>
-        {links.map(link => (
-          <LinkRow 
-            key={link.id}
-            link={link}
-            getCampaignName={getCampaignName}
-            getClickCount={getClickCount}
-            formatDate={formatDate}
-            onEdit={onEditLink}
-            onDelete={onDeleteLink}
-          />
-        ))}
+        {links &&
+          links.map((link) => (
+            <LinkRow
+              key={link.id}
+              link={link}
+              getCampaignName={getCampaignName}
+              getClickCount={getClickCount}
+              formatDate={formatDate}
+              onEdit={onEditLink}
+              onDelete={onDeleteLink}
+            />
+          ))}
       </tbody>
     </Table>
   );
