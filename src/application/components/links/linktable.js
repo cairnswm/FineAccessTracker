@@ -10,6 +10,9 @@ const LinkTable = ({
   onEditLink, 
   onDeleteLink 
 }) => {
+  if (!links || links.length === 0) {
+    return <p>No links available.</p>;
+  }
   return (
     <Table responsive hover>
       <thead>
