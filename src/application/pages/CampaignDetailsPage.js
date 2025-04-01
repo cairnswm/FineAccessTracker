@@ -20,7 +20,6 @@ const CampaignLinksPage = () => {
   const {
     links,
     loading: linksLoading,
-    fetchLinks,
     addLink,
     updateLink,
     deleteLink,
@@ -133,7 +132,7 @@ const CampaignLinksPage = () => {
 
   const getCampaignName = (campaignId) => {
     const foundCampaign = campaigns.find((c) => c.id === campaignId);
-    return foundCampaign ? foundCampaign.name : "Unknown Campaign";
+    return foundCampaign ? foundCampaign.name : "";
   };
 
   if (campaignsLoading || !campaign) {

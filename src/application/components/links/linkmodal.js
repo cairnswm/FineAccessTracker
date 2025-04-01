@@ -35,19 +35,6 @@ const LinkModal = ({
             </Form.Group>
           )}
           <Form.Group className="mb-3">
-            <Form.Label>Short Code</Form.Label>
-            <Form.Control
-              type="text"
-              name="short_code"
-              value={formData.short_code}
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Text className="text-muted">
-              This will be the unique identifier for your link (e.g., "summer-sale")
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-3">
             <Form.Label>Destination URL</Form.Label>
             <Form.Control
               type="url"
@@ -56,9 +43,12 @@ const LinkModal = ({
               onChange={handleInputChange}
               required
             />
+            <Form.Text className="text-muted">
+              Enter the URL where users will be redirected when they click the link.
+              </Form.Text>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Title</Form.Label>
+            <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="title"
@@ -66,15 +56,10 @@ const LinkModal = ({
               onChange={handleInputChange}
               required
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Expiration Date (Optional)</Form.Label>
-            <Form.Control
-              type="date"
-              name="expires_at"
-              value={formData.expires_at}
-              onChange={handleInputChange}
-            />
+            <Form.Text className="text-muted">
+              Enter a short description for the link. This is for you to identify it's purpose later.
+            </Form.Text>
+
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

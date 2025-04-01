@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Alert } from "react-bootstrap";
+import { Row, Col, Alert, Button } from "react-bootstrap";
 import { useCampaigns } from "../context/CampaignContext";
 import { useLinks } from "../context/LinkContext";
 import { useAuth } from "../../auth/hooks/useAuth";
@@ -10,6 +10,7 @@ import PageMenu from "../components/pagemenu";
 import CampaignsTab from "../components/links/campaignstab";
 import CampaignModal from "../components/links/campaignmodal";
 import { accessElf } from "../../auth/utils/accessElf";
+import { PlusLg } from "react-bootstrap-icons";
 
 const CampaignsPage = () => {
   const { user } = useAuth();
@@ -89,10 +90,27 @@ const CampaignsPage = () => {
   return (
     <PageLayout>
       <PageMenu />
-      <Row className="mb-4">
+      <Row className="mb-4 align-items-center">
         <Col>
           <h1>Campaign Management</h1>
           <p>Create and manage your campaigns</p>
+        </Col>
+        <Col className="text-end">
+          <Button
+            variant="primary"
+            onClick={() => {
+              setEditingCampaign(null);
+              setFormData({
+                name: "",
+                application_id:
+                  applications.length > 0 ? applications[0].id.toString() : "",
+              });
+              setShowCampaignModal(true);
+            }}
+          >
+            <PlusLg className="me-2" />
+            Add Campaign
+          </Button>
         </Col>
       </Row>
       <Alert variant="info" className="mb-4">

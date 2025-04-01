@@ -222,7 +222,8 @@ $accessTrackerConfig = [
     "post" => [
         "createApplication" => "insertApplication",
         "decodeApiKey" => "reverseApiKey",
-        "deleteApplication" => "deleteApplication"
+        "deleteApplication" => "deleteApplication",
+        "insertLink" => "insertLink",
 
     ]
 ];

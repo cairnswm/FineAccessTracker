@@ -32,11 +32,7 @@ export const LinkProvider = ({ children }) => {
     setError(null);
     
     try {
-      // In a real implementation, this would fetch from the API
-      // For now, we'll use mock data
-      const endpoint = campaignId 
-        ? `api/api.php/campaign/${campaignId}/links`
-        : `api/api.php/user/${user.id}/links`;
+      const endpoint = `api/api.php/campaign/${campaignId}/links`;
       
       const response = await fetch(
         combineUrlAndPath(REACT_APP_ACCESS_API, endpoint),
@@ -56,12 +52,6 @@ export const LinkProvider = ({ children }) => {
       const data = await response.json();
       setLinks(data);
       
-      // Using mock data for now
-      // if (campaignId) {
-      //   setLinks(mockLinks.filter(link => link.campaign_id === campaignId));
-      // } else {
-      //   setLinks(mockLinks);
-      // }
     } catch (error) {
       console.error("Error fetching links:", error);
       setError("Failed to fetch links");
@@ -84,30 +74,31 @@ export const LinkProvider = ({ children }) => {
     
     try {
       // In a real implementation, this would send to the API
-      // const response = await fetch(
-      //   combineUrlAndPath(REACT_APP_ACCESS_API, "api/api.php/createLink"),
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //       App_id: tenant,
-      //     },
-      //     body: JSON.stringify(newLink),
-      //   }
-      // );
+      const response = await fetch(
+        combineUrlAndPath(REACT_APP_ACCESS_API, "api/api.php/insertLink"),
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+          body: JSON.stringify(newLink),
+        }
+      );
       
-      // if (!response.ok) {
-      //   throw new Error(`API request failed with status ${response.status}`);
-      // }
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
       
-      // const data = await response.json();
+      const data = await response.json();
+      console.log("Link added:", data);
       
       // Mock implementation
       const linkWithId = {
         ...newLink,
-        id: Math.max(...links.map(l => l.id), 0) + 1,
-        clicks: []
+        id: data.id,
+        short_code: data.short_code,
       };
       
       setLinks([...links, linkWithId]);
