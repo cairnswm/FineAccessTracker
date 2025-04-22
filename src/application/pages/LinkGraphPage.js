@@ -21,13 +21,11 @@ const LinkGraphPage = () => {
   const {
     links,
     loading: linksLoading,
-    addLink,
-    updateLink,
-    deleteLink,
-    activeLinkId, setActiveLinkId, linkClicksData,
-    activeLink
+    linkCountryData,
+    setActiveLinkId,
+    linkClicksData,
+    activeLink,
   } = useLinks();
-
 
   const [campaign, setCampaign] = useState(null);
   const [showLinkModal, setShowLinkModal] = useState(false);
@@ -73,7 +71,7 @@ const LinkGraphPage = () => {
     ],
   };
 
-  console.log("Link Graph Data", data);
+  console.log("Link country Data", linkCountryData);
 
   const options = {
     responsive: true,
@@ -121,12 +119,40 @@ const LinkGraphPage = () => {
             </div>
           </Col>
         </Row>
-        
-      <Alert variant="info" className="mb-4">
-        Under Active Development! This page is currently under development. Some features may not be fully functional yet.
-      </Alert>
-        <Bar data={data} options={options} />
-        
+
+        <Alert variant="info" className="mb-4">
+          Under Active Development! This page is currently under development.
+          Some features may not be fully functional yet.
+        </Alert>
+        <Card className="mt-3">
+          <Card.Header>
+            <h1>Daily Clicks</h1>
+          </Card.Header>
+          <Card.Body>
+            <Bar data={data} options={options} />
+          </Card.Body>
+        </Card>
+        <Card className="mt-3">
+          <Card.Header>
+            <h1>Top Locations</h1>
+          </Card.Header>
+          <Card.Body>
+            <ul className="list-group list-group-flush mt-3">
+              {linkCountryData &&
+                linkCountryData.slice(0, 5).map((location, index) => (
+                  <li
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                    key={index}
+                  >
+                    {location.country}
+                    <span className="badge bg-primary rounded-pill">
+                      {location.unique_clicks} visits
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </Card.Body>
+        </Card>
       </Container>
     </PageLayout>
   );

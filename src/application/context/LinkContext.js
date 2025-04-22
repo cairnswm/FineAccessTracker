@@ -23,6 +23,7 @@ export const LinkProvider = ({ children }) => {
 
   const [links, setLinks] = useState([]);
   const [linkClicksData, setLinkClicksData] = useState([]);
+  const [linkCountryData, setLinkCountryData] = useState([]);
   const [activeLinkId, setActiveLinkId] = useState();
   const [activeLink, setActiveLink] = useState();
   const [loading, setLoading] = useState(false);
@@ -226,14 +227,46 @@ export const LinkProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const fetchLinkCountryData = async () => {
+    try {
+      const response = await fetch(
+        combineUrlAndPath(
+          REACT_APP_ACCESS_API,
+          `api/api.php/link/${activeLinkId}/country`
+        ),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Link country data:", data);
+      setLinkCountryData(data);
+    } catch (error) {
+      console.error("Error fetching link clicks:", error);
+      setError("Failed to fetch link clicks");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (activeLinkId) {
       console.log("Fetching link clicks for ID:", activeLinkId);
       fetchLinkClicksData();
+      fetchLinkCountryData();
       setActiveLink(links.find((link) => link.id === parseInt(activeLinkId)));
     } else {
       setLinkClicksData([]);
+      setLinkCountryData([]);
       setActiveLink(null);
     }
   }, [activeLinkId]);
@@ -315,7 +348,7 @@ export const LinkProvider = ({ children }) => {
         addClickToLink,
         activeLinkId,
         setActiveLinkId,
-        linkClicksData,activeLink, setActiveLink
+        linkClicksData,activeLink, setActiveLink, linkCountryData
       }}
     >
       {children}
