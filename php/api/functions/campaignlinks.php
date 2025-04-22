@@ -154,6 +154,29 @@ function insertLink($data)
     }
 }
 
+function getCountryForLinks($config, $id)
+{
+    global $gapiconn;
+
+    $query = "SELECT country, COUNT(clicks.id) total_clicks, COUNT(DISTINCT clicks.ip_address) unique_clicks FROM clicks, ip_geolocation_cache ip
+WHERE link_id = ?
+And clicks.ip_address = ip.ip_address
+GROUP BY country
+ORDER BY 3 desc;";
+
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('i', $config['where']['link_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
+}
+
 function getDailyClicksPerLink($config)
 {
     global $gapiconn;

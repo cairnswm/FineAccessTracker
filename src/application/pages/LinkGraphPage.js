@@ -60,17 +60,12 @@ const LinkGraphPage = () => {
     );
   }
 
-  console.log("Link Graph Page Rendered", activeLink, linkClicksData.length);
-
-  
-  const reversedData = [...linkClicksData].reverse(); 
-
   const data = {
-    labels: reversedData.map((entry) => entry.click_date),
+    labels: linkClicksData.map((entry) => entry.click_date),
     datasets: [
       {
         label: "Clicks",
-        data: reversedData.map((entry) => entry.unique_clicks),
+        data: linkClicksData.map((entry) => entry.unique_clicks),
         backgroundColor: "rgba(75,192,192,0.6)",
         borderColor: "rgba(75,192,192,1)",
         borderWidth: 1,

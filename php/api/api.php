@@ -222,6 +222,11 @@ $accessTrackerConfig = [
                 "key" => "link_id",
                 "select" => "getDailyClicksPerLink",
             ],
+            "country" => [
+                "tablename" => "clicks",
+                "key" => "link_id",
+                "select" => "getCountryForLinks",
+            ],
         ]
     ],
     "post" => [
