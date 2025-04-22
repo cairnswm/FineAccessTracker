@@ -217,6 +217,11 @@ $accessTrackerConfig = [
                 "key" => "link_id",
                 "select" => ["id", "link_id", "ip_address", "user_agent", "referer", "created_at"],
             ],
+            "clicks" => [
+                "tablename" => "clicks",
+                "key" => "link_id",
+                "select" => "getDailyClicksPerLink",
+            ],
         ]
     ],
     "post" => [
@@ -224,6 +229,7 @@ $accessTrackerConfig = [
         "decodeApiKey" => "reverseApiKey",
         "deleteApplication" => "deleteApplication",
         "insertLink" => "insertLink",
+        "linkClicksByDate" => "getDailyClicksPerLink"
 
     ]
 ];

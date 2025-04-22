@@ -16,7 +16,7 @@ const LinkRow = ({
         variant="outline-secondary" 
         size="sm" 
         className="ms-2" 
-        onClick={() => navigator.clipboard.writeText(`https://accesself.co.za/php/api/lnk.php/${link.short_code}`)}
+        onClick={() => navigator.clipboard.writeText(`https://accesself.co.za/l/${link.short_code}`)}
       >
         <Copy />
       </Button>

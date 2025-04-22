@@ -4,23 +4,29 @@ function getClicksForCampaign($config, $id)
 {
     global $gapiconn;
 
-    $query = "SELECT
-    DATE(c.created_at) AS click_date,
-    COUNT(*) AS total_clicks,
+    $query = "WITH RECURSIVE date_range AS (
+    SELECT CURDATE() - INTERVAL 30 DAY AS click_date
+    UNION ALL
+    SELECT DATE_ADD(click_date, INTERVAL 1 DAY)
+    FROM date_range
+    WHERE click_date < CURDATE()
+)
+SELECT
+    dr.click_date,
+    COUNT(c.id) AS total_clicks,
     COUNT(DISTINCT c.ip_address) AS unique_clicks
 FROM
-    clicks c
-JOIN
-    links l ON c.link_id = l.id
-WHERE
-    l.campaign_id = ?
-    AND c.created_at >= CURDATE() - INTERVAL 30 DAY
+    date_range dr
+LEFT JOIN
+    clicks c ON DATE(c.created_at) = dr.click_date
+LEFT JOIN
+    links l ON c.link_id = l.id AND l.campaign_id = ?
 GROUP BY
-    DATE(c.created_at)
+    dr.click_date
 ORDER BY
-    click_date DESC;";
+    dr.click_date DESC";
     $stmt = $gapiconn->prepare($query);
-    $stmt->bind_param('s', $config['where']['campaign_id']);
+    $stmt->bind_param('s', $config['where']['link_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $rows = [];
@@ -77,7 +83,8 @@ function insertLink($data)
     global $gapiconn, $userid;
 
     // Helper function to generate a unique 6-character shortcode
-    function generateUniqueShortCode($gapiconn) {
+    function generateUniqueShortCode($gapiconn)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $length = 6;
         do {
@@ -145,4 +152,40 @@ function insertLink($data)
             'error' => $error
         ];
     }
+}
+
+function getDailyClicksPerLink($config)
+{
+    global $gapiconn;
+
+    $query = "WITH RECURSIVE date_range AS (
+  SELECT MIN(DATE(created_at)) AS visitDate
+  FROM clicks
+  WHERE link_id = ?
+  UNION ALL
+  SELECT DATE_ADD(visitDate, INTERVAL 1 DAY)
+  FROM date_range
+  WHERE visitDate < (SELECT MAX(DATE(created_at)) FROM clicks WHERE link_id = 2)
+)
+SELECT
+  dr.visitDate,    
+  COUNT(clicks.id) AS total_clicks,
+    COUNT(DISTINCT clicks.ip_address) AS unique_clicks
+FROM date_range dr
+LEFT JOIN clicks ON DATE(clicks.created_at) = dr.visitDate AND clicks.link_id = 2
+LEFT JOIN ip_geolocation_cache ip ON clicks.ip_address = ip.ip_address
+GROUP BY dr.visitDate
+ORDER BY dr.visitDate;";
+
+    $stmt = $gapiconn->prepare($query);
+    $stmt->bind_param('i', $config['where']['link_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $stmt->close();
+
+    return $rows;
 }
