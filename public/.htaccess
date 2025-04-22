@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Redirect /l/{elf} to /php/api/lnk.php/{elf}
+RewriteRule ^l/([^/]+)$ php/api/lnk.php/$1 [L]
+
 # Redirect all routes to index.html except those starting with /php
 RewriteCond %{REQUEST_URI} !^/php
 RewriteCond %{REQUEST_FILENAME} !-f
