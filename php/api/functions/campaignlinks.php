@@ -188,20 +188,20 @@ function getDailyClicksPerLink($config)
   UNION ALL
   SELECT DATE_ADD(visitDate, INTERVAL 1 DAY)
   FROM date_range
-  WHERE visitDate < (SELECT MAX(DATE(created_at)) FROM clicks WHERE link_id = 2)
+  WHERE visitDate < (SELECT MAX(DATE(created_at)) FROM clicks WHERE link_id = ?)
 )
 SELECT
   dr.visitDate as click_date,    
   COUNT(clicks.id) AS total_clicks,
     COUNT(DISTINCT clicks.ip_address) AS unique_clicks
 FROM date_range dr
-LEFT JOIN clicks ON DATE(clicks.created_at) = dr.visitDate AND clicks.link_id = 2
+LEFT JOIN clicks ON DATE(clicks.created_at) = dr.visitDate AND clicks.link_id = ?
 LEFT JOIN ip_geolocation_cache ip ON clicks.ip_address = ip.ip_address
 GROUP BY dr.visitDate
 ORDER BY dr.visitDate;";
 
     $stmt = $gapiconn->prepare($query);
-    $stmt->bind_param('i', $config['where']['link_id']);
+    $stmt->bind_param('iii', $config['where']['link_id'], $config['where']['link_id'],   $config['where']['link_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $rows = [];
