@@ -24,6 +24,8 @@ export const CampaignProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [activeCampaign, setActiveCampaign] = useState(null);
   const [campaignClicksData, setCampaignClicksData] = useState([]);
+  const [activeLinkId, setActiveLinkId] = useState(null);
+  const [linkClicksData, setLinkClicksData] = useState([]);
 
   const fetchCampaigns = async () => {
     if (!user || !token) return;

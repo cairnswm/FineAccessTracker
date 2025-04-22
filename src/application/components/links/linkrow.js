@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Copy, Pencil, Trash } from "react-bootstrap-icons";
+import { Copy, GraphUp, Pencil, Trash } from "react-bootstrap-icons";
 
 const LinkRow = ({ 
   link, 
   getCampaignName, 
   onEdit, 
-  onDelete 
+  onDelete,
+  onGraph 
 }) => {
   return (
     <tr>
@@ -33,8 +34,11 @@ const LinkRow = ({
         <Button variant="outline-primary" size="sm" className="me-1" onClick={() => onEdit(link)}>
           <Pencil />
         </Button>
-        <Button variant="outline-danger" size="sm" onClick={() => onDelete(link.id)}>
+        <Button variant="outline-danger" size="sm" className="me-1" onClick={() => onDelete(link.id)}>
           <Trash />
+        </Button>
+        <Button variant="outline-danger" size="sm" onClick={() => onGraph(link.id)}>
+          <GraphUp />
         </Button>
       </td>
     </tr>

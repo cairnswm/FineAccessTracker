@@ -168,7 +168,7 @@ function getDailyClicksPerLink($config)
   WHERE visitDate < (SELECT MAX(DATE(created_at)) FROM clicks WHERE link_id = 2)
 )
 SELECT
-  dr.visitDate,    
+  dr.visitDate as click_date,    
   COUNT(clicks.id) AS total_clicks,
     COUNT(DISTINCT clicks.ip_address) AS unique_clicks
 FROM date_range dr

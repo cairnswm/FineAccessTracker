@@ -102,6 +102,10 @@ const CampaignLinksPage = () => {
     });
   };
 
+  const handleGraphLink = (linkId) => {
+    navigate(`/link/${linkId}/graph`);
+  };
+
   const openEditLink = (link) => {
     setEditingLink(link);
     setFormData({
@@ -189,6 +193,7 @@ const CampaignLinksPage = () => {
         >
           Add New Link
         </Button>
+        
         <LinkTable
           links={links}
           getCampaignName={getCampaignName}
@@ -196,8 +201,9 @@ const CampaignLinksPage = () => {
           formatDate={formatDate}
           onEditLink={openEditLink}
           onDeleteLink={handleDeleteLink}
+          onGraphLink={handleGraphLink}
         />
-        {/* Link Modal */}
+
         <LinkModal
           show={showLinkModal}
           onHide={() => setShowLinkModal(false)}

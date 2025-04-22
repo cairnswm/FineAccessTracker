@@ -19,6 +19,7 @@ import CampaignLinksPage from './application/pages/CampaignDetailsPage';
 import ApplicationPage from './application/pages/ApplicationDetailsPage';
 import DocumentationPage from './application/pages/DocumentationPage';
 import AboutPage from './application/pages/AboutPage';
+import LinkGraph from './application/pages/LinkGraphPage';
 
 // Components
 import Navigation from './application/components/Navigation';
@@ -58,6 +59,7 @@ function App() {
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/subscriptions/*" element={user ? <SubscriptionRouting /> : <Navigate to="/login" />} />
+        <Route path="/link/:linkId/graph" element={user ? <LinkGraph /> : <Navigate to="/login" />} />
         
         {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" />} />

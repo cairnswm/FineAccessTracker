@@ -9,6 +9,7 @@ const LinkTable = ({
   formatDate,
   onEditLink,
   onDeleteLink,
+  onGraphLink
 }) => {
   if (links.error) {
     return <p>{links.error}</p>;
@@ -40,6 +41,7 @@ const LinkTable = ({
               formatDate={formatDate}
               onEdit={onEditLink}
               onDelete={onDeleteLink}
+              onGraph={onGraphLink}
             />
           ))}
       </tbody>

@@ -22,6 +22,9 @@ export const LinkProvider = ({ children }) => {
   const { activeCampaign } = useCampaigns();
 
   const [links, setLinks] = useState([]);
+  const [linkClicksData, setLinkClicksData] = useState([]);
+  const [activeLinkId, setActiveLinkId] = useState();
+  const [activeLink, setActiveLink] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -30,10 +33,10 @@ export const LinkProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       const endpoint = `api/api.php/campaign/${campaignId}/links`;
-      
+
       const response = await fetch(
         combineUrlAndPath(REACT_APP_ACCESS_API, endpoint),
         {
@@ -44,14 +47,13 @@ export const LinkProvider = ({ children }) => {
           },
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-      
+
       const data = await response.json();
       setLinks(data);
-      
     } catch (error) {
       console.error("Error fetching links:", error);
       setError("Failed to fetch links");
@@ -71,7 +73,7 @@ export const LinkProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       const response = await fetch(
@@ -86,21 +88,21 @@ export const LinkProvider = ({ children }) => {
           body: JSON.stringify(newLink),
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log("Link added:", data);
-      
+
       // Mock implementation
       const linkWithId = {
         ...newLink,
         id: data.id,
         short_code: data.short_code,
       };
-      
+
       setLinks([...links, linkWithId]);
       return linkWithId;
     } catch (error) {
@@ -116,7 +118,7 @@ export const LinkProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       const response = await fetch(
@@ -131,18 +133,18 @@ export const LinkProvider = ({ children }) => {
           body: JSON.stringify(updatedData),
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-      
+
       setLinks(
-        links.map((link) => 
+        links.map((link) =>
           link.id === id ? { ...link, ...updatedData } : link
         )
       );
-      
-      return links.find(link => link.id === id);
+
+      return links.find((link) => link.id === id);
     } catch (error) {
       console.error("Error updating link:", error);
       setError("Failed to update link");
@@ -156,7 +158,7 @@ export const LinkProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       const response = await fetch(
@@ -170,13 +172,13 @@ export const LinkProvider = ({ children }) => {
           },
         }
       );
-      
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
 
       console.log("Link deleted:", id);
-      
+
       setLinks(links.filter((link) => link.id !== id));
     } catch (error) {
       console.error("Error deleting link:", error);
@@ -194,6 +196,48 @@ export const LinkProvider = ({ children }) => {
     return links.find((link) => link.short_code === shortCode);
   };
 
+  const fetchLinkClicksData = async () => {
+    try {
+      const response = await fetch(
+        combineUrlAndPath(
+          REACT_APP_ACCESS_API,
+          `api/api.php/link/${activeLinkId}/clicks`
+        ),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            App_id: tenant,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Link clicks data:", data);
+      setLinkClicksData(data);
+    } catch (error) {
+      console.error("Error fetching link clicks:", error);
+      setError("Failed to fetch link clicks");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeLinkId) {
+      console.log("Fetching link clicks for ID:", activeLinkId);
+      fetchLinkClicksData();
+      setActiveLink(links.find((link) => link.id === parseInt(activeLinkId)));
+    } else {
+      setLinkClicksData([]);
+      setActiveLink(null);
+    }
+  }, [activeLinkId]);
+
   const getClicksForLink = (linkId) => {
     const link = links.find((link) => link.id === parseInt(linkId));
     return link ? link.clicks : [];
@@ -204,7 +248,7 @@ export const LinkProvider = ({ children }) => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       // In a real implementation, this would send to the API
       // const response = await fetch(
@@ -219,33 +263,33 @@ export const LinkProvider = ({ children }) => {
       //     body: JSON.stringify(clickData),
       //   }
       // );
-      
+
       // if (!response.ok) {
       //   throw new Error(`API request failed with status ${response.status}`);
       // }
-      
+
       // const data = await response.json();
-      
+
       // Mock implementation
       const linkIndex = links.findIndex((link) => link.id === parseInt(linkId));
-      
+
       if (linkIndex === -1) {
         throw new Error(`Link with ID ${linkId} not found`);
       }
-      
+
       const newClick = {
         ...clickData,
-        id: Math.max(...links[linkIndex].clicks.map(c => c.id), 0) + 1,
+        id: Math.max(...links[linkIndex].clicks.map((c) => c.id), 0) + 1,
         link_id: parseInt(linkId),
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
       };
-      
+
       const updatedLinks = [...links];
       updatedLinks[linkIndex] = {
         ...updatedLinks[linkIndex],
-        clicks: [...updatedLinks[linkIndex].clicks, newClick]
+        clicks: [...updatedLinks[linkIndex].clicks, newClick],
       };
-      
+
       setLinks(updatedLinks);
       return newClick;
     } catch (error) {
@@ -268,7 +312,10 @@ export const LinkProvider = ({ children }) => {
         getLink,
         getLinkByShortCode,
         getClicksForLink,
-        addClickToLink
+        addClickToLink,
+        activeLinkId,
+        setActiveLinkId,
+        linkClicksData,activeLink, setActiveLink
       }}
     >
       {children}
