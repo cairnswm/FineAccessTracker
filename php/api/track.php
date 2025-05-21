@@ -35,19 +35,37 @@ if (empty($apikey)) {
     $apikey = trim(substr($authHeader, 7));
   }
 }
-if (empty($apikey)) {
-  http_response_code(401);
-  echo json_encode(["error" => "API key or Bearer token required"]);
-  exit;
-}
 
-$appid = decodeApiKey($apikey);
 $user_id = getParam("user_id", "");
 $itemid = getParam("id", "");
 $page = getParam("page", "");
+$domain = getParam("domain", "");
 $error = getParam("error", "");
 $ip_address = $_SERVER['REMOTE_ADDR'];
 $out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address];
+
+if (empty($apikey) && !empty($domain)) {
+  $mysqli = new mysqli($trackerconfig['server'], $trackerconfig['username'], $trackerconfig['password'], $trackerconfig['database']);
+  if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+  }
+  $sql = "SELECT api_key FROM application WHERE domain = ?";
+  $stmt = $mysqli->prepare($sql);
+  if ($stmt === false) {
+    die("Prepare failed: " . $mysqli->error);
+  }
+  $stmt->bind_param("s", $domain);
+  $stmt->execute();
+  $stmt->bind_result($dbApiKey);
+  if ($stmt->fetch()) {
+    $apikey = $dbApiKey;
+  }
+  $stmt->close();
+  $mysqli->close();
+}
+
+$appid = decodeApiKey($apikey);
+
 
 $itemtype = "site";
 
@@ -73,6 +91,7 @@ if ($itemtype != "") {
   }
 
   $message = $error;
+
 
   if ($itemtype === "site" && empty($page)) {
     $today = date('Y-m-d');

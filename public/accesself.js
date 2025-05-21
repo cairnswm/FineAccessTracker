@@ -1,18 +1,18 @@
 (function () {
   let apiKey = null;
-  const backendUrl = 'https://accesself.co.za/php/api/track.php'; 
+  const backendUrl = "https://accesself.co.za/php/api/track.php";
 
   function sendToBackend(url, isFirstVisit = false) {
     if (!apiKey) {
-      console.warn('API key not set. Skipping send.');
+      console.warn("API key not set. Skipping send.");
       return;
     }
 
-    let page = '';
-    let id = '';
+    let page = "";
+    let id = "";
 
     if (!isFirstVisit) {
-      page = url.split('/').pop();
+      page = url.split("/").pop();
 
       const match = url.match(/^(.*)\/([^\/]+)$/);
       if (match) {
@@ -22,17 +22,18 @@
     }
 
     fetch(backendUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         page: page,
         id: id,
-        timestamp: new Date().toISOString()
-      })
-    }).catch(err => console.error('Tracking error:', err));
+        domain: window.location.hostname,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch((err) => console.error("Tracking error:", err));
   }
 
   function trackUrlChange() {
@@ -40,11 +41,11 @@
   }
 
   function checkFirstVisit() {
-    const firstVisitKey = 'accessElfSessionFirstVisit';
+    const firstVisitKey = "accessElfSessionFirstVisit";
     if (!sessionStorage.getItem(firstVisitKey)) {
       // First visit detected
-      sendToBackend('', true);
-      sessionStorage.setItem(firstVisitKey, 'true');
+      sendToBackend("", true);
+      sessionStorage.setItem(firstVisitKey, "true");
     }
   }
 
@@ -61,18 +62,18 @@
     trackUrlChange();
   };
 
-  window.addEventListener('popstate', trackUrlChange);
-  window.addEventListener('hashchange', trackUrlChange);
+  window.addEventListener("popstate", trackUrlChange);
+  window.addEventListener("hashchange", trackUrlChange);
 
   // API exposure
   window.AccessElf = {
     setApiKey: function (key) {
       apiKey = key;
-      console.log('Tracker API key set.');
+      console.log("Tracker API key set.");
     },
     sendNow: function () {
       trackUrlChange();
-    }
+    },
   };
 
   // Initial load
