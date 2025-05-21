@@ -30,8 +30,6 @@ function decodeApiKey($guid)
 $headers = getallheaders();
 $apikey = isset($headers['apikey']) ? $headers['apikey'] : '';
 
-
-
 $appid = decodeApiKey($apikey);
 $user_id = getParam("user_id", "");
 $itemid = getParam("id", "");
@@ -63,8 +61,8 @@ if ($itemtype != "") {
     die("Connection failed: " . $mysqli->connect_error);
   }
   
-  $sql = "INSERT INTO events (application_id, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE count = count + 1";
+  $sql = "INSERT INTO events (application_id, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)";
+      // ON DUPLICATE KEY UPDATE count = count + 1";
 
   $stmt = $mysqli->prepare($sql);
   if ($stmt === false) {
