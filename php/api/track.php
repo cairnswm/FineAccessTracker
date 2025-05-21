@@ -29,6 +29,17 @@ function decodeApiKey($guid)
 
 $headers = getallheaders();
 $apikey = isset($headers['apikey']) ? $headers['apikey'] : '';
+if (empty($apikey)) {
+  $authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : '';
+  if (stripos($authHeader, 'Bearer ') === 0) {
+    $apikey = trim(substr($authHeader, 7));
+  }
+}
+if (empty($apikey)) {
+  http_response_code(401);
+  echo json_encode(["error" => "API key or Bearer token required"]);
+  exit;
+}
 
 $appid = decodeApiKey($apikey);
 $user_id = getParam("user_id", "");
