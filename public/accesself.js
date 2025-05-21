@@ -3,10 +3,10 @@
   const backendUrl = "https://accesself.co.za/php/api/track.php";
 
   function sendToBackend(url, isFirstVisit = false) {
-    if (!apiKey) {
-      console.warn("API key not set. Skipping send.");
-      return;
-    }
+    // if (!apiKey) {
+    //   console.warn("API key not set. Skipping send.");
+    //   return;
+    // }
 
     let page = "";
     let id = "";

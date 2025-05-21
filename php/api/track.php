@@ -45,6 +45,11 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 $out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address];
 
 if (empty($apikey) && !empty($domain)) {
+  if ($domain === "localhost") {
+    http_response_code(403);
+    echo json_encode(["error" => "API key required for localhost domain"]);
+    exit;
+  }
   $mysqli = new mysqli($trackerconfig['server'], $trackerconfig['username'], $trackerconfig['password'], $trackerconfig['database']);
   if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
