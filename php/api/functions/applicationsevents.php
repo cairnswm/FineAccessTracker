@@ -43,6 +43,7 @@ function getApplicationsForUser($config, $id)
     a.description,
     a.api_key,
     COUNT(e.id) AS totalVisits,
+    COUNT(DISTINCT CASE WHEN e.event_date = CURDATE() THEN e.id END) AS eventsToday,
     COUNT(DISTINCT e.ip_address) AS uniqueVisitors,
     COUNT(DISTINCT CASE WHEN e.event_date = CURDATE() THEN e.ip_address END) AS visitsToday,
     COUNT(DISTINCT CASE WHEN e.event_date = CURDATE() - INTERVAL 1 DAY THEN e.ip_address END) AS visitsYesterday,
