@@ -26,7 +26,7 @@ include_once "./functions/campaignlinks.php";
 include_once "./functions/campaigns.php";
 include_once "./functions/applicationsevents.php";
 include_once "./functions/applicationreports.php";
-
+include_once "./functions/sessiontracker.php";
 
 // Define the configurations
 $accessTrackerConfig = [
@@ -234,7 +234,8 @@ $accessTrackerConfig = [
         "decodeApiKey" => "reverseApiKey",
         "deleteApplication" => "deleteApplication",
         "insertLink" => "insertLink",
-        "linkClicksByDate" => "getDailyClicksPerLink"
+        "linkClicksByDate" => "getDailyClicksPerLink",
+        "sessionTracker" => "sessiontracker",
 
     ]
 ];

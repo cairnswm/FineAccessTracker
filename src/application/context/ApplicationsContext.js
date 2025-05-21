@@ -76,7 +76,55 @@ export const ApplicationsProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      setDailyAnalytics(data);
+
+      const getDateRange = (data) => {
+        if (!Array.isArray(data) || data.length === 0) return [null, null];
+        const dates = data.map(item => new Date(item.visitDate));
+        const minDate = new Date(Math.min(...dates));
+        const maxDate = new Date(Math.max(...dates));
+        return [
+          minDate.toISOString().split("T")[0],
+          maxDate.toISOString().split("T")[0]
+        ];
+      };
+
+      const fillMissingDays = (data) => {
+        if (!Array.isArray(data) || data.length === 0) return [];
+        const [startDate, endDate] = getDateRange(data);
+        const result = [];
+        const dateMap = {};
+        data.forEach(item => {
+          dateMap[item.visitDate] = item;
+        });
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        for (
+          let d = new Date(start);
+          d <= end;
+          d.setDate(d.getDate() + 1)
+        ) {
+          const dateStr = d.toISOString().split("T")[0];
+          if (dateMap[dateStr]) {
+        result.push(dateMap[dateStr]);
+          } else {
+        result.push({
+          applicationId: data[0].applicationId,
+          visitDate: dateStr,
+          totalVisits: 0,
+          uniqueVisitors: 0,
+          avgSession: "00:00:00.0000",
+          lastUpdated: null
+        });
+          }
+        }
+        return result;
+      };
+
+      const filledData = fillMissingDays(data);
+
+      setDailyAnalytics(filledData);
     } catch (error) {
       console.error("Error fetching daily analytics:", error);
     } finally {

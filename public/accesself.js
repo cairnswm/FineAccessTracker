@@ -21,18 +21,23 @@
       }
     }
 
-    fetch(backendUrl, {
-      method: "POST",
-      headers: {
+    const headers ={
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
+    }
+    if (apiKey && apiKey.length > 0 && apiKey !== "undefined" && apiKey !== "null") {
+        headers.Authorization = `Bearer ${apiKey}`;
+    }
+    const body = {
         page: page,
         id: id,
         domain: window.location.hostname,
         timestamp: new Date().toISOString(),
-      }),
+      }
+
+    fetch(backendUrl, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
     }).catch((err) => console.error("Tracking error:", err));
   }
 

@@ -27,7 +27,20 @@ const TrackingInformation = () => {
         </Alert>
         
         <div className="mt-3">
-          <h6>Recommended Implementation:</h6>
+          <h6>Recommended Implementation for Single Page Applications (SPAs):</h6>
+          <pre className="bg-light p-3 rounded">
+            <code>{`
+<script src="http://accesself.co.za/accesself.js"></script>
+<script>
+  // Set your API key once loaded
+  AccessElf.setApiKey('YOUR_API_KEY_HERE');
+</script>
+`}</code>
+          </pre>
+        </div>
+
+        <div className="mt-3">
+          <h6>Recommended Implementation for Non-SPA Applications:</h6>
           <pre className="bg-light p-3 rounded">
             <code>{`
 // In your main app (e.g., App.js or useEffect in layout)

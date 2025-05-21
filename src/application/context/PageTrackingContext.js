@@ -42,6 +42,8 @@ export const PageTrackingProvider = ({ children }) => {
       }
       
       const summaryData = await summaryResponse.json();
+
+
       
       // Fetch day by day data
       const dayByDayResponse = await fetch(combineUrlAndPath(REACT_APP_ACCESS_API,`api/api.php/application/${applicationId}/pagebyday`), {
