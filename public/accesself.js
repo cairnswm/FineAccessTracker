@@ -12,12 +12,12 @@
     let id = "";
 
     if (!isFirstVisit) {
-      page = url.split("/").pop();
+      const urlObj = new URL(url);
+      const pathSegments = urlObj.pathname.split("/").filter(segment => segment);
 
-      const match = url.match(/^(.*)\/([^\/]+)$/);
-      if (match) {
-        page = match[1];
-        id = match[2];
+      if (pathSegments.length > 0) {
+        page = pathSegments.pop();
+        id = pathSegments.length > 0 ? pathSegments.pop() : "";
       }
     }
 
