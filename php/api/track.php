@@ -60,6 +60,29 @@ if ($itemtype != "") {
   if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
   }
+
+  $message = $error;
+
+  if ($itemtype === "site" && empty($page)) {
+    $today = date('Y-m-d');
+    $checkSql = "SELECT id FROM events WHERE application_id = ? AND type = 'site' AND ip_address = ? AND DATE(event_date) = ?";
+    $checkStmt = $mysqli->prepare($checkSql);
+    if ($checkStmt === false) {
+      die("Prepare failed: " . $mysqli->error);
+    }
+    $checkStmt->bind_param("sss", $appid, $ip_address, $today);
+    $checkStmt->execute();
+    $checkStmt->store_result();
+    if ($checkStmt->num_rows > 0) {
+      $checkStmt->close();
+      $out["data"] = "Already tracked today";
+      $mysqli->close();
+      http_response_code(200);
+      echo json_encode($out);
+      exit;
+    }
+    $checkStmt->close();
+  }
   
   $sql = "INSERT INTO events (application_id, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)";
       // ON DUPLICATE KEY UPDATE count = count + 1";
