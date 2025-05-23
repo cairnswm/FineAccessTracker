@@ -21,7 +21,7 @@ if (typeof process !== "undefined" && process?.env) {
 }
 
 if (window.location.hostname === "localhost") {
-  ACCESS = "http://localhost/accesstracker/php/";
+  ACCESS = "http://localhost/AccessElf/php/";
 }
 
 console.log("ACCESS API: ", ACCESS);

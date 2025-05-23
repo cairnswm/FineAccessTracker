@@ -28,9 +28,10 @@ const TrackingInformation = () => {
         
         <div className="mt-3">
           <h6>Recommended Implementation for Single Page Applications (SPAs):</h6>
+          The easiest way to add AccessElf is to use the SPA library. Every time the URL changes the new URL will be sent for our Elf to record. This is also the quickest and easiest way to add it to your Bolt.New project.
           <pre className="bg-light p-3 rounded">
             <code>{`
-<script src="http://accesself.co.za/accesself.js"></script>
+<script src="https://accesself.co.za/accesself.js"></script>
 <script>
   // Set your API key once loaded
   AccessElf.setApiKey('YOUR_API_KEY_HERE');
