@@ -1,13 +1,13 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import PageLayout from '../../auth/components/pagelayout';
-import PageMenu from '../components/pagemenu';
-import BenefitsSection from '../components/landingpage/BenefitsSection';
-import IntegrationSection from '../components/landingpage/IntegrationSection';
-import HowItWorksSection from '../components/landingpage/HowItWorksSection';
-import FeaturesSection from '../components/landingpage/FeaturesSection';
-import PricingSection from '../components/landingpage/PricingSection';
-import TrackingInformation from '../components/documentation/TrackingInformation';
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import PageLayout from "../../auth/components/pagelayout";
+import PageMenu from "../components/pagemenu";
+import BenefitsSection from "../components/landingpage/BenefitsSection";
+import IntegrationSection from "../components/landingpage/IntegrationSection";
+import HowItWorksSection from "../components/landingpage/HowItWorksSection";
+import FeaturesSection from "../components/landingpage/FeaturesSection";
+import PricingSection from "../components/landingpage/PricingSection";
+import TrackingInformation from "../components/documentation/TrackingInformation";
 import { accessElf } from "../../auth/utils/accessElf";
 
 const AboutPage = () => {
@@ -20,19 +20,45 @@ const AboutPage = () => {
           <Col>
             <h1>About Access Tracker</h1>
             <p className="lead">
-              Access Tracker is a powerful analytics platform designed to help developers 
-              understand how users interact with their applications. Our mission is to provide 
-              simple yet powerful tracking tools that give you actionable insights.
+              Access Tracker is a powerful analytics platform designed to help
+              developers understand how users interact with their applications.
+              Our mission is to provide simple yet powerful tracking tools that
+              give you actionable insights.
             </p>
           </Col>
         </Row>
-        
+        <Row className="mb-5">
+          <Col className="d-flex flex-column align-items-center justify-content-center">
+            <feedback-elf-review api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad" />
+          </Col>
+        </Row>
+        {window.location.hostname === "localhost" && (
+          <Row className="d-flex flex-row align-items-center justify-content-center mb-5">
+            <Col className="text-center">
+              <feedback-elf-button
+                type="review"
+                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+              />
+            </Col>
+            <Col className="text-center">
+              <feedback-elf-button
+                type="bug"
+                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+              />
+            </Col>
+            <Col className="text-center">
+              <feedback-elf-button
+                type="feature"
+                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+              />
+            </Col>
+          </Row>
+        )}
         <Row className="mb-5">
           <Col>
             <TrackingInformation />
           </Col>
         </Row>
-        
         <BenefitsSection />
         <IntegrationSection />
         <HowItWorksSection />

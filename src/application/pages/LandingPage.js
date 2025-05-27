@@ -11,6 +11,7 @@ import CTASection from "../components/landingpage/CTASection";
 import "./LandingPage.css";
 import WhySection from "../components/landingpage/WhySection";
 import { accessElf } from "../../auth/utils/accessElf";
+import CampaignFeaturesSection from "../components/landingpage/CampaignFeaturesSection"; // New section
 
 const LandingPage = () => {
   accessElf.track("landing");
@@ -22,6 +23,7 @@ const LandingPage = () => {
       <IntegrationSection />
       <HowItWorksSection />
       <FeaturesSection />
+      <CampaignFeaturesSection /> {/* New section */}
       <PricingSection />
       <WhySection />
       <CTASection />

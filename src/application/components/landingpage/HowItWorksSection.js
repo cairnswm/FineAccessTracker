@@ -58,6 +58,23 @@ const HowItWorksSection = () => {
               </p>
             </div>
           </Col>
+          <Col md={4}>
+            <div className="text-center">
+              <div
+                className="bg-primary text-white rounded-circle d-inline-flex justify-content-center align-items-center mb-3"
+                style={{ width: "60px", height: "60px" }}
+              >
+                <span className="fs-4">4</span>
+              </div>
+              <h4>Data Security</h4>
+              <p>
+                Data is stored on South African-based servers, outside of the
+                USA and Europe. Sessions are tracked by IP address only—no other
+                personal information is stored. No cookies are stored on the end
+                user's machine.
+              </p>
+            </div>
+          </Col>
           <Col xs={12}>
             <Image src="applications.png" alt="Applications List" fluid />
           </Col>
