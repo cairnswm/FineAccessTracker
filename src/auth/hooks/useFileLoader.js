@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { videoMimeTypes, imageMimeTypes, validateExtension } from "../utils/media";
 import { combineUrlAndPath } from "../utils/combineUrlAndPath";
+import { REACT_APP_CONTENT_API } from "../../env";
 
 const useFileLoader = (
   prefix = "FILE",
@@ -10,7 +11,7 @@ const useFileLoader = (
   onProgress
 ) => {
   const { token } = useAuth();
-  const url = combineUrlAndPath(process.env.REACT_APP_CONTENT_API, `uploadfile.php?pre=${prefix}`);
+  const url = combineUrlAndPath(REACT_APP_CONTENT_API, `uploadfile.php?pre=${prefix}`);
   const [fileData, setFileData] = useState();
   const fileInputRef = useRef();
   const [file, setFile] = useState();
