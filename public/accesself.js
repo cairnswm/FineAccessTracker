@@ -37,12 +37,13 @@
     if (bulk) {
       bulkData.push(body);
 
-      // Start the timer only if it's not already running
-      if (!bulkTimer) {
-        bulkTimer = setTimeout(() => {
-          sendBulkData();
-        }, 6000); // 6 seconds
+      // Always restart the timer when new data is added
+      if (bulkTimer) {
+        clearTimeout(bulkTimer);
       }
+      bulkTimer = setTimeout(() => {
+        sendBulkData();
+      }, 6000); // 6 seconds
 
       if (bulkData.length >= 50) {
         sendBulkData();
