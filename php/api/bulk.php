@@ -1,9 +1,10 @@
 <?php
 
 include_once dirname(__FILE__) . '/../corsheaders.php';
-include_once dirname(__FILE__) . '/../trackerconfig.php';
-include_once dirname(__FILE__) . '/../utils.php';
-include_once dirname(__FILE__) . '/../ipinfo.php';
+include_once dirname(__FILE__) . "/../utils.php";
+include_once dirname(__FILE__) . "/../trackerconfig.php";
+include_once dirname(__FILE__) . "/ipinfo.php";
+include_once dirname(__FILE__) . "/functions/apikey.php";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

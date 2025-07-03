@@ -10,22 +10,7 @@ error_reporting(E_ALL);
 include_once dirname(__FILE__) . "/../utils.php";
 include_once dirname(__FILE__) . "/../trackerconfig.php";
 include_once dirname(__FILE__) . "/ipinfo.php";
-
-function decodeApiKey($guid)
-{
-  $parts = explode('-', $guid);
-  if (count($parts) < 2) {
-    throw new Exception("Invalid GUID format.");
-  }
-
-  $base = $parts[0];
-  $encoded = $parts[1];
-
-  $baseInt = hexdec($base);
-  $encodedInt = hexdec($encoded);
-
-  return $encodedInt - $baseInt;
-}
+include_once dirname(__FILE__) . "/functions/apikey.php";
 
 $headers = getallheaders();
 $apikey = isset($headers['apikey']) ? $headers['apikey'] : '';
