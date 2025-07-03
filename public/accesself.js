@@ -7,11 +7,6 @@
   let bulkTimer = null;
 
   function sendToBackend(url, isFirstVisit = false) {
-    // if (!apiKey) {
-    //   console.warn("API key not set. Skipping send.");
-    //   return;
-    // }
-
     let page = "";
     let id = "";
 
@@ -20,8 +15,8 @@
       const pathSegments = urlObj.pathname.split("/").filter(segment => segment);
 
       if (pathSegments.length > 0) {
-        page = pathSegments.pop();
-        id = pathSegments.length > 0 ? pathSegments.pop() : "";
+        id = pathSegments.pop();
+        page = pathSegments.length > 0 ? pathSegments.pop() : "";
       }
     }
 
@@ -33,8 +28,8 @@
     }
 
     const body = {
-      page: page,
-      id: id,
+      page: id || page, // Swap fields if id is present
+      id: id ? page : "", // Assign page to id only if id is present
       domain: window.location.hostname,
       timestamp: new Date().toISOString(),
     };
