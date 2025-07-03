@@ -14,9 +14,14 @@
       const urlObj = new URL(url);
       const pathSegments = urlObj.pathname.split("/").filter(segment => segment);
 
-      if (pathSegments.length > 0) {
+      if (pathSegments.length === 1) {
+        page = pathSegments[0];
+      } else if (pathSegments.length === 2) {
+        page = pathSegments[0];
+        id = pathSegments[1];
+      } else if (pathSegments.length > 2) {
         id = pathSegments.pop();
-        page = pathSegments.length > 0 ? pathSegments.pop() : "";
+        page = pathSegments.pop();
       }
     }
 
