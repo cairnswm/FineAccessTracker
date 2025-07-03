@@ -1,6 +1,10 @@
 (function () {
   let apiKey = null;
   const backendUrl = "https://accesself.co.za/php/api/track.php";
+  const bulkUrl = "https://accesself.co.za/php/api/bulk.php";
+  let bulk = true;
+  let bulkData = [];
+  let bulkTimer = null;
 
   function sendToBackend(url, isFirstVisit = false) {
     // if (!apiKey) {
@@ -21,24 +25,57 @@
       }
     }
 
-    const headers ={
-        "Content-Type": "application/json",
-    }
+    const headers = {
+      "Content-Type": "application/json",
+    };
     if (apiKey && apiKey.length > 0 && apiKey !== "undefined" && apiKey !== "null") {
-        headers.Authorization = `Bearer ${apiKey}`;
+      headers.Authorization = `Bearer ${apiKey}`;
     }
-    const body = {
-        page: page,
-        id: id,
-        domain: window.location.hostname,
-        timestamp: new Date().toISOString(),
-      }
 
-    fetch(backendUrl, {
+    const body = {
+      page: page,
+      id: id,
+      domain: window.location.hostname,
+      timestamp: new Date().toISOString(),
+    };
+
+    if (bulk) {
+      bulkData.push(body);
+      if (bulkData.length >= 50) {
+        sendBulkData();
+      } else if (!bulkTimer) {
+        bulkTimer = setTimeout(() => {
+          sendBulkData();
+        }, 60000); // 1 minute
+      }
+    } else {
+      fetch(backendUrl, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }).catch((err) => console.error("Tracking error:", err));
+    }
+  }
+
+  function sendBulkData() {
+    if (bulkData.length === 0) return;
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (apiKey && apiKey.length > 0 && apiKey !== "undefined" && apiKey !== "null") {
+      headers.Authorization = `Bearer ${apiKey}`;
+    }
+
+    fetch(bulkUrl, {
       method: "POST",
       headers: headers,
-      body: JSON.stringify(body),
-    }).catch((err) => console.error("Tracking error:", err));
+      body: JSON.stringify({ data: bulkData }),
+    }).catch((err) => console.error("Bulk tracking error:", err));
+
+    bulkData = [];
+    clearTimeout(bulkTimer);
+    bulkTimer = null;
   }
 
   function trackUrlChange() {
@@ -48,13 +85,11 @@
   function checkFirstVisit() {
     const firstVisitKey = "accessElfSessionFirstVisit";
     if (!sessionStorage.getItem(firstVisitKey)) {
-      // First visit detected
       sendToBackend("", true);
       sessionStorage.setItem(firstVisitKey, "true");
     }
   }
 
-  // Monkey-patch pushState and replaceState
   const originalPushState = history.pushState;
   history.pushState = function () {
     originalPushState.apply(this, arguments);
@@ -70,7 +105,6 @@
   window.addEventListener("popstate", trackUrlChange);
   window.addEventListener("hashchange", trackUrlChange);
 
-  // API exposure
   window.AccessElf = {
     setApiKey: function (key) {
       apiKey = key;
@@ -79,9 +113,12 @@
     sendNow: function () {
       trackUrlChange();
     },
+    setBulk: function (isBulk) {
+      bulk = isBulk;
+      console.log(`Bulk mode set to ${bulk}`);
+    },
   };
 
-  // Initial load
   checkFirstVisit();
   trackUrlChange();
 })();

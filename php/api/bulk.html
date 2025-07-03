@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk API Documentation</title>
+</head>
+<body>
+    <h1>Bulk API Documentation</h1>
+    <p>The <code>bulk.php</code> endpoint allows you to insert multiple events into the database in a single request. The request body should contain an array of objects, each with the following fields:</p>
+    <ul>
+        <li><code>page</code>: The page identifier (string).</li>
+        <li><code>id</code>: The item identifier (string).</li>
+    </ul>
+
+    <h2>Endpoint</h2>
+    <p><code>POST /php/api/bulk.php</code></p>
+
+    <h2>Headers</h2>
+    <ul>
+        <li><code>Content-Type</code>: <code>application/json</code></li>
+        <li><code>apikey</code>: Your API key (string).</li>
+    </ul>
+
+    <h2>Request Body</h2>
+    <pre>
+{
+    "data": [
+        {
+            "page": "examplePage",
+            "id": "exampleId"
+        },
+        {
+            "page": "anotherPage",
+            "id": "anotherId"
+        }
+    ]
+}
+    </pre>
+
+    <h2>Response</h2>
+    <p>On success, the API will return:</p>
+    <pre>
+{
+    "status": "success"
+}
+    </pre>
+
+    <h2>Sample JavaScript Call</h2>
+    <pre>
+const apiUrl = '/php/api/bulk.php';
+const apiKey = 'your-api-key';
+
+const requestData = {
+    data: [
+        {
+            page: 'examplePage',
+            id: 'exampleId'
+        },
+        {
+            page: 'anotherPage',
+            id: 'anotherId'
+        }
+    ]
+};
+
+fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'apikey': apiKey
+    },
+    body: JSON.stringify(requestData)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+    </pre>
+</body>
+</html>
