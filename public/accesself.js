@@ -36,12 +36,16 @@
 
     if (bulk) {
       bulkData.push(body);
-      if (bulkData.length >= 50) {
-        sendBulkData();
-      } else if (!bulkTimer) {
+
+      // Start the timer only if it's not already running
+      if (!bulkTimer) {
         bulkTimer = setTimeout(() => {
           sendBulkData();
-        }, 60000); // 1 minute
+        }, 6000); // 6 seconds
+      }
+
+      if (bulkData.length >= 50) {
+        sendBulkData();
       }
     } else {
       fetch(backendUrl, {
@@ -69,7 +73,7 @@
     }).catch((err) => console.error("Bulk tracking error:", err));
 
     bulkData = [];
-    clearTimeout(bulkTimer);
+    clearTimeout(bulkTimer); // Stop the timer when bulk data is sent
     bulkTimer = null;
   }
 
