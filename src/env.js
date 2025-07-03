@@ -20,11 +20,9 @@ if (typeof process !== "undefined" && process?.env) {
   ACCESS = process.env.REACT_APP_ACCESS_API;
 }
 
-if (window.location.hostname === "localhost") {
+if (typeof window !== "undefined" && window.location.hostname === "localhost") {
   ACCESS = "http://localhost/AccessElf/php/";
 }
-
-console.log("ACCESS API: ", ACCESS);
 
 export const REACT_APP_TENANT_API = TENANT;
 export const REACT_APP_AUTH_API = AUTH;
