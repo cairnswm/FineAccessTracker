@@ -33,8 +33,8 @@
     }
 
     const body = {
-      page: id || page, // Swap fields if id is present
-      id: id ? page : "", // Assign page to id only if id is present
+      page: page,
+      id: id,
       domain: window.location.hostname,
       timestamp: new Date().toISOString(),
     };
