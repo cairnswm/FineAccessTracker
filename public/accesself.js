@@ -122,9 +122,12 @@
       bulk = isBulk;
       console.log(`Bulk mode set to ${bulk}`);
     },
+    getLocationData: function (ip = null) {
+      return locationData(ip);
+    },
   };
 
-  function getLocationData(ip = null) {
+  function locationData(ip = null) {
     const placeUrl = `https://accesself.co.za/php/api/place.php${ip ? `?ip=${ip}` : ''}`;
 
     return fetch(placeUrl, {
