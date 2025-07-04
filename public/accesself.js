@@ -124,6 +124,31 @@
     },
   };
 
+  function getLocationData(ip = null) {
+    const placeUrl = `https://accesself.co.za/php/api/place.php${ip ? `?ip=${ip}` : ''}`;
+
+    return fetch(placeUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch location data");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Location data fetched:", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error fetching location data:", error);
+        return null;
+      });
+  }
+
   checkFirstVisit();
   trackUrlChange();
 })();

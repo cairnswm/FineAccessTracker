@@ -176,6 +176,18 @@ $accessTrackerConfig = [
         "beforeupdate" => "",
         "beforedelete" => ""
     ],
+        "place" => [
+        "tablename" => "ip_geolocation_cache",
+        "key" => "ip_address",
+        "select" => ["id", "ip_address", "country", "region", "city", "last_updated", "created_at", "modified_at"],
+        "create" => ["ip_address", "country", "region", "city", "last_updated"],
+        "update" => ["country", "region", "city", "last_updated"],
+        "delete" => false,
+        "beforeselect" => "",
+        "beforecreate" => "",
+        "beforeupdate" => "",
+        "beforedelete" => ""
+        ],
     "campaign" => [
         "tablename" => "campaigns",
         "key" => "id",
