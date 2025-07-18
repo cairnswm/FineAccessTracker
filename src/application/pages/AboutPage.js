@@ -12,6 +12,7 @@ import { accessElf } from "../../auth/utils/accessElf";
 
 const AboutPage = () => {
   accessElf.track("about");
+
   return (
     <PageLayout>
       <PageMenu />
@@ -29,7 +30,7 @@ const AboutPage = () => {
         </Row>
         <Row className="mb-5">
           <Col className="d-flex flex-column align-items-center justify-content-center">
-            <feedback-elf-review api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad" />
+            <feedback-elf-review api_key="3686f922-3686f93a-46b0-91b9-6d8a6e00b6c7" />
           </Col>
         </Row>
         {window.location.hostname === "localhost" && (
@@ -37,19 +38,19 @@ const AboutPage = () => {
             <Col className="text-center">
               <feedback-elf-button
                 type="review"
-                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+                api_key="3686f922-3686f93a-46b0-91b9-6d8a6e00b6c7"
               />
             </Col>
             <Col className="text-center">
               <feedback-elf-button
                 type="bug"
-                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+                api_key="3686f922-3686f93a-46b0-91b9-6d8a6e00b6c7"
               />
             </Col>
             <Col className="text-center">
               <feedback-elf-button
                 type="feature"
-                api_key="f2446f40-f2446f42-4e64-acd3-9e7fe626f5ad"
+                api_key="3686f922-3686f93a-46b0-91b9-6d8a6e00b6c7"
               />
             </Col>
           </Row>

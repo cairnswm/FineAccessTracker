@@ -152,6 +152,39 @@
       });
   }
 
+  function sendErrorToBackend(errorMessage, errorData = null) {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (apiKey && apiKey.length > 0 && apiKey !== "undefined" && apiKey !== "null") {
+      headers.Authorization = `Bearer ${apiKey}`;
+    }
+
+    const body = {
+      error: errorMessage,
+      data: errorData ? JSON.stringify(errorData) : null,
+      page: window.location.pathname,
+      domain: window.location.hostname,
+      timestamp: new Date().toISOString(),
+    };
+
+    fetch("https://accesself.co.za/php/api/error.php", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    }).catch((err) => console.error("Error logging failed:", err));
+  }
+
+  window.onerror = function (message, source, lineno, colno, error) {
+    const errorData = {
+      source: source,
+      lineno: lineno,
+      colno: colno,
+      stack: error ? error.stack : null,
+    };
+    sendErrorToBackend(message, errorData);
+  };
+
   checkFirstVisit();
   trackUrlChange();
 })();

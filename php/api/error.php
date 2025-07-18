@@ -22,18 +22,15 @@ if (empty($apikey)) {
 
 $user_id = getParam("user_id", "");
 $itemid = getParam("id", "");
-$page = getParam("page", "");
+$page = getParam("page", "error");
 $domain = getParam("domain", "");
 $error = getParam("error", "");
+$data = getParam("data", "");
+$message = getParam("message", "");
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address];
+$out = ["page" => $page, "itemid" => $itemid, "user_id" => $user_id, "ip_address" => $ip_address, "data" => $data, "message" => $message];
 
 if (empty($apikey) && !empty($domain)) {
-  // if ($domain === "localhost") {
-  //   http_response_code(403);
-  //   echo json_encode(["error" => "API key required for localhost domain"]);
-  //   exit;
-  // }
   $mysqli = new mysqli($trackerconfig['server'], $trackerconfig['username'], $trackerconfig['password'], $trackerconfig['database']);
   if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
@@ -55,20 +52,7 @@ if (empty($apikey) && !empty($domain)) {
 
 $appid = decodeApiKey($apikey);
 
-
-$itemtype = "site";
-
-if (isset($page) && $page != "") {
-  $itemtype = "page";
-}
-
-if (isset($itemid) && $itemid != "") {
-  $itemtype = "item";
-}
-
-if (isset($error) && $error != "") {
-  $itemtype = "error";
-}
+$itemtype = "error";
 
 $out["type"] = $itemtype;
 
@@ -79,39 +63,14 @@ if ($itemtype != "") {
     die("Connection failed: " . $mysqli->connect_error);
   }
 
-  $message = $error;
-
-
-  if ($itemtype === "site" && empty($page)) {
-    $today = date('Y-m-d');
-    $checkSql = "SELECT id FROM events WHERE application_id = ? AND type = 'site' AND ip_address = ? AND DATE(event_date) = ?";
-    $checkStmt = $mysqli->prepare($checkSql);
-    if ($checkStmt === false) {
-      die("Prepare failed: " . $mysqli->error);
-    }
-    $checkStmt->bind_param("sss", $appid, $ip_address, $today);
-    $checkStmt->execute();
-    $checkStmt->store_result();
-    if ($checkStmt->num_rows > 0) {
-      $checkStmt->close();
-      $out["data"] = "Already tracked today";
-      $mysqli->close();
-      http_response_code(200);
-      echo json_encode($out);
-      exit;
-    }
-    $checkStmt->close();
-  }
-  
-  $sql = "INSERT INTO events (application_id, event_type, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)";
-      // ON DUPLICATE KEY UPDATE count = count + 1";
+  $sql = "INSERT INTO events (application_id, event_type, type, page, item_id, message, data, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   $stmt = $mysqli->prepare($sql);
   if ($stmt === false) {
     die("Prepare failed: " . $mysqli->error);
   }
 
-  $stmt->bind_param("sssssss", $appid, "route", $itemtype, $page, $itemid, $message, $ip_address);
+  $stmt->bind_param("ssssssss", $appid, "error", $itemtype, $page, $itemid, $message, $data, $ip_address);
 
   if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);

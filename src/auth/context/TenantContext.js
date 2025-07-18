@@ -9,6 +9,8 @@ const TenantContext = createContext(null);
 const TenantProvider = (props) => {
   const { children, onError } = props;
 
+  console.log("TENANT CONTEXT")
+
   const [tenant] = useState(props.applicationId);
   const configValue = props.config;
   const [params, setParams] = useState(props.params || []);

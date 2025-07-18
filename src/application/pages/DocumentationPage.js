@@ -7,13 +7,11 @@ import TrackingInformation from '../components/documentation/TrackingInformation
 import { accessElf } from "../../auth/utils/accessElf";
 
 const DocumentationPage = () => {
-  // Example API key for documentation purposes
   const exampleApiKey = "example-api-key-12345";
   accessElf.track("documentation");
-  
+
   return (
     <PageLayout>
-      
       <PageMenu />
       <Container>
         <h1 className="mb-4">Documentation</h1>
@@ -21,10 +19,9 @@ const DocumentationPage = () => {
           Learn how to integrate Access Tracker into your applications. 
           The examples below use a sample API key for demonstration purposes.
         </p>
-        
+
         <TrackingInformation />
-        
-        <IntegrationTab apiKey={exampleApiKey} />
+
       </Container>
     </PageLayout>
   );

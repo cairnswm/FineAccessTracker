@@ -9,13 +9,6 @@ const TrackingInformation = () => {
         <h5 className="mb-0">Important Tracking Information</h5>
       </Card.Header>
       <Card.Body>
-        <Alert variant="info" className="d-flex align-items-start">
-          <InfoCircleFill className="me-2 mt-1" size={20} />
-          <div>
-            <strong>Session Tracking:</strong> Users accessing the same page/item within a 15-minute window will only be counted once. 
-            If a user returns to the same page after 15 minutes, it will be recorded as a new access.
-          </div>
-        </Alert>
         
         <Alert variant="info" className="d-flex align-items-start">
           <GeoAltFill className="me-2 mt-1" size={20} />
@@ -44,18 +37,18 @@ const TrackingInformation = () => {
           <h6>Recommended Implementation for Non-SPA Applications:</h6>
           <pre className="bg-light p-3 rounded">
             <code>{`
-// In your main app (e.g., App.js or useEffect in layout)
-import { setApiKey, track } from './accessElf';
+<script src="https://accesself.co.za/accesself.js"></script>
+<script>
+  // Set your API key once loaded
+  AccessElf.setApiKey('YOUR_API_KEY_HERE');
 
-// Set API key once
-setApiKey("YOUR_API_KEY");
+  // On the home page to track location-based site visit
+  AccessElf.sendNow();
 
-// On the home page to track location-based site visit
-track(); // no page or id specified
-
-// On specific pages to track views (no location data)
-track("products"); // page only
-track("products", "product-123"); // page and item ID
+  // On specific pages to track views (no location data)
+  AccessElf.sendNow("products"); // page only
+  AccessElf.sendNow("product", "123"); // page and item ID
+</script>
 `}</code>
           </pre>
         </div>
