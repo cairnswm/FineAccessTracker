@@ -103,15 +103,16 @@ if ($itemtype != "") {
     $checkStmt->close();
   }
   
-  $sql = "INSERT INTO events (application_id, event_type, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO events (application_id, event_type, type, page, item_id, message, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?)";
       // ON DUPLICATE KEY UPDATE count = count + 1";
 
   $stmt = $mysqli->prepare($sql);
   if ($stmt === false) {
-    die("Prepare failed: " . $mysqli->error);
+    die("Prepare failed: {$mysqli->error}");
   }
 
-  $stmt->bind_param("sssssss", $appid, "route", $itemtype, $page, $itemid, $message, $ip_address);
+  $eventType = "route";
+  $stmt->bind_param("sssssss", $appid, $eventType, $itemtype, $page, $itemid, $message, $ip_address);
 
   if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
