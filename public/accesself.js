@@ -65,12 +65,16 @@
   function sendBulkData() {
     if (bulkData.length === 0) return;
 
+    // Only send if API key is set
+    if (!apiKey || apiKey.length === 0 || apiKey === "undefined" || apiKey === "null") {
+      // Do not clear timer or data, just wait for next trigger
+      return;
+    }
+
     const headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`
     };
-    if (apiKey && apiKey.length > 0 && apiKey !== "undefined" && apiKey !== "null") {
-      headers.Authorization = `Bearer ${apiKey}`;
-    }
 
     fetch(bulkUrl, {
       method: "POST",
